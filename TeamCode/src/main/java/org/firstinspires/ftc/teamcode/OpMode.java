@@ -43,23 +43,20 @@ public class OpMode extends LinearOpMode {
         LMLeft = hardwareMap.get(DcMotor.class, "LiftMotorLeft"); //new DcMotor(hardwareMap, "LiftMotorLeft");
         LMRight = hardwareMap.get(DcMotor.class, "LiftMotorRight");
         IntakeMotor = hardwareMap.get(DcMotor.class, "IntakeMotor");//new DcMotor(hardwareMap, "LiftMotorRight");
-        telemetry.addData("Hardware: ", "Initialized");
-        telemetry.update();
+
+
         LMLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LMLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        LMLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LMRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         IntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
         LMLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LMRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         IntakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        int pos = LMLeft.getCurrentPosition();
-        int pos1= IntakeMotor.getCurrentPosition();
-//            int pos2 = LMRight.getCurrentPosition();
+
         intakeSpinServo = hardwareMap.get(CRServo.class, "intakeSpinServo");
-        telemetry.addData("LeftLift: ", LMLeft.getCurrentPosition());
-        telemetry.addData("RightLift: ", LMRight.getCurrentPosition());
-        telemetry.addData("Intake motor: ", IntakeMotor.getCurrentPosition());
-        telemetry.update();
+
 
         clawServo = new SimpleServo(
                 hardwareMap, "clawServo", 0, 300,
@@ -72,6 +69,7 @@ public class OpMode extends LinearOpMode {
 
 
         ElapsedTime timer = new ElapsedTime();
+        ElapsedTime wait = new ElapsedTime();
 
 
         waitForStart();
@@ -91,9 +89,124 @@ public class OpMode extends LinearOpMode {
             } else {
                 drive_speed = 1;
             }
-            if(gamepad1.circle)
+
+            if (gamepad1.dpad_up)
             {
-                pos1 = pos1 + 200;
+                LMLeft.setTargetPosition(200);
+                LMRight.setTargetPosition(200);
+                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                timer.reset();
+                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                {
+                    LMLeft.setPower(1);
+                    LMRight.setPower(1);
+                }
+                clawServo.turnToAngle(293);
+                wait.reset();
+                while (wait.seconds() < 0.2) {}
+                timer.reset();
+                LMLeft.setTargetPosition(1550);
+                LMRight.setTargetPosition(1550);
+                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                timer.reset();
+                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                {
+                    LMLeft.setPower(1);
+                    LMRight.setPower(1);
+                }
+            }
+
+            if (gamepad1.dpad_down)
+            {
+                LMLeft.setTargetPosition(1100);
+                LMRight.setTargetPosition(1100);
+                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                timer.reset();
+                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                {
+                    LMLeft.setPower(1);
+                    LMRight.setPower(1);
+                }
+                clawServo.turnToAngle(220);
+                wait.reset();
+                while (wait.seconds() < 0.2) {}
+                timer.reset();
+                LMLeft.setTargetPosition(0);
+                LMRight.setTargetPosition(0);
+                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                timer.reset();
+                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                {
+                    LMLeft.setPower(1);
+                    LMRight.setPower(1);
+                }
+            }
+
+            if (gamepad1.right_bumper)
+            {
+                intakeSpinServo.setPower(1);
+                timer.reset();
+            }
+            if (gamepad1.left_bumper)
+            {
+                intakeSpinServo.setPower(-1);
+                timer.reset();
+            }
+            if (timer.seconds() > 0.1)
+            {
+                intakeSpinServo.setPower(0);
+            }
+
+            if(gamepad1.triangle)
+            {
+                intakeAngleServo.turnToAngle(0);
+            }
+            if(gamepad1.cross)
+            {
+                intakeAngleServo.turnToAngle(300 );
+            }
+            if(gamepad1.share)
+            {
+                LMLeft.setTargetPosition(1450);
+                LMRight.setTargetPosition(1450);
+                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                timer.reset();
+                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                {
+                    LMLeft.setPower(1);
+                    LMRight.setPower(1);
+                }
+            }
+            if(gamepad1.options)
+            {
+                LMLeft.setTargetPosition(0);
+                LMRight.setTargetPosition(0);
+                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                timer.reset();
+                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                {
+                    LMLeft.setPower(1);
+                    LMRight.setPower(1);
+                }
+            }
+
+
+            LMLeft.setPower(0.1);
+            LMRight.setPower(0.1);
+            IntakeMotor.setPower(0);
+            telemetry.addData("Status: ", LMLeft.getCurrentPosition());
+            telemetry.addData("Statusintake", IntakeMotor.getCurrentPosition());
+            telemetry.update();
+
+           /* if(gamepad1.circle)
+            {
+                pos1 = 1900;
                 IntakeMotor.setTargetPosition(pos1);
                 IntakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();
@@ -104,7 +217,7 @@ public class OpMode extends LinearOpMode {
             }
             if(gamepad1.triangle)
             {
-                pos1 = pos1 - 200;
+                pos1 = 0;
                 IntakeMotor.setTargetPosition(pos1);
                 IntakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();
@@ -113,6 +226,8 @@ public class OpMode extends LinearOpMode {
 
                 }
             }
+
+
             if (gamepad1.share) {
                 pos = pos + 1900;
                 LMLeft.setTargetPosition(pos);
@@ -125,12 +240,6 @@ public class OpMode extends LinearOpMode {
                     LMRight.setPower(1);
 
                 }
-                LMLeft.setPower(0);
-                IntakeMotor.setPower(0);
-                LMRight.setPower(0);
-                telemetry.addData("timer:", timer.seconds());
-                telemetry.addData("Status Left: ", LMLeft.getCurrentPosition());
-                telemetry.update();
             }
 
             if (gamepad1.options) {
@@ -200,43 +309,15 @@ public class OpMode extends LinearOpMode {
                     LMRight.setPower(1);
                 }
             }
-            LMLeft.setPower(0);
-            LMRight.setPower(0);
-            telemetry.addData("Status: ", LMLeft.getCurrentPosition());
-            telemetry.update();
 
-            /*if (gamepad1.circle)
+            if (gamepad1.circle)
             {
                 clawServo.turnToAngle(220);
             }
-            if (gamepad1.triangle)
-            {
+            if (gamepad1.triangle) {
                 clawServo.turnToAngle(293);
             }
-             */
-            if (gamepad1.right_bumper)
-            {
-                intakeSpinServo.setPower(1);
-                timer.reset();
-            }
-            if (gamepad1.left_bumper)
-            {
-                intakeSpinServo.setPower(-1);
-                timer.reset();
-            }
-            if (timer.seconds() > 0.1)
-            {
-                intakeSpinServo.setPower(0);
-            }
-
-            if(gamepad1.dpad_right)
-            {
-                intakeAngleServo.turnToAngle(0);
-            }
-            if(gamepad1.dpad_up)
-            {
-                intakeAngleServo.turnToAngle(300 );
-            }
+            */
         }
 
     }
