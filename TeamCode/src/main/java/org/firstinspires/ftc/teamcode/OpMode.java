@@ -195,129 +195,32 @@ public class OpMode extends LinearOpMode {
                     LMRight.setPower(1);
                 }
             }
-
-
-            LMLeft.setPower(0.1);
-            LMRight.setPower(0.1);
-            IntakeMotor.setPower(0);
-            telemetry.addData("Status: ", LMLeft.getCurrentPosition());
-            telemetry.addData("Statusintake", IntakeMotor.getCurrentPosition());
-            telemetry.update();
-
-           /* if(gamepad1.circle)
+            if(gamepad1.circle)
             {
-                pos1 = 1900;
-                IntakeMotor.setTargetPosition(pos1);
+                IntakeMotor.setTargetPosition(1900);
                 IntakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();
                 while (IntakeMotor.isBusy() && timer.seconds() < 2) {
                     IntakeMotor.setPower(1);
-
-                }
-            }
-            if(gamepad1.triangle)
-            {
-                pos1 = 0;
-                IntakeMotor.setTargetPosition(pos1);
-                IntakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                timer.reset();
-                while (IntakeMotor.isBusy() && timer.seconds() < 2) {
-                    IntakeMotor.setPower(1);
-
-                }
-            }
-
-
-            if (gamepad1.share) {
-                pos = pos + 1900;
-                LMLeft.setTargetPosition(pos);
-                LMRight.setTargetPosition(pos);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                timer.reset();
-                while ((LMLeft.isBusy()|| LMRight.isBusy()) && timer.seconds() < 2) {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
-
-                }
-            }
-
-            if (gamepad1.options) {
-                LMLeft.setTargetPosition(0);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setTargetPosition(0);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                timer.reset();
-                while ((LMLeft.isBusy()|| LMRight.isBusy()) && timer.seconds() < 2) {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
-                }
-            }
-            if(gamepad1.guide)
-            {
-                pos = pos + 200;
-                LMLeft.setTargetPosition(pos);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setTargetPosition(pos);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
-                {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
-                }
-            }
-            if(gamepad1.cross)
-            {
-                pos = pos - 200;
-                LMLeft.setTargetPosition(pos);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setTargetPosition(pos);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
-                {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
                 }
             }
             if(gamepad1.square)
             {
-                //pos = pos+300;
-                LMLeft.setTargetPosition(580);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setTargetPosition(580);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                IntakeMotor.setTargetPosition(0);
+                IntakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
-                {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
-                }
-            }
-            if(gamepad1.dpad_down)
-            {
-                //pos = pos - 450;
-                LMLeft.setTargetPosition(30);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setTargetPosition(30);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
-                {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
+                while (IntakeMotor.isBusy() && timer.seconds() < 2) {
+                    IntakeMotor.setPower(1);
                 }
             }
 
-            if (gamepad1.circle)
-            {
-                clawServo.turnToAngle(220);
-            }
-            if (gamepad1.triangle) {
-                clawServo.turnToAngle(293);
-            }
-            */
+            LMLeft.setPower(0.1);
+            LMRight.setPower(0.1);
+            IntakeMotor.setPower(0.1);
+            telemetry.addData("Status: ", LMLeft.getCurrentPosition());
+            telemetry.addData("Statusintake", IntakeMotor.getCurrentPosition());
+            telemetry.update();
+
         }
 
     }
