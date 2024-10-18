@@ -237,6 +237,8 @@ public class Claw {
             Action trajectoryActionChosen4;
             Action trajectoryActionChosen5;
             Action trajectoryActionChosen6;
+
+
             trajectoryActionChosen = tab1.build();
             trajectoryActionChosen0 = tab0.build();
             trajectoryActionChosen1 = tab2.build();
@@ -244,21 +246,22 @@ public class Claw {
             trajectoryActionChosen4 = tab4.build();
             trajectoryActionChosen5 = tab5.build();
             trajectoryActionChosen6 = tab6.build();
+
+
             Actions.runBlocking(
                     new SequentialAction(
                             new ParallelAction(
-                                lift.liftUp(),
-                                trajectoryActionChosen
+                                    lift.liftUp(),
+                                    trajectoryActionChosen
                             ),
                             lift.liftDown(),
                             new ParallelAction(
                                     claw.openClaw(),
                                     trajectoryActionChosen0
                                     ),
-                           // new SleepAction(1),
                             new ParallelAction(
-                            lift.liftSpeciment(),
-                            trajectoryActionChosen1
+                                    lift.liftSpeciment(),
+                                    trajectoryActionChosen1
                             ),
                             new SleepAction(2),
                             claw.closeClaw(),
@@ -268,25 +271,14 @@ public class Claw {
                             trajectoryActionChosen4,
                             lift.liftDown(),
                             new ParallelAction(
-                                claw.openClaw(),
+                                    claw.openClaw(),
                                     trajectoryActionChosen5
                             ),
                             new ParallelAction(
                                     lift.liftPark(),
                                     trajectoryActionChosen6
                             )
-
                             ));
-            /*Actions.runBlocking(
-                    new SleepAction(1));
-
-            Actions.runBlocking(
-                    new SequentialAction(
-                            lift.liftPark(),
-                            trajectoryActionChosen1
-
-                    ));*/
-
         }
     }
 }
