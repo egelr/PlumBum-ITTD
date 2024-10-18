@@ -3,6 +3,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
@@ -120,6 +121,36 @@ public class LiftPark implements Action {
     public Action liftPark() {
         return new Lift.LiftPark();
     }
+
+
+    //liftSpeciment
+    public class LiftSpeciment implements Action {
+        private boolean initialized = false;
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            if (!initialized) {
+                lift1.setPower(-0.8);
+                lift2.setPower(-0.8);
+                initialized = true;
+            }
+
+            double pos = lift1.getCurrentPosition();
+            packet.put("liftPos", pos);
+            if (pos > 200) {
+                return true;
+            } else {
+                lift1.setPower(0);
+                lift2.setPower(0);
+
+                return false;
+            }
+        }
+    }
+
+    public Action liftSpeciment() {
+        return new Lift.LiftSpeciment();
+    }
 }
 
 public class Claw {
@@ -167,9 +198,26 @@ public class Claw {
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                 .setReversed(true)
                 .lineToX(-31);
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-31,0,Math.toRadians(0)))
+        TrajectoryActionBuilder tab0 = drive.actionBuilder(new Pose2d(-31,0,Math.toRadians(0)))
                 .setReversed(false)
-                .splineTo(new Vector2d(0, 30), Math.toRadians(180));
+                .lineToX(-30.5);
+        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-30.5,0,Math.toRadians(0)))
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(-10,30,Math.toRadians(185)),Math.toRadians(185))
+                .setReversed(true)
+                .lineToX(-0.5);
+        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(-10.5 ,30,Math.toRadians(185)))
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(-10, -10, Math.toRadians(10)),Math.toRadians(0));
+        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-10, -10, Math.toRadians(0)))
+                .setReversed(true)
+                .lineToX(-29);
+        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-29, -10, Math.toRadians(0)))
+                .setReversed(false)
+                .lineToX(-28);
+        TrajectoryActionBuilder tab6 = drive.actionBuilder(new Pose2d(-28, -10, Math.toRadians(0)))
+                .setReversed(false)
+                        .splineToSplineHeading(new Pose2d(-10, 30, Math.toRadians(0)),Math.toRadians(0));
 
 
         // actions that need to happen on init; for instance, a claw tightening.
@@ -183,25 +231,62 @@ public class Claw {
             if (isStopRequested()) return;
 
             Action trajectoryActionChosen;
+            Action trajectoryActionChosen0;
             Action trajectoryActionChosen1;
+            Action trajectoryActionChosen3;
+            Action trajectoryActionChosen4;
+            Action trajectoryActionChosen5;
+            Action trajectoryActionChosen6;
             trajectoryActionChosen = tab1.build();
+            trajectoryActionChosen0 = tab0.build();
             trajectoryActionChosen1 = tab2.build();
+            trajectoryActionChosen3 = tab3.build();
+            trajectoryActionChosen4 = tab4.build();
+            trajectoryActionChosen5 = tab5.build();
+            trajectoryActionChosen6 = tab6.build();
+            Actions.runBlocking(
+                    new SequentialAction(
+                            new ParallelAction(
+                                lift.liftUp(),
+                                trajectoryActionChosen
+                            ),
+                            lift.liftDown(),
+                            new ParallelAction(
+                                    claw.openClaw(),
+                                    trajectoryActionChosen0
+                                    ),
+                           // new SleepAction(1),
+                            new ParallelAction(
+                            lift.liftSpeciment(),
+                            trajectoryActionChosen1
+                            ),
+                            new SleepAction(2),
+                            claw.closeClaw(),
+                            new SleepAction(0.2),
+                            trajectoryActionChosen3,
+                            lift.liftUp(),
+                            trajectoryActionChosen4,
+                            lift.liftDown(),
+                            new ParallelAction(
+                                claw.openClaw(),
+                                    trajectoryActionChosen5
+                            ),
+                            new ParallelAction(
+                                    lift.liftPark(),
+                                    trajectoryActionChosen6
+                            )
+
+                            ));
+            /*Actions.runBlocking(
+                    new SleepAction(1));
 
             Actions.runBlocking(
                     new SequentialAction(
-                            lift.liftUp(),
-                            trajectoryActionChosen,
-                            lift.liftDown(),
-                            claw.openClaw()
-                    ));
-            Actions.runBlocking(
-                    new SleepAction(1));
-            Actions.runBlocking(new SequentialAction(
                             lift.liftPark(),
                             trajectoryActionChosen1
 
-                    )
-            );
+                    ));*/
+
         }
     }
 }
