@@ -91,7 +91,7 @@ public class OpMode extends LinearOpMode {
             } else {
                 drive_speed = 1;
             }
-            //Picking up Speciments from the wall control
+            //Picking up Specimens from the wall control
             if (gamepad1.dpad_up)
             {
                 LMLeft.setTargetPosition(200);
@@ -119,11 +119,11 @@ public class OpMode extends LinearOpMode {
                     LMRight.setPower(1);
                 }
             }
-            //Placing/Hanging the Speciments control
+            //Placing/Hanging the Specimens control
             if (gamepad1.dpad_down)
             {
-                LMLeft.setTargetPosition(1100);
-                LMRight.setTargetPosition(1100);
+                LMLeft.setTargetPosition(1050);
+                LMRight.setTargetPosition(1050);
                 LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();

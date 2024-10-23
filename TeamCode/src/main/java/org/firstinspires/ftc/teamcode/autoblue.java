@@ -21,8 +21,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@Autonomous(name = "Auto", group = "Autonomous")
-public class auto extends LinearOpMode {
+@Autonomous(name = "Autoblue", group = "Autonomous")
+public class autoblue extends LinearOpMode {
     public class Lift {
         private DcMotorEx lift1;
         private DcMotorEx lift2;
@@ -93,67 +93,67 @@ public class auto extends LinearOpMode {
             return new LiftDown();
         }
 
-//liftPark
-public class LiftPark implements Action {
-    private boolean initialized = false;
+        //liftPark
+        public class LiftPark implements Action {
+            private boolean initialized = false;
 
-    @Override
-    public boolean run(@NonNull TelemetryPacket packet) {
-        if (!initialized) {
-            lift1.setPower(-0.8);
-            lift2.setPower(-0.8);
-            initialized = true;
-        }
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    lift1.setPower(-0.8);
+                    lift2.setPower(-0.8);
+                    initialized = true;
+                }
 
-        double pos = lift1.getCurrentPosition();
-        packet.put("liftPos", pos);
-        if (pos > 0) {
-            return true;
-        } else {
-            lift1.setPower(0);
-            lift2.setPower(0);
+                double pos = lift1.getCurrentPosition();
+                packet.put("liftPos", pos);
+                if (pos > 0) {
+                    return true;
+                } else {
+                    lift1.setPower(0);
+                    lift2.setPower(0);
 
-            return false;
-        }
-    }
-}
-
-    public Action liftPark() {
-        return new Lift.LiftPark();
-    }
-
-
-    //liftSpeciment
-    public class LiftSpeciment implements Action {
-        private boolean initialized = false;
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket packet) {
-            if (!initialized) {
-                lift1.setPower(-0.8);
-                lift2.setPower(-0.8);
-                initialized = true;
-            }
-
-            double pos = lift1.getCurrentPosition();
-            packet.put("liftPos", pos);
-            if (pos > 200) {
-                return true;
-            } else {
-                lift1.setPower(0);
-                lift2.setPower(0);
-
-                return false;
+                    return false;
+                }
             }
         }
+
+        public Action liftPark() {
+            return new Lift.LiftPark();
+        }
+
+
+        //liftSpeciment
+        public class LiftSpeciment implements Action {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    lift1.setPower(-0.8);
+                    lift2.setPower(-0.8);
+                    initialized = true;
+                }
+
+                double pos = lift1.getCurrentPosition();
+                packet.put("liftPos", pos);
+                if (pos > 200) {
+                    return true;
+                } else {
+                    lift1.setPower(0);
+                    lift2.setPower(0);
+
+                    return false;
+                }
+            }
+        }
+
+        public Action liftSpeciment() {
+            return new Lift.LiftSpeciment();
+        }
     }
 
-    public Action liftSpeciment() {
-        return new Lift.LiftSpeciment();
-    }
-}
-
-public class Claw {
+    public class Claw {
         private Servo claw;
 
         public Claw(HardwareMap hardwareMap) {
@@ -203,10 +203,10 @@ public class Claw {
                 .lineToX(-30.5);
         TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-30.5,0,Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-10,30,Math.toRadians(185)),Math.toRadians(185))
+                .splineToSplineHeading(new Pose2d(-8,30,Math.toRadians(185)),Math.toRadians(185))
                 .setReversed(true)
                 .lineToX(-0.5);
-        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(-10.5 ,30,Math.toRadians(185)))
+        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(-8.5 ,30,Math.toRadians(185)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -10, Math.toRadians(10)),Math.toRadians(0));
         TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-10, -10, Math.toRadians(0)))
@@ -217,7 +217,7 @@ public class Claw {
                 .lineToX(-30);
         TrajectoryActionBuilder tab6 = drive.actionBuilder(new Pose2d(-30, -10, Math.toRadians(0)))
                 .setReversed(false)
-                        .splineToSplineHeading(new Pose2d(-8, 35, Math.toRadians(0)),Math.toRadians(0));
+                .splineToSplineHeading(new Pose2d(-8, 35, Math.toRadians(0)),Math.toRadians(0));
 
 
         // actions that need to happen on init; for instance, a claw tightening.
@@ -258,7 +258,7 @@ public class Claw {
                             new ParallelAction(
                                     claw.openClaw(),
                                     trajectoryActionChosen0
-                                    ),
+                            ),
                             new ParallelAction(
                                     lift.liftSpeciment(),
                                     trajectoryActionChosen1
@@ -278,7 +278,7 @@ public class Claw {
                                     lift.liftPark(),
                                     trajectoryActionChosen6
                             )
-                            ));
+                    ));
         }
     }
 }
