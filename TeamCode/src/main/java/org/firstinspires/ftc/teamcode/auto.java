@@ -34,7 +34,8 @@ public class auto extends LinearOpMode {
             lift2 = hardwareMap.get(DcMotorEx.class, "LiftMotorLeft");
             lift2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             lift2.setDirection(DcMotorSimple.Direction.REVERSE);
-
+            //lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            //lift2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
 
         public class LiftUp implements Action {
@@ -78,7 +79,7 @@ public class auto extends LinearOpMode {
 
                 double pos = lift1.getCurrentPosition();
                 packet.put("liftPos", pos);
-                if (pos > 1100) {
+                if (pos > 1120) {
                     return true;
                 } else {
                     lift1.setPower(0);
@@ -197,28 +198,41 @@ public class Claw {
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                 .setReversed(true)
-                .lineToX(-31);
-        TrajectoryActionBuilder tab0 = drive.actionBuilder(new Pose2d(-31,0,Math.toRadians(0)))
+                .lineToX(-29.5);
+        TrajectoryActionBuilder tab0 = drive.actionBuilder(new Pose2d(-29.5,0,Math.toRadians(0)))
                 .setReversed(false)
-                .lineToX(-30.5);
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-30.5,0,Math.toRadians(0)))
+                .lineToX(-29);
+        TrajectoryActionBuilder tab12 = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-10,30,Math.toRadians(185)),Math.toRadians(185))
+                .lineToX(-23)
+                .splineToSplineHeading(new Pose2d(-23, 26, Math.toRadians(85)), Math.toRadians(0))
+                .strafeTo(new Vector2d(-46, 26))
+                .strafeTo(new Vector2d(-46, 42))
+                .strafeTo(new Vector2d(-5, 42));
+        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-5,42,Math.toRadians(85)))
                 .setReversed(true)
-                .lineToX(-0.5);
-        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(-10.5 ,30,Math.toRadians(185)))
+                .splineToSplineHeading(new Pose2d(4,30,Math.toRadians(180)),Math.toRadians(0));
+        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(4,30,Math.toRadians(180)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-10, -10, Math.toRadians(10)),Math.toRadians(0));
-        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-10, -10, Math.toRadians(0)))
+                .splineToSplineHeading(new Pose2d(-10, -5, Math.toRadians(0)),Math.toRadians(0));
+        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-10, -5, Math.toRadians(0)))
                 .setReversed(true)
-                .lineToX(-31);
-        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-31, -10, Math.toRadians(0)))
+                .lineToX(-28);
+        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-28, -5, Math.toRadians(0)))
                 .setReversed(false)
-                .lineToX(-30);
-        TrajectoryActionBuilder tab6 = drive.actionBuilder(new Pose2d(-30, -10, Math.toRadians(0)))
+                .lineToX(-27);
+        TrajectoryActionBuilder tab6 = drive.actionBuilder(new Pose2d(-27, -5, Math.toRadians(0)))
                 .setReversed(false)
-                        .splineToSplineHeading(new Pose2d(-8, 35, Math.toRadians(0)),Math.toRadians(0));
-
+                        .splineToSplineHeading(new Pose2d(4, 30, Math.toRadians(180)),Math.toRadians(0));
+        TrajectoryActionBuilder tab7 = drive.actionBuilder(new Pose2d(4, 30, Math.toRadians(180)))
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(-10, -2.5, Math.toRadians(0)),Math.toRadians(0));
+        TrajectoryActionBuilder tab8 = drive.actionBuilder(new Pose2d(-10, -2.5, Math.toRadians(0)))
+                .setReversed(true)
+                .lineToX(-28);
+        TrajectoryActionBuilder tab9 = drive.actionBuilder(new Pose2d(-38, -2.5, Math.toRadians(0)))
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(0, 30, Math.toRadians(0)),Math.toRadians(0));
 
         // actions that need to happen on init; for instance, a claw tightening.
         Actions.runBlocking(claw.closeClaw());
@@ -232,20 +246,28 @@ public class Claw {
 
             Action trajectoryActionChosen;
             Action trajectoryActionChosen0;
+            Action trajectoryActionChosen12;
             Action trajectoryActionChosen1;
             Action trajectoryActionChosen3;
             Action trajectoryActionChosen4;
             Action trajectoryActionChosen5;
             Action trajectoryActionChosen6;
+            Action trajectoryActionChosen7;
+            Action trajectoryActionChosen8;
+            Action trajectoryActionChosen9;
 
 
             trajectoryActionChosen = tab1.build();
             trajectoryActionChosen0 = tab0.build();
+            trajectoryActionChosen12 = tab12.build();
             trajectoryActionChosen1 = tab2.build();
             trajectoryActionChosen3 = tab3.build();
             trajectoryActionChosen4 = tab4.build();
             trajectoryActionChosen5 = tab5.build();
             trajectoryActionChosen6 = tab6.build();
+            trajectoryActionChosen7 = tab7.build();
+            trajectoryActionChosen8 = tab8.build();
+            trajectoryActionChosen9 = tab9.build();
 
 
             Actions.runBlocking(
@@ -259,13 +281,15 @@ public class Claw {
                                     claw.openClaw(),
                                     trajectoryActionChosen0
                                     ),
+                            new SleepAction(0.1),
+                            trajectoryActionChosen12,
                             new ParallelAction(
                                     lift.liftSpeciment(),
                                     trajectoryActionChosen1
                             ),
-                            new SleepAction(2),
                             claw.closeClaw(),
-                            new SleepAction(0.2),
+                            new SleepAction(0.1),
+                            lift.liftUp(),
                             trajectoryActionChosen3,
                             lift.liftUp(),
                             trajectoryActionChosen4,
@@ -275,8 +299,20 @@ public class Claw {
                                     trajectoryActionChosen5
                             ),
                             new ParallelAction(
-                                    lift.liftPark(),
+                                    lift.liftSpeciment(),
                                     trajectoryActionChosen6
+                           ),
+                            claw.closeClaw(),
+                            new SleepAction(0.1),
+                            lift.liftUp(),
+                            trajectoryActionChosen7,
+                            lift.liftUp(),
+                            trajectoryActionChosen8,
+                            lift.liftDown(),
+                            new ParallelAction(
+                            claw.openClaw(),
+                                    trajectoryActionChosen9,
+                                    lift.liftPark()
                             )
                             ));
         }

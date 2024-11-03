@@ -17,8 +17,11 @@ public class OpMode extends LinearOpMode {
 
     //Creating the variables for Servos and Motors
     private SimpleServo clawServo;
-    private SimpleServo intakeAngleServo;
-    public CRServo intakeSpinServo;
+    private SimpleServo intakePivotServo;
+    private SimpleServo intakeArmServo;
+    private SimpleServo intakeClawServo;
+    private SimpleServo transferClawServo;
+    private SimpleServo flipServo;
     private DcMotor LMLeft;
     private DcMotor LMRight;
     private DcMotor IntakeMotor;
@@ -58,14 +61,29 @@ public class OpMode extends LinearOpMode {
         IntakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Creating Servos
-        intakeSpinServo = hardwareMap.get(CRServo.class, "intakeSpinServo");
 
         clawServo = new SimpleServo(
                 hardwareMap, "clawServo", 0, 300,
                 AngleUnit.DEGREES
         );
-        intakeAngleServo = new SimpleServo(
-                hardwareMap, "intakeAngleServo", 0, 300,
+        intakePivotServo = new SimpleServo(
+                hardwareMap, "intakePivotServo", 0, 300,
+                AngleUnit.DEGREES
+        );
+        intakeArmServo = new SimpleServo(
+                hardwareMap, "intakeArmServo", 0, 300,
+                AngleUnit.DEGREES
+        );
+        intakeClawServo = new SimpleServo(
+                hardwareMap, "intakeClawServo", 0, 300,
+                AngleUnit.DEGREES
+        );
+        transferClawServo = new SimpleServo(
+                hardwareMap, "transferClawServo", 0, 300,
+                AngleUnit.DEGREES
+        );
+        flipServo = new SimpleServo(
+                hardwareMap, "flipServo", 0, 300,
                 AngleUnit.DEGREES
         );
 
@@ -89,7 +107,7 @@ public class OpMode extends LinearOpMode {
             if (gamepad1.right_trigger > 0.5) {
                 drive_speed = 0.35;
             } else {
-                drive_speed = 1;
+                drive_speed = 0.85;
             }
             //Picking up Specimens from the wall control
             if (gamepad1.dpad_up)
@@ -148,32 +166,39 @@ public class OpMode extends LinearOpMode {
                 }
             }
 
-            //Intake spinning controls
-            if (gamepad1.right_bumper)
-            {
-                intakeSpinServo.setPower(1);
-                timer.reset();
-            }
-            if (gamepad1.left_bumper)
-            {
-                intakeSpinServo.setPower(-1);
-                timer.reset();
-            }
-            if (timer.seconds() > 0.1)
-            {
-                intakeSpinServo.setPower(0);
-            }
 
             //Intake flipping controls
-            if(gamepad1.triangle)
+            /*if(gamepad1.triangle && gamepad1.left_trigger < 0.5 && gamepad1.right_trigger < 0.5)
             {
-                intakeAngleServo.turnToAngle(0);
-            }
-            if(gamepad1.cross)
-            {
-                intakeAngleServo.turnToAngle(300 );
-            }
+                intakeArmServo.turnToAngle(200);
+                wait.reset();
+                while (wait.seconds() < 0.5) {}
 
+                intakeArmServo.turnToAngle(275);
+            }
+            if(gamepad1.cross && gamepad1.left_trigger < 0.5 && gamepad1.right_trigger < 0.5)
+            {
+                intakeArmServo.turnToAngle(110);
+            }
+            if (gamepad1.left_trigger > 0.5 && gamepad1.triangle) {
+                intakeClawServo.turnToAngle(250);
+            }
+            if (gamepad1.left_trigger > 0.5 && gamepad1.cross) {
+                intakeClawServo.turnToAngle(150);
+            }
+             */
+            if (gamepad1.right_trigger > 0.5 && gamepad1.triangle) {
+                intakePivotServo.turnToAngle(140);
+            }
+            if (gamepad1.right_trigger > 0.5 && gamepad1.cross) {
+                intakePivotServo.turnToAngle(230);
+            }
+            if (gamepad1.left_trigger > 0.5 && gamepad1.circle) {
+                transferClawServo.turnToAngle(30);
+            }
+            if (gamepad1.left_trigger > 0.5 && gamepad1.square) {
+                transferClawServo.turnToAngle(90);
+            }
             //Robot hanging controls
             if(gamepad1.share)
             {
@@ -203,7 +228,7 @@ public class OpMode extends LinearOpMode {
             }
 
             //Intake slide extension or reduction controls
-            if(gamepad1.circle)
+            if(gamepad1.circle && gamepad1.left_trigger < 0.5)
             {
                 IntakeMotor.setTargetPosition(1900);
                 IntakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -211,9 +236,20 @@ public class OpMode extends LinearOpMode {
                 while (IntakeMotor.isBusy() && timer.seconds() < 2) {
                     IntakeMotor.setPower(1);
                 }
+                intakeClawServo.turnToAngle(150);
+                intakeArmServo.turnToAngle(120);
             }
-            if(gamepad1.square)
+            if(gamepad1.square && gamepad1.left_trigger < 0.5)
             {
+                intakeArmServo.turnToAngle(100);
+                timer.reset();
+                while (timer.seconds() < 0.4) {}
+                intakeClawServo.turnToAngle(250);
+                intakePivotServo.turnToAngle(140);
+                intakeArmServo.turnToAngle(200);
+                wait.reset();
+                while (wait.seconds() < 0.5) {}
+                intakeArmServo.turnToAngle(275);
                 IntakeMotor.setTargetPosition(0);
                 IntakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();
@@ -221,13 +257,48 @@ public class OpMode extends LinearOpMode {
                     IntakeMotor.setPower(1);
                 }
             }
-
+            if(gamepad1.dpad_left)
+            {
+                LMLeft.setTargetPosition(0);
+                LMRight.setTargetPosition(0);
+                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                timer.reset();
+                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2) {
+                    LMLeft.setPower(1);
+                    LMRight.setPower(1);
+                }
+                transferClawServo.turnToAngle(30);
+                wait.reset();
+                while (wait.seconds() < 0.2) {}
+                flipServo.turnToAngle(217);
+            }
+            if(gamepad1.dpad_right)
+            {
+                transferClawServo.turnToAngle(90);
+                wait.reset();
+                while (wait.seconds() < 0.1) {}
+                intakeClawServo.turnToAngle(150);
+                flipServo.turnToAngle(60);
+                LMLeft.setTargetPosition(1450);
+                LMRight.setTargetPosition(1450);
+                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                timer.reset();
+                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2) {
+                    LMLeft.setPower(1);
+                    LMRight.setPower(1);
+                }
+            }
             //Telemetry and slides' powers
             LMLeft.setPower(0.1);
             LMRight.setPower(0.1);
             IntakeMotor.setPower(0.1);
             telemetry.addData("Status: ", LMLeft.getCurrentPosition());
             telemetry.addData("Statusintake", IntakeMotor.getCurrentPosition());
+            telemetry.addData("armServo",intakeArmServo.getAngle());
+            telemetry.addData("pivot",intakePivotServo.getAngle());
+            telemetry.addData("clawIntake",intakeClawServo.getAngle());
             telemetry.update();
 
         }
