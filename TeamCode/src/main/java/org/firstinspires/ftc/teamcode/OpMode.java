@@ -259,6 +259,10 @@ public class OpMode extends LinearOpMode {
             }
             if(gamepad1.dpad_left)
             {
+                transferClawServo.turnToAngle(30);
+                wait.reset();
+                while (wait.seconds() < 0.2) {}
+                flipServo.turnToAngle(217);
                 LMLeft.setTargetPosition(0);
                 LMRight.setTargetPosition(0);
                 LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -268,10 +272,7 @@ public class OpMode extends LinearOpMode {
                     LMLeft.setPower(1);
                     LMRight.setPower(1);
                 }
-                transferClawServo.turnToAngle(30);
-                wait.reset();
-                while (wait.seconds() < 0.2) {}
-                flipServo.turnToAngle(217);
+
             }
             if(gamepad1.dpad_right)
             {
@@ -280,8 +281,8 @@ public class OpMode extends LinearOpMode {
                 while (wait.seconds() < 0.1) {}
                 intakeClawServo.turnToAngle(150);
                 flipServo.turnToAngle(60);
-                LMLeft.setTargetPosition(1450);
-                LMRight.setTargetPosition(1450);
+                LMLeft.setTargetPosition(1550);
+                LMRight.setTargetPosition(1550);
                 LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();
@@ -289,6 +290,17 @@ public class OpMode extends LinearOpMode {
                     LMLeft.setPower(1);
                     LMRight.setPower(1);
                 }
+            }
+            if(gamepad1.left_bumper)
+            {
+                transferClawServo.turnToAngle(90);
+                wait.reset();
+                while (wait.seconds() < 0.1) {}
+                intakeClawServo.turnToAngle(150);
+                flipServo.turnToAngle(60);
+                timer.reset();
+                while (timer.seconds() < 0.7) {}
+                transferClawServo.turnToAngle(30);
             }
             //Telemetry and slides' powers
             LMLeft.setPower(0.1);
