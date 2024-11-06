@@ -164,7 +164,7 @@ public class Claw {
         public class CloseClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                claw.setPosition(0.9766);
+                claw.setPosition(variables.specimenClawAngleClosed); //0.9766
                 return false;
             }
         }
@@ -176,7 +176,7 @@ public class Claw {
         public class OpenClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                claw.setPosition(0.5);
+                claw.setPosition(variables.specimenClawAngleOpened); //0.5
                 return false;
             }
         }

@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.variables;
 
 @TeleOp(name = "OpMode")
 public class OpMode extends LinearOpMode {
@@ -122,7 +123,7 @@ public class OpMode extends LinearOpMode {
                     LMLeft.setPower(1);
                     LMRight.setPower(1);
                 }
-                clawServo.turnToAngle(293);
+                clawServo.turnToAngle(variables.specimenClawAngleClosed);
                 wait.reset();
                 while (wait.seconds() < 0.2) {}
                 timer.reset();
@@ -150,7 +151,7 @@ public class OpMode extends LinearOpMode {
                     LMLeft.setPower(1);
                     LMRight.setPower(1);
                 }
-                clawServo.turnToAngle(220);
+                clawServo.turnToAngle(variables.specimenClawAngleOpened);
                 wait.reset();
                 while (wait.seconds() < 0.2) {}
                 timer.reset();
@@ -186,18 +187,18 @@ public class OpMode extends LinearOpMode {
             if (gamepad1.left_trigger > 0.5 && gamepad1.cross) {
                 intakeClawServo.turnToAngle(150);
             }
-             */
-            if (gamepad1.right_trigger > 0.5 && gamepad1.triangle) {
-                intakePivotServo.turnToAngle(140);
-            }
-            if (gamepad1.right_trigger > 0.5 && gamepad1.cross) {
-                intakePivotServo.turnToAngle(230);
-            }
             if (gamepad1.left_trigger > 0.5 && gamepad1.circle) {
                 transferClawServo.turnToAngle(30);
             }
             if (gamepad1.left_trigger > 0.5 && gamepad1.square) {
                 transferClawServo.turnToAngle(90);
+            }
+            */
+            if (gamepad1.right_trigger > 0.5 && gamepad1.triangle) {
+                intakePivotServo.turnToAngle(variables.pivotVerticalAngle);
+            }
+            if (gamepad1.right_trigger > 0.5 && gamepad1.cross) {
+                intakePivotServo.turnToAngle(variables.pivotHorizontalAngle);
             }
             //Robot hanging controls
             if(gamepad1.share)
@@ -236,20 +237,20 @@ public class OpMode extends LinearOpMode {
                 while (IntakeMotor.isBusy() && timer.seconds() < 2) {
                     IntakeMotor.setPower(1);
                 }
-                intakeClawServo.turnToAngle(150);
-                intakeArmServo.turnToAngle(120);
+                intakeClawServo.turnToAngle(variables.intakeClawServoAngleOpened);
+                intakeArmServo.turnToAngle(variables.armServoAngleDown);
             }
             if(gamepad1.square && gamepad1.left_trigger < 0.5)
             {
-                intakeArmServo.turnToAngle(100);
+                intakeArmServo.turnToAngle(variables.armServoAngleGrab);
                 timer.reset();
                 while (timer.seconds() < 0.4) {}
-                intakeClawServo.turnToAngle(250);
+                intakeClawServo.turnToAngle(variables.intakeClawServoAngleClosed);
                 intakePivotServo.turnToAngle(140);
-                intakeArmServo.turnToAngle(200);
+                intakeArmServo.turnToAngle(variables.armServoAngleStraight);
                 wait.reset();
                 while (wait.seconds() < 0.5) {}
-                intakeArmServo.turnToAngle(275);
+                intakeArmServo.turnToAngle(variables.armServoAngleUp);
                 IntakeMotor.setTargetPosition(0);
                 IntakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();
@@ -259,10 +260,10 @@ public class OpMode extends LinearOpMode {
             }
             if(gamepad1.dpad_left)
             {
-                transferClawServo.turnToAngle(30);
+                transferClawServo.turnToAngle(variables.transferClawServoAngleOpened);
                 wait.reset();
                 while (wait.seconds() < 0.2) {}
-                flipServo.turnToAngle(217);
+                flipServo.turnToAngle(variables.armServoAngleDown);
                 LMLeft.setTargetPosition(0);
                 LMRight.setTargetPosition(0);
                 LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -276,11 +277,11 @@ public class OpMode extends LinearOpMode {
             }
             if(gamepad1.dpad_right)
             {
-                transferClawServo.turnToAngle(90);
+                transferClawServo.turnToAngle(variables.transferClawServoAngleClosed);
                 wait.reset();
                 while (wait.seconds() < 0.1) {}
-                intakeClawServo.turnToAngle(150);
-                flipServo.turnToAngle(60);
+                intakeClawServo.turnToAngle(variables.intakeClawServoAngleOpened);
+                flipServo.turnToAngle(variables.flipServoAngleUp);
                 LMLeft.setTargetPosition(1550);
                 LMRight.setTargetPosition(1550);
                 LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -293,14 +294,14 @@ public class OpMode extends LinearOpMode {
             }
             if(gamepad1.left_bumper)
             {
-                transferClawServo.turnToAngle(90);
+                transferClawServo.turnToAngle(variables.transferClawServoAngleClosed);
                 wait.reset();
                 while (wait.seconds() < 0.1) {}
-                intakeClawServo.turnToAngle(150);
-                flipServo.turnToAngle(60);
+                intakeClawServo.turnToAngle(variables.intakeClawServoAngleOpened);
+                flipServo.turnToAngle(variables.flipServoAngleUp);
                 timer.reset();
                 while (timer.seconds() < 0.7) {}
-                transferClawServo.turnToAngle(30);
+                transferClawServo.turnToAngle(variables.transferClawServoAngleOpened);
             }
             //Telemetry and slides' powers
             LMLeft.setPower(0.1);
