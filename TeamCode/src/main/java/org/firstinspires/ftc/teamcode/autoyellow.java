@@ -202,7 +202,7 @@ public class autoyellow extends LinearOpMode {
 
                 double pos1 = iSlide.getCurrentPosition();
                 packet.put("liftPos", pos1);
-                if (pos1 < 1150) {
+                if (pos1 < 1280) {
                     return true;
                 } else {
                     iSlide.setPower(0);
@@ -225,7 +225,7 @@ public class autoyellow extends LinearOpMode {
 
                 double pos1 = iSlide.getCurrentPosition();
                 packet.put("liftPos", pos1);
-                if (pos1 < 1850) {
+                if (pos1 < 1350) {
                     return true;
                 } else {
                     iSlide.setPower(0);
@@ -271,7 +271,7 @@ public class autoyellow extends LinearOpMode {
         public class CloseClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                claw.setPosition(variables.specimenClawAngleClosed/300); //0.9766
+                claw.setPosition(0.9766);
                 return false;
             }
         }
@@ -283,7 +283,7 @@ public class autoyellow extends LinearOpMode {
         public class OpenClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                claw.setPosition(variables.specimenClawAngleOpened/300); //0.5
+                claw.setPosition(0.5);
                 return false;
             }
         }
@@ -302,7 +302,7 @@ public class autoyellow extends LinearOpMode {
         public class downFlip implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                flipServo.setPosition(variables.flipServoAngleDown/300); //0.723
+                flipServo.setPosition(0.856666);
                 return false;
             }
         }
@@ -312,7 +312,7 @@ public class autoyellow extends LinearOpMode {
         public class upFlip implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                flipServo.setPosition(variables.flipServoAngleUp/300); //0.2
+                flipServo.setPosition(0.34);
                 return false;
             }
         }
@@ -320,34 +320,34 @@ public class autoyellow extends LinearOpMode {
             return new FlipServo.upFlip();
         }
     }
-        public class IntakeClaw {
-            private Servo intakeClaw;
+    public class IntakeClaw {
+        private Servo intakeClaw;
 
-            public IntakeClaw(HardwareMap hardwareMap) {
-                intakeClaw = hardwareMap.get(Servo.class, "intakeClawServo");
-            }
+        public IntakeClaw(HardwareMap hardwareMap) {
+            intakeClaw = hardwareMap.get(Servo.class, "intakeClawServo");
+        }
 
-            public class CloseIntakeClaw implements Action {
-                @Override
-                public boolean run(@NonNull TelemetryPacket packet) {
-                    intakeClaw.setPosition(variables.intakeClawServoAngleClosed/300); //0.833
-                    return false;
-                }
-            }
-
-            public Action closeIntakeClaw() {return new IntakeClaw.CloseIntakeClaw();}
-
-            public class OpenIntakeClaw implements Action {
-                @Override
-                public boolean run(@NonNull TelemetryPacket packet) {
-                    intakeClaw.setPosition(variables.intakeClawServoAngleOpened/300); //0.5
-                    return false;
-                }
-            }
-            public Action openIntakeClaw() {
-                return new IntakeClaw.OpenIntakeClaw();
+        public class CloseIntakeClaw implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                intakeClaw.setPosition(0.8833333);
+                return false;
             }
         }
+
+        public Action closeIntakeClaw() {return new IntakeClaw.CloseIntakeClaw();}
+
+        public class OpenIntakeClaw implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                intakeClaw.setPosition(0.6);
+                return false;
+            }
+        }
+        public Action openIntakeClaw() {
+            return new IntakeClaw.OpenIntakeClaw();
+        }
+    }
     public class TransferClaw {
         private Servo transferClaw;
 
@@ -358,7 +358,7 @@ public class autoyellow extends LinearOpMode {
         public class CloseTransferClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                transferClaw.setPosition(variables.transferClawServoAngleClosed/300); //0.3
+                transferClaw.setPosition(0.3);
                 return false;
             }
         }
@@ -368,7 +368,7 @@ public class autoyellow extends LinearOpMode {
         public class OpenTransferClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                transferClaw.setPosition(variables.transferClawServoAngleOpened/300); //0.1
+                transferClaw.setPosition(0.1);
                 return false;
             }
         }
@@ -386,7 +386,7 @@ public class autoyellow extends LinearOpMode {
         public class PivotN implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                pivot.setPosition(variables.pivotVerticalAngle); //0.46667
+                pivot.setPosition(0.46667);
                 return false;
             }
         }
@@ -395,7 +395,7 @@ public class autoyellow extends LinearOpMode {
             return new Pivot.PivotN();
         }
     }
-        public class IntakeArm {
+    public class IntakeArm {
         private Servo intakeArm;
 
         public IntakeArm(HardwareMap hardwareMap) {
@@ -405,7 +405,7 @@ public class autoyellow extends LinearOpMode {
         public class intakeArmDown implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                intakeArm.setPosition(variables.armServoAngleDown/300); //0.3667
+                intakeArm.setPosition(0.3667);
                 return false;
             }
         }
@@ -415,7 +415,7 @@ public class autoyellow extends LinearOpMode {
         public class intakeArmSt implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                intakeArm.setPosition(variables.armServoAngleStraight/300); //0.6667
+                intakeArm.setPosition(0.6667);
                 return false;
             }
         }
@@ -423,7 +423,7 @@ public class autoyellow extends LinearOpMode {
         public class intakeArmUp implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                intakeArm.setPosition(variables.armServoAngleStraight/300); //0.91667
+                intakeArm.setPosition(0.91667);
                 return false;
             }
         }
@@ -431,7 +431,7 @@ public class autoyellow extends LinearOpMode {
         public class intakeArmGrab implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                intakeArm.setPosition(variables.armServoAngleGrab/300); //0.3333
+                intakeArm.setPosition(0.37);
                 return false;
             }
         }
@@ -462,24 +462,24 @@ public class autoyellow extends LinearOpMode {
                 .lineToX(-29);
         TrajectoryActionBuilder tab12 = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-13, -41.5, Math.toRadians(170)), Math.toRadians(0));
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-13, -41.5, Math.toRadians(170)))
-                .setReversed(true)
-                .splineToSplineHeading(new Pose2d(-11,-51,Math.toRadians(125)),Math.toRadians(0));
-        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(-11,-51,Math.toRadians(125)))
+                .splineToSplineHeading(new Pose2d(-7.5, -50, Math.toRadians(157)), Math.toRadians(0));
+        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-7.5, -50, Math.toRadians(153)))
                 .setReversed(false)
-                .turn(Math.toRadians(53));
-        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-11, -51, Math.toRadians(175)))
+                .turn(Math.toRadians(-32)); //4
+        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(-7.5,-50,Math.toRadians(125)))
                 .setReversed(false)
-                .turn(Math.toRadians(-53));
-        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-11, -51, Math.toRadians(122)))
+                .turn(Math.toRadians(54));
+        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-7.5, -50, Math.toRadians(179)))
                 .setReversed(false)
-                .turn(Math.toRadians(69))
-                .lineToX(-12.5);
-        TrajectoryActionBuilder tab6 = drive.actionBuilder(new Pose2d(-12.5, -51, Math.toRadians(191)))
+                .turn(Math.toRadians(-54));
+        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-7.5, -50, Math.toRadians(125)))
                 .setReversed(false)
-                .lineToX(-11)
-                .turn(Math.toRadians(-69));
+                .turn(Math.toRadians(67))
+                .lineToX(-10);
+        TrajectoryActionBuilder tab6 = drive.actionBuilder(new Pose2d(-10, -50, Math.toRadians(193)))
+                .setReversed(false)
+                .lineToX(-7.5)
+                .turn(Math.toRadians(-70));
         TrajectoryActionBuilder tab7 = drive.actionBuilder(new Pose2d(4, 30, Math.toRadians(180)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -2.5, Math.toRadians(0)),Math.toRadians(0));
@@ -562,6 +562,7 @@ public class autoyellow extends LinearOpMode {
                             flipServo.upFlip(),
                             new SleepAction(0.1),
                             lift.liftBasket(),
+                            new SleepAction(0.3),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.2),
                             flipServo.downFlip(),
@@ -588,7 +589,7 @@ public class autoyellow extends LinearOpMode {
                             flipServo.downFlip(),
                             lift.liftPark(),
                             trajectoryActionChosen5,
-                            IntakeSlides.SlideExtend2()/*,
+                            IntakeSlides.SlideExtend2(),
                             intakeArm.intakeArmGrab(),
                             new SleepAction(0.8),
                             intakeClaw.closeIntakeClaw(),
@@ -608,7 +609,7 @@ public class autoyellow extends LinearOpMode {
                             new SleepAction(0.2),
                             flipServo.downFlip(),
                             lift.liftPark()
-                            */
+
                     ));
         }
     }

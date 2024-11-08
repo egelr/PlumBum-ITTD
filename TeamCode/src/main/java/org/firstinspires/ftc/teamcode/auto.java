@@ -60,10 +60,39 @@ public class auto extends LinearOpMode {
                     return false;
                 }
             }
+
         }
 
         public Action liftUp() {
-            return new LiftUp();
+            return new Lift.LiftUp();
+        }
+        public class LiftBasket implements Action {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    lift1.setPower(1);
+                    lift2.setPower(1);
+                    initialized = true;
+                }
+
+                double pos = lift1.getCurrentPosition();
+                packet.put("liftPos", pos);
+                if (pos < 1550) {
+                    return true;
+                } else {
+                    lift1.setPower(0);
+                    lift2.setPower(0);
+
+                    return false;
+                }
+            }
+
+        }
+
+        public Action liftBasket() {
+            return new Lift.LiftBasket();
         }
 
         public class LiftDown implements Action {
@@ -91,70 +120,148 @@ public class auto extends LinearOpMode {
         }
 
         public Action liftDown() {
-            return new LiftDown();
+            return new Lift.LiftDown();
         }
 
-//liftPark
-public class LiftPark implements Action {
-    private boolean initialized = false;
+        //liftPark
+        public class LiftPark implements Action {
+            private boolean initialized = false;
 
-    @Override
-    public boolean run(@NonNull TelemetryPacket packet) {
-        if (!initialized) {
-            lift1.setPower(-0.8);
-            lift2.setPower(-0.8);
-            initialized = true;
-        }
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    lift1.setPower(-0.8);
+                    lift2.setPower(-0.8);
+                    initialized = true;
+                }
 
-        double pos = lift1.getCurrentPosition();
-        packet.put("liftPos", pos);
-        if (pos > 0) {
-            return true;
-        } else {
-            lift1.setPower(0);
-            lift2.setPower(0);
+                double pos = lift1.getCurrentPosition();
+                packet.put("liftPos", pos);
+                if (pos > 0) {
+                    return true;
+                } else {
+                    lift1.setPower(0);
+                    lift2.setPower(0);
 
-            return false;
-        }
-    }
-}
-
-    public Action liftPark() {
-        return new Lift.LiftPark();
-    }
-
-
-    //liftSpeciment
-    public class LiftSpeciment implements Action {
-        private boolean initialized = false;
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket packet) {
-            if (!initialized) {
-                lift1.setPower(-0.8);
-                lift2.setPower(-0.8);
-                initialized = true;
-            }
-
-            double pos = lift1.getCurrentPosition();
-            packet.put("liftPos", pos);
-            if (pos > 200) {
-                return true;
-            } else {
-                lift1.setPower(0);
-                lift2.setPower(0);
-
-                return false;
+                    return false;
+                }
             }
         }
-    }
 
-    public Action liftSpeciment() {
-        return new Lift.LiftSpeciment();
-    }
-}
+        public Action liftPark() {
+            return new Lift.LiftPark();
+        }
 
-public class Claw {
+
+        //liftSpeciment
+        public class LiftSpeciment implements Action {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    lift1.setPower(-0.8);
+                    lift2.setPower(-0.8);
+                    initialized = true;
+                }
+
+                double pos = lift1.getCurrentPosition();
+                packet.put("liftPos", pos);
+                if (pos > 200) {
+                    return true;
+                } else {
+                    lift1.setPower(0);
+                    lift2.setPower(0);
+
+                    return false;
+                }
+            }
+        }
+
+        public Action liftSpeciment() {
+            return new Lift.LiftSpeciment();
+        }
+    }
+    public class IntakeSlides {
+        private DcMotorEx iSlide;
+
+        public IntakeSlides(HardwareMap hardwareMap) {
+            iSlide = hardwareMap.get(DcMotorEx.class, "IntakeMotor");
+            iSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            iSlide.setDirection(DcMotorSimple.Direction.FORWARD);
+        }
+        public class SlideExtend implements Action {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    iSlide.setPower(1);
+                    initialized = true;
+                }
+
+                double pos1 = iSlide.getCurrentPosition();
+                packet.put("liftPos", pos1);
+                if (pos1 < 1280) {
+                    return true;
+                } else {
+                    iSlide.setPower(0);
+                    return false;
+                }
+            }
+        }
+        public  Action SlideExtend() {
+            return new IntakeSlides.SlideExtend();
+        }
+        public class SlideExtend2 implements Action {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    iSlide.setPower(1);
+                    initialized = true;
+                }
+
+                double pos1 = iSlide.getCurrentPosition();
+                packet.put("liftPos", pos1);
+                if (pos1 < 1350) {
+                    return true;
+                } else {
+                    iSlide.setPower(0);
+                    return false;
+                }
+            }
+        }
+        public  Action SlideExtend2() {
+            return new IntakeSlides.SlideExtend2();
+        }
+        public class SlidePark implements Action {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    iSlide.setPower(-0.8);
+                    initialized = true;
+                }
+
+                double pos1 = iSlide.getCurrentPosition();
+                packet.put("SlidePos", pos1);
+                if (pos1 > 0) {
+                    return true;
+                } else {
+                    iSlide.setPower(0);
+                    return false;
+                }
+            }
+        }
+        public Action SlidePark() {
+            return new IntakeSlides.SlidePark();
+        }
+
+    }
+    public class Claw {
         private Servo claw;
 
         public Claw(HardwareMap hardwareMap) {
@@ -164,26 +271,171 @@ public class Claw {
         public class CloseClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                claw.setPosition(variables.specimenClawAngleClosed); //0.9766
+                claw.setPosition(0.9766);
                 return false;
             }
         }
 
         public Action closeClaw() {
-            return new CloseClaw();
+            return new Claw.CloseClaw();
         }
 
         public class OpenClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                claw.setPosition(variables.specimenClawAngleOpened); //0.5
+                claw.setPosition(0.5);
                 return false;
             }
         }
 
         public Action openClaw() {
-            return new OpenClaw();
+            return new Claw.OpenClaw();
         }
+    }
+    public class FlipServo {
+        private Servo flipServo;
+
+        public FlipServo(HardwareMap hardwareMap) {
+            flipServo = hardwareMap.get(Servo.class, "flipServo");
+        }
+
+        public class downFlip implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                flipServo.setPosition(0.856666);
+                return false;
+            }
+        }
+        public Action downFlip() {
+            return new FlipServo.downFlip();
+        }
+        public class upFlip implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                flipServo.setPosition(0.34);
+                return false;
+            }
+        }
+        public Action upFlip() {
+            return new FlipServo.upFlip();
+        }
+    }
+    public class IntakeClaw {
+        private Servo intakeClaw;
+
+        public IntakeClaw(HardwareMap hardwareMap) {
+            intakeClaw = hardwareMap.get(Servo.class, "intakeClawServo");
+        }
+
+        public class CloseIntakeClaw implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                intakeClaw.setPosition(0.8833333);
+                return false;
+            }
+        }
+
+        public Action closeIntakeClaw() {return new IntakeClaw.CloseIntakeClaw();}
+
+        public class OpenIntakeClaw implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                intakeClaw.setPosition(0.6);
+                return false;
+            }
+        }
+        public Action openIntakeClaw() {
+            return new IntakeClaw.OpenIntakeClaw();
+        }
+    }
+    public class TransferClaw {
+        private Servo transferClaw;
+
+        public TransferClaw(HardwareMap hardwareMap) {
+            transferClaw = hardwareMap.get(Servo.class, "transferClawServo");
+        }
+
+        public class CloseTransferClaw implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                transferClaw.setPosition(0.3);
+                return false;
+            }
+        }
+
+        public Action closeTransferClaw() {return new TransferClaw.CloseTransferClaw();}
+
+        public class OpenTransferClaw implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                transferClaw.setPosition(0.1);
+                return false;
+            }
+        }
+        public Action openTransferClaw() {
+            return new TransferClaw.OpenTransferClaw();
+        }
+    }
+    public class Pivot {
+        private Servo pivot;
+
+        public Pivot(HardwareMap hardwareMap) {
+            pivot = hardwareMap.get(Servo.class, "intakePivotServo");
+        }
+
+        public class PivotN implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                pivot.setPosition(0.46667);
+                return false;
+            }
+        }
+
+        public Action PivotN() {
+            return new Pivot.PivotN();
+        }
+    }
+    public class IntakeArm {
+        private Servo intakeArm;
+
+        public IntakeArm(HardwareMap hardwareMap) {
+            intakeArm = hardwareMap.get(Servo.class, "intakeArmServo");
+        }
+
+        public class intakeArmDown implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                intakeArm.setPosition(0.3667);
+                return false;
+            }
+        }
+
+        public Action intakeArmDown() {return new IntakeArm.intakeArmDown();}
+
+        public class intakeArmSt implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                intakeArm.setPosition(0.6667);
+                return false;
+            }
+        }
+        public Action intakeArmSt() {return new IntakeArm.intakeArmSt();}
+        public class intakeArmUp implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                intakeArm.setPosition(0.91667);
+                return false;
+            }
+        }
+        public Action intakeArmUp() {return new IntakeArm.intakeArmUp();}
+        public class intakeArmGrab implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                intakeArm.setPosition(0.37);
+                return false;
+            }
+        }
+        public Action intakeArmGrab() {return new IntakeArm.intakeArmGrab();}
     }
 
     @Override
@@ -194,6 +446,12 @@ public class Claw {
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Claw claw = new Claw(hardwareMap);
         Lift lift = new Lift(hardwareMap);
+        IntakeSlides IntakeSlides = new IntakeSlides(hardwareMap);
+        IntakeClaw intakeClaw = new IntakeClaw(hardwareMap);
+        IntakeArm intakeArm = new IntakeArm(hardwareMap);
+        FlipServo flipServo = new FlipServo(hardwareMap);
+        TransferClaw transferClaw = new TransferClaw(hardwareMap);
+        Pivot pivot = new Pivot(hardwareMap);
 
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
@@ -236,6 +494,11 @@ public class Claw {
 
         // actions that need to happen on init; for instance, a claw tightening.
         Actions.runBlocking(claw.closeClaw());
+        Actions.runBlocking(flipServo.downFlip());
+        Actions.runBlocking(intakeClaw.openIntakeClaw());
+        Actions.runBlocking(transferClaw.openTransferClaw());
+        Actions.runBlocking(intakeArm.intakeArmUp());
+        Actions.runBlocking(pivot.PivotN());
 
 
         while (!isStopRequested() && !opModeIsActive()) {
