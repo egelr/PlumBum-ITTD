@@ -56,9 +56,9 @@ public class OpMode extends LinearOpMode {
         IntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //Resetting the encoders of Lift and Intake Motors
-        LMLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LMRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        IntakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //LMLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //LMRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //IntakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Creating Servos
 
@@ -206,6 +206,9 @@ public class OpMode extends LinearOpMode {
             }
             if (gamepad1.left_trigger > 0.5 && gamepad1.cross) {
                 transferClawServo.turnToAngle(30);
+            }
+            if (gamepad1.left_trigger > 0.5 && gamepad1.triangle) {
+                transferClawServo.turnToAngle(90);
             }
             //Robot hanging controls
             if(gamepad1.share)

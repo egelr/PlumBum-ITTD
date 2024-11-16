@@ -10,7 +10,7 @@ public class variables {
     public static final double intakeClawServoAngleOpened = 150;
     public static final double transferClawServoAngleClosed = 90;
     public static final double transferClawServoAngleOpened = 30;
-    public static final double flipServoAngleDown = 217;
+    public static final double flipServoAngleDown = 249;
     public static final double flipServoAngleUp = 60;
     public static final double pivotVerticalAngle = 140;
     public static final double pivotHorizontalAngle = 230;
