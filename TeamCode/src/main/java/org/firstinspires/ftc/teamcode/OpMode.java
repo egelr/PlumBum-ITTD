@@ -18,13 +18,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "OpMode")
 public class OpMode extends LinearOpMode {
 
-    //Creating the variables for Servos and Motors
-    private Servo clawServo;
-    private Servo intakePivotServo;
-    private Servo intakeArmServo;
-    private Servo intakeClawServo;
-    private Servo transferClawServo;
-    private Servo flipServo;
+    //Creating the variables for Motors
     private DcMotor LMLeft;
     private DcMotor LMRight;
     private DcMotor IntakeMotor;

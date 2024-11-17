@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -13,13 +14,19 @@ import org.firstinspires.ftc.teamcode.autoyellow;
 import org.firstinspires.ftc.teamcode.variables;
 
 public class IntakeSlides {
-    private DcMotor iSlide;
+    private Motor iSlide;
 
     public IntakeSlides(HardwareMap hardwareMap) {
-        iSlide = hardwareMap.get(DcMotor.class, "IntakeMotor");
-        iSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        iSlide.setDirection(DcMotorSimple.Direction.FORWARD);
-        iSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        iSlide = new Motor (hardwareMap, "IntakeMotor");
+        iSlide.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        //iSlide.setDirection(DcMotorSimple.Direction.FORWARD);
+        //iSlide.setRunMode(Motor.RunMode.PositionControl);
+
+        iSlide.setPositionCoefficient(0.05);
+
+        iSlide.setPositionTolerance(50);
+
+        iSlide.resetEncoder();
     }
     public class SlideExtend implements Action {
         private boolean initialized = false;
@@ -28,15 +35,15 @@ public class IntakeSlides {
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
                 iSlide.setTargetPosition(variables.intakeSlideExtendPos);
-                iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                iSlide.setPower(1);
+                iSlide.setRunMode(Motor.RunMode.PositionControl);
+                iSlide.set(1);
                 initialized = true;
             }
 
-            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPos) {
+            if (!iSlide.atTargetPosition()) {
                 return true;
             } else {
-                iSlide.setPower(0.1);
+                iSlide.set(0.1);
                 return false;
             }
         }
@@ -51,14 +58,14 @@ public class IntakeSlides {
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
                 iSlide.setTargetPosition(variables.intakeSlideExtendPos2);
-                iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                iSlide.setPower(1);
+                iSlide.setRunMode(Motor.RunMode.PositionControl);
+                iSlide.set(1);
                 initialized = true;
             }
-            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPos2) {
+            if (!iSlide.atTargetPosition()) {
                 return true;
             } else {
-                iSlide.setPower(0.1);
+                iSlide.set(0.1);
                 return false;
             }
         }
@@ -73,15 +80,15 @@ public class IntakeSlides {
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
                 iSlide.setTargetPosition(0);
-                iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                iSlide.setPower(-1);
+                iSlide.setRunMode(Motor.RunMode.PositionControl);
+                iSlide.set(1);
                 initialized = true;
             }
 
-            if (iSlide.getCurrentPosition() > 0) {
+            if (!iSlide.atTargetPosition()) {
                 return true;
             } else {
-                iSlide.setPower(0.1);
+                iSlide.set(0.1);
                 return false;
             }
 

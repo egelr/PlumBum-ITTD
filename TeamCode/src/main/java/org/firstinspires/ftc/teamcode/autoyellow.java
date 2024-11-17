@@ -92,38 +92,39 @@ public class autoyellow extends LinearOpMode {
         Actions.runBlocking(transferClaw.openTransferClaw());
         Actions.runBlocking(intakeArm.intakeArmUp());
         Actions.runBlocking(pivot.PivotN());
+        Actions.runBlocking(IntakeSlides.SlidePark());
+        Actions.runBlocking(lift.liftPark());
 
+        Action trajectoryActionChosen;
+        Action trajectoryActionChosen0;
+        Action trajectoryActionChosen12;
+        Action trajectoryActionChosen1;
+        Action trajectoryActionChosen3;
+        Action trajectoryActionChosen4;
+        Action trajectoryActionChosen5;
+        Action trajectoryActionChosen6;
+        Action trajectoryActionChosen7;
+        Action trajectoryActionChosen8;
+        Action trajectoryActionChosen9;
+
+
+        trajectoryActionChosen = tab1.build();
+        trajectoryActionChosen0 = tab0.build();
+        trajectoryActionChosen12 = tab12.build();
+        trajectoryActionChosen1 = tab2.build();
+        trajectoryActionChosen3 = tab3.build();
+        trajectoryActionChosen4 = tab4.build();
+        trajectoryActionChosen5 = tab5.build();
+        trajectoryActionChosen6 = tab6.build();
+        trajectoryActionChosen7 = tab7.build();
+        trajectoryActionChosen8 = tab8.build();
+        trajectoryActionChosen9 = tab9.build();
 
         while (!isStopRequested() && !opModeIsActive()) {
 
             waitForStart();
 
             if (isStopRequested()) return;
-
-            Action trajectoryActionChosen;
-            Action trajectoryActionChosen0;
-            Action trajectoryActionChosen12;
-            Action trajectoryActionChosen1;
-            Action trajectoryActionChosen3;
-            Action trajectoryActionChosen4;
-            Action trajectoryActionChosen5;
-            Action trajectoryActionChosen6;
-            Action trajectoryActionChosen7;
-            Action trajectoryActionChosen8;
-            Action trajectoryActionChosen9;
-
-
-            trajectoryActionChosen = tab1.build();
-            trajectoryActionChosen0 = tab0.build();
-            trajectoryActionChosen12 = tab12.build();
-            trajectoryActionChosen1 = tab2.build();
-            trajectoryActionChosen3 = tab3.build();
-            trajectoryActionChosen4 = tab4.build();
-            trajectoryActionChosen5 = tab5.build();
-            trajectoryActionChosen6 = tab6.build();
-            trajectoryActionChosen7 = tab7.build();
-            trajectoryActionChosen8 = tab8.build();
-            trajectoryActionChosen9 = tab9.build();
 
 
             Actions.runBlocking(

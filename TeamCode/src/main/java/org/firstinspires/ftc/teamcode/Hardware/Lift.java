@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -13,19 +14,28 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.variables;
 
 public class Lift {
-        private DcMotor lift1;
-        private DcMotor lift2;
 
+private Motor lift1;
+private Motor lift2;
         public Lift(HardwareMap hardwareMap) {
-            lift1 = hardwareMap.get(DcMotor.class, "LiftMotorRight");
-            lift1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            lift1.setDirection(DcMotorSimple.Direction.FORWARD);
-            lift2 = hardwareMap.get(DcMotor.class, "LiftMotorLeft");
-            lift2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            lift2.setDirection(DcMotorSimple.Direction.REVERSE);
+            lift1 = new Motor (hardwareMap, "LiftMotorRight");
+            lift1.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+            //lift1.setDirection(DcMotorSimple.Direction.FORWARD);
+            lift2 = new Motor (hardwareMap, "LiftMotorLeft");
+            lift2.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+            lift2.setInverted(true);
 
-            lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            lift2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            //lift1.setRunMode(Motor.RunMode.PositionControl);
+            //lift2.setRunMode(Motor.RunMode.PositionControl);
+
+            lift1.setPositionCoefficient(0.05);
+            lift2.setPositionCoefficient(0.05);
+
+            lift1.setPositionTolerance(50);
+            lift2.setPositionTolerance(50);
+
+            lift1.resetEncoder();
+            lift2.resetEncoder();
         }
 
         public class LiftUp implements Action {
@@ -35,18 +45,18 @@ public class Lift {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     lift1.setTargetPosition(variables.liftUpPos);
-                    lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lift1.setRunMode(Motor.RunMode.PositionControl);
                     lift2.setTargetPosition(variables.liftUpPos);
-                    lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lift1.setPower(1);
-                    lift2.setPower(1);
+                    lift2.setRunMode(Motor.RunMode.PositionControl);
+                    lift1.set(1);
+                    lift2.set(1);
                     initialized = true;
                 }
-                if (lift1.getCurrentPosition()<variables.liftUpPos) {
+                if (!lift1.atTargetPosition()) {
                     return true;
                 } else {
-                    lift1.setPower(0.1);
-                    lift2.setPower(0.1);
+                    lift1.set(0.1);
+                    lift2.set(0.1);
                     return false;
                 }
             }
@@ -63,18 +73,18 @@ public class Lift {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     lift1.setTargetPosition(variables.liftBasketPos);
-                    lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lift1.setRunMode(Motor.RunMode.PositionControl);
                     lift2.setTargetPosition(variables.liftBasketPos);
-                    lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lift1.setPower(1);
-                    lift2.setPower(1);
+                    lift2.setRunMode(Motor.RunMode.PositionControl);
+                    lift1.set(1);
+                    lift2.set(1);
                     initialized = true;
                 }
-                if (lift1.getCurrentPosition()<variables.liftBasketPos) {
+                if (!lift1.atTargetPosition()) {
                     return true;
                 } else {
-                    lift1.setPower(0.1);
-                    lift2.setPower(0.1);
+                    lift1.set(0.1);
+                    lift2.set(0.1);
                     return false;
                 }
             }
@@ -92,18 +102,18 @@ public class Lift {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     lift1.setTargetPosition(variables.liftDownPos);
-                    lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lift1.setRunMode(Motor.RunMode.PositionControl);
                     lift2.setTargetPosition(variables.liftDownPos);
-                    lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lift1.setPower(-1);
-                    lift2.setPower(-1);
+                    lift2.setRunMode(Motor.RunMode.PositionControl);
+                    lift1.set(-1);
+                    lift2.set(-1);
                     initialized = true;
                 }
-                if (lift1.getCurrentPosition()>variables.liftDownPos) {
+                if (!lift1.atTargetPosition()) {
                     return true;
                 } else {
-                    lift1.setPower(0.1);
-                    lift2.setPower(0.1);
+                    lift1.set(0.1);
+                    lift2.set(0.1);
                     return false;
                 }
             }
@@ -121,18 +131,18 @@ public class Lift {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     lift1.setTargetPosition(0);
-                    lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lift1.setRunMode(Motor.RunMode.PositionControl);
                     lift2.setTargetPosition(0);
-                    lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lift1.setPower(-0.8);
-                    lift2.setPower(-0.8);
+                    lift2.setRunMode(Motor.RunMode.PositionControl);
+                    lift1.set(1);
+                    lift2.set(1);
                     initialized = true;
                 }
-                if (lift1.getCurrentPosition()>0) {
+                if (!lift1.atTargetPosition()) {
                     return true;
                 } else {
-                    lift1.setPower(0.1);
-                    lift2.setPower(0.1);
+                    lift1.set(0.1);
+                    lift2.set(0.1);
                     return false;
                 }
             }
@@ -151,18 +161,18 @@ public class Lift {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     lift1.setTargetPosition(variables.liftSpecimenPos);
-                    lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lift1.setRunMode(Motor.RunMode.PositionControl);
                     lift2.setTargetPosition(variables.liftSpecimenPos);
-                    lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lift1.setPower(-0.8);
-                    lift2.setPower(-0.8);
+                    lift2.setRunMode(Motor.RunMode.PositionControl);
+                    lift1.set(1);
+                    lift2.set(1);
                     initialized = true;
                 }
-                if (lift1.getCurrentPosition()>variables.liftSpecimenPos) {
+                if (!lift1.atTargetPosition()) {
                     return true;
                 } else {
-                    lift1.setPower(0.1);
-                    lift2.setPower(0.1);
+                    lift1.set(0.1);
+                    lift2.set(0.1);
                     return false;
                 }
             }
