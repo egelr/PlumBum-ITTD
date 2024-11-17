@@ -7,6 +7,8 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.variables;
+
 public class IntakeClaw {
     private Servo intakeClaw;
 
@@ -17,7 +19,7 @@ public class IntakeClaw {
     public class CloseIntakeClaw implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeClaw.setPosition(0.8833333);
+            intakeClaw.setPosition(variables.intakeClawServoAngleClosed/300);
             return false;
         }
     }
@@ -27,7 +29,7 @@ public class IntakeClaw {
     public class OpenIntakeClaw implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeClaw.setPosition(0.6);
+            intakeClaw.setPosition(variables.intakeClawServoAngleOpened/300);
             return false;
         }
     }

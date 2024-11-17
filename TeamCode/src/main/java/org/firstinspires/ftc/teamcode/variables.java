@@ -2,20 +2,32 @@ package org.firstinspires.ftc.teamcode;
 
 public class variables {
 
-    public static final double armServoAngleDown = 126;
-    public static final double armServoAngleGrab = 109;
-    public static final double armServoAngleStraight = 200;
+
     public static final double armServoAngleUp = 275;
-    public static final double intakeClawServoAngleClosed = 250;
-    public static final double intakeClawServoAngleOpened = 150;
+    public static final double armServoAngleDown = armServoAngleUp - 149;
+    public static final double armServoAngleGrab = armServoAngleUp - 166;
+    public static final double armServoAngleStraight = armServoAngleUp - 75;
+
+
+    public static final double intakeClawServoAngleClosed = 265;
+    public static final double intakeClawServoAngleOpened = intakeClawServoAngleClosed - 85;
+
+
     public static final double transferClawServoAngleClosed = 90;
-    public static final double transferClawServoAngleOpened = 30;
+    public static final double transferClawServoAngleOpened = transferClawServoAngleClosed - 60;
+
+
     public static final double flipServoAngleDown = 249;
-    public static final double flipServoAngleUp = 105;
+    public static final double flipServoAngleUp = flipServoAngleDown - 144;
+    public static final double flipServoAngleBasket = flipServoAngleDown - 174;
+
+
     public static final double pivotVerticalAngle = 140;
-    public static final double pivotHorizontalAngle = 230;
+    public static final double pivotHorizontalAngle = pivotVerticalAngle + 90;
+
+
     public static final double specimenClawAngleClosed = 293;
-    public static final double specimenClawAngleOpened = 220;
+    public static final double specimenClawAngleOpened = specimenClawAngleClosed - 73;
 
 
     //INTAKE SLIDES

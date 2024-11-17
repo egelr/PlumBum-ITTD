@@ -7,6 +7,8 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.variables;
+
 public class TransferClaw {
     private Servo transferClaw;
 
@@ -17,7 +19,7 @@ public class TransferClaw {
     public class CloseTransferClaw implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            transferClaw.setPosition(0.3);
+            transferClaw.setPosition(variables.transferClawServoAngleClosed/300);
             return false;
         }
     }
@@ -27,7 +29,7 @@ public class TransferClaw {
     public class OpenTransferClaw implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            transferClaw.setPosition(0.1);
+            transferClaw.setPosition(variables.transferClawServoAngleOpened/300);
             return false;
         }
     }

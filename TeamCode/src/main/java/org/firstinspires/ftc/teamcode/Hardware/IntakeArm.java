@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.autoyellow;
+import org.firstinspires.ftc.teamcode.variables;
 
 public class IntakeArm {
     private Servo intakeArm;
@@ -19,7 +20,7 @@ public class IntakeArm {
     public class intakeArmDown implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeArm.setPosition(0.42);
+            intakeArm.setPosition(variables.armServoAngleDown/300);
             return false;
         }
     }
@@ -29,7 +30,7 @@ public class IntakeArm {
     public class intakeArmSt implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeArm.setPosition(0.6667);
+            intakeArm.setPosition(variables.armServoAngleStraight/300);
             return false;
         }
     }
@@ -37,7 +38,7 @@ public class IntakeArm {
     public class intakeArmUp implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeArm.setPosition(0.91667);
+            intakeArm.setPosition(variables.armServoAngleUp/300);
             return false;
         }
     }
@@ -45,7 +46,7 @@ public class IntakeArm {
     public class intakeArmGrab implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeArm.setPosition(0.363);
+            intakeArm.setPosition(variables.armServoAngleGrab/300);
             return false;
         }
     }

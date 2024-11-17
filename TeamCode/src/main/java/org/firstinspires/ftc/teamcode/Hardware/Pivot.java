@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.autoyellow;
+import org.firstinspires.ftc.teamcode.variables;
 
 public class Pivot {
     private Servo pivot;
@@ -19,7 +20,7 @@ public class Pivot {
     public class PivotN implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            pivot.setPosition(0.46667);
+            pivot.setPosition(variables.pivotVerticalAngle/300);
             return false;
         }
     }

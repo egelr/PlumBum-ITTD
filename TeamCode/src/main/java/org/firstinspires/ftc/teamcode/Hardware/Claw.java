@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.autoyellow;
+import org.firstinspires.ftc.teamcode.variables;
 
 public class Claw {
     private Servo claw;
@@ -19,7 +20,7 @@ public class Claw {
     public class CloseClaw implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            claw.setPosition(0.9766);
+            claw.setPosition(variables.specimenClawAngleClosed/300);
             return false;
         }
     }
@@ -31,7 +32,7 @@ public class Claw {
     public class OpenClaw implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            claw.setPosition(0.5);
+            claw.setPosition(variables.specimenClawAngleOpened/300);
             return false;
         }
     }

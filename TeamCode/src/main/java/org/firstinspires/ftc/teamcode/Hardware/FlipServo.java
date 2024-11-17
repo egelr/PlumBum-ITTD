@@ -29,7 +29,7 @@ public class FlipServo {
     public class upFlip implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            flipServo.setPosition(0.35);
+            flipServo.setPosition(variables.flipServoAngleUp/300);
             return false;
         }
     }
@@ -40,7 +40,7 @@ public class FlipServo {
 public class basketFlip implements Action {
     @Override
     public boolean run(@NonNull TelemetryPacket packet) {
-        flipServo.setPosition(0.25);
+        flipServo.setPosition(variables.flipServoAngleBasket/300);
         return false;
     }
 }
