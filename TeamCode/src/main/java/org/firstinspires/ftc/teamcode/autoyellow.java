@@ -57,24 +57,24 @@ public class autoyellow extends LinearOpMode {
                 .lineToX(-29);
         TrajectoryActionBuilder tab12 = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-11, -50.5, Math.toRadians(157)), Math.toRadians(0));
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-11, -50.5, Math.toRadians(153)))
+                .splineToSplineHeading(new Pose2d(-10, -50.5, Math.toRadians(157)), Math.toRadians(0));
+        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(157)))
                 .setReversed(false)
                 .turn(Math.toRadians(-32)); //4
-        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(-7.5,-50,Math.toRadians(125)))
+        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(125)))
                 .setReversed(false)
                 .turn(Math.toRadians(54));
-        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-7.5, -50, Math.toRadians(179)))
+        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(179)))
                 .setReversed(false)
                 .turn(Math.toRadians(-54));
-        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-7.5, -50, Math.toRadians(125)))
+        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
                 .setReversed(false)
-                .turn(Math.toRadians(65))
-                .lineToX(-10.5);
-        TrajectoryActionBuilder tab6 = drive.actionBuilder(new Pose2d(-10.5, -50, Math.toRadians(191)))
+                .turn(Math.toRadians(68.5))
+                .lineToX(-12);
+        TrajectoryActionBuilder tab6 = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(193.5)))
                 .setReversed(false)
-                .lineToX(-8)
-                .turn(Math.toRadians(-65));
+                .lineToX(-10)
+                .turn(Math.toRadians(-68.5));
         TrajectoryActionBuilder tab7 = drive.actionBuilder(new Pose2d(4, 30, Math.toRadians(180)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -2.5, Math.toRadians(0)),Math.toRadians(0));
@@ -133,7 +133,6 @@ public class autoyellow extends LinearOpMode {
                                     trajectoryActionChosen
                             ),
                             lift.liftDown(),
-                            new SleepAction(0.4),
                             new ParallelAction(
                                     claw.openClaw(),
                                     trajectoryActionChosen0
@@ -142,48 +141,100 @@ public class autoyellow extends LinearOpMode {
                                     lift.liftPark(),
                                     trajectoryActionChosen12
                             ),
-                            IntakeSlides.SlideExtend(),
-                            new SleepAction(1),
+                            new ParallelAction(
+                                    IntakeSlides.SlideExtend(),
+                                    intakeArm.intakeArmDown()
+                            ),
                             intakeArm.intakeArmGrab(),
-                            new SleepAction(0.5),
+                            new SleepAction(0.25),
                             intakeClaw.closeIntakeClaw(),
-                            new SleepAction(0.4),
+                            new SleepAction(0.3),
                             intakeArm.intakeArmSt(),
-                            new SleepAction(0.5),
+                            new SleepAction(0.4),
+                            new ParallelAction(
                             intakeArm.intakeArmUp(),
-                            IntakeSlides.SlidePark(),
-                            transferClaw.closeTransferClaw(),
-                            new SleepAction(2)
-                            /*,
+                            IntakeSlides.SlidePark()
+                            ),
+                            new ParallelAction(
+                                    transferClaw.closeTransferClaw(),
                             trajectoryActionChosen1,
-                            intakeClaw.openIntakeClaw(),
-                            new SleepAction(0.5),
+                            intakeClaw.openIntakeClaw()
+                            ),
+                            new ParallelAction(
                             flipServo.upFlip(),
-                            new SleepAction(0.1),
-                            lift.liftBasket(),
-                            new SleepAction(1.5),
-                            transferClaw.openTransferClaw(),
+                            lift.liftBasket()
+                            ),
+                            flipServo.basketFlip(),
                             new SleepAction(0.2),
+                            transferClaw.openTransferClaw(),
+                            new SleepAction(0.1),
+                            new ParallelAction(
                             flipServo.downFlip(),
                             lift.liftPark(),
                             trajectoryActionChosen3,
                             IntakeSlides.SlideExtend2(),
+                            intakeArm.intakeArmDown()
+                            ),
                             intakeArm.intakeArmGrab(),
-                            new SleepAction(0.8),
+                            new SleepAction(0.25),
                             intakeClaw.closeIntakeClaw(),
-                            new SleepAction(0.4),
+                            new SleepAction(0.3),
                             intakeArm.intakeArmSt(),
-                            new SleepAction(0.5),
-                            intakeArm.intakeArmUp(),
-                            IntakeSlides.SlidePark(),
+                            new SleepAction(0.4),
+                            new ParallelAction(
+                                    intakeArm.intakeArmUp(),
+                                    IntakeSlides.SlidePark()
+                            ),
+                            new ParallelAction(
                             transferClaw.closeTransferClaw(),
                             trajectoryActionChosen4,
-                            intakeClaw.openIntakeClaw(),
-                            new SleepAction(0.5),
-                            flipServo.upFlip(),
+                            intakeClaw.openIntakeClaw()),
+                            new ParallelAction(
+                                    flipServo.upFlip(),
+                                    lift.liftBasket()
+                            ),
+
+
+
+
+                            flipServo.basketFlip(),
+                            new SleepAction(0.2),
+                            transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
-                            lift.liftBasket(),
-                            new SleepAction(1.5),
+                            new ParallelAction(
+                                    flipServo.downFlip(),
+                                    lift.liftPark(),
+                                    trajectoryActionChosen5,
+                                    IntakeSlides.SlideExtend2(),
+                                    intakeArm.intakeArmDown()
+                            ),
+                            intakeArm.intakeArmGrab(),
+                            new SleepAction(0.25),
+                            intakeClaw.closeIntakeClaw(),
+                            new SleepAction(0.3),
+                            intakeArm.intakeArmSt(),
+                            new SleepAction(0.4),
+                            new ParallelAction(
+                                    intakeArm.intakeArmUp(),
+                                    IntakeSlides.SlidePark()
+                            ),
+                            new ParallelAction(
+                                    transferClaw.closeTransferClaw(),
+                                    trajectoryActionChosen6,
+                                    intakeClaw.openIntakeClaw()),
+                            new ParallelAction(
+                                    flipServo.upFlip(),
+                                    lift.liftBasket()
+                            ),
+                            flipServo.basketFlip(),
+                            new SleepAction(0.2),
+                            transferClaw.openTransferClaw(),
+                            new SleepAction(0.1),
+                            new ParallelAction(
+                                    flipServo.downFlip(),
+                                    lift.liftPark()
+                            )
+                            /*
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.2),
                             flipServo.downFlip(),

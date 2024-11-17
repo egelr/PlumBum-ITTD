@@ -36,4 +36,16 @@ public class FlipServo {
     public Action upFlip() {
         return new FlipServo.upFlip();
     }
+
+public class basketFlip implements Action {
+    @Override
+    public boolean run(@NonNull TelemetryPacket packet) {
+        flipServo.setPosition(0.25);
+        return false;
+    }
 }
+    public Action basketFlip() {
+        return new FlipServo.basketFlip();
+    }
+}
+

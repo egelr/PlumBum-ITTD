@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.autoyellow;
+import org.firstinspires.ftc.teamcode.variables;
 
 public class IntakeSlides {
     private DcMotor iSlide;
@@ -26,21 +27,18 @@ public class IntakeSlides {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                iSlide.setTargetPosition(1280);
+                iSlide.setTargetPosition(variables.intakeSlideExtendPos);
                 iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 iSlide.setPower(1);
                 initialized = true;
             }
 
-            /*double pos1 = iSlide.getCurrentPosition();
-            packet.put("liftPos", pos1);
-            if (pos1 < 1280) {
+            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPos) {
                 return true;
             } else {
                 iSlide.setPower(0.1);
                 return false;
-            }*/
-            return false;
+            }
         }
     }
     public  Action SlideExtend() {
@@ -52,21 +50,17 @@ public class IntakeSlides {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                iSlide.setTargetPosition(1350);
+                iSlide.setTargetPosition(variables.intakeSlideExtendPos2);
                 iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 iSlide.setPower(1);
                 initialized = true;
             }
-
-//            double pos1 = iSlide.getCurrentPosition();
-//            packet.put("liftPos", pos1);
-//            if (pos1 < 1350) {
-//                return true;
-//            } else {
-//                iSlide.setPower(0);
-//                return false;
-//            }
-            return false;
+            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPos2) {
+                return true;
+            } else {
+                iSlide.setPower(0.1);
+                return false;
+            }
         }
     }
     public  Action SlideExtend2() {
@@ -80,19 +74,17 @@ public class IntakeSlides {
             if (!initialized) {
                 iSlide.setTargetPosition(0);
                 iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                iSlide.setPower(-0.8);
+                iSlide.setPower(-1);
                 initialized = true;
             }
 
-//            double pos1 = iSlide.getCurrentPosition();
-//            packet.put("SlidePos", pos1);
-//            if (pos1 > 0) {
-//                return true;
-//            } else {
-//                iSlide.setPower(0);
-//                return false;
-//            }
-            return false;
+            if (iSlide.getCurrentPosition() > 0) {
+                return true;
+            } else {
+                iSlide.setPower(0.1);
+                return false;
+            }
+
         }
     }
     public Action SlidePark() {
