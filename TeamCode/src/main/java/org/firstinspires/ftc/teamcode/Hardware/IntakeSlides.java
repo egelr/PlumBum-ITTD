@@ -36,7 +36,7 @@ public class IntakeSlides {
             if (!initialized) {
                 iSlide.setTargetPosition(variables.intakeSlideExtendPos);
                 iSlide.setRunMode(Motor.RunMode.PositionControl);
-                iSlide.set(1);
+                iSlide.set(0.9);
                 initialized = true;
             }
 
@@ -59,7 +59,7 @@ public class IntakeSlides {
             if (!initialized) {
                 iSlide.setTargetPosition(variables.intakeSlideExtendPos2);
                 iSlide.setRunMode(Motor.RunMode.PositionControl);
-                iSlide.set(1);
+                iSlide.set(0.9);
                 initialized = true;
             }
             if (!iSlide.atTargetPosition()) {
@@ -81,7 +81,7 @@ public class IntakeSlides {
             if (!initialized) {
                 iSlide.setTargetPosition(0);
                 iSlide.setRunMode(Motor.RunMode.PositionControl);
-                iSlide.set(1);
+                iSlide.set(0.9);
                 initialized = true;
             }
 

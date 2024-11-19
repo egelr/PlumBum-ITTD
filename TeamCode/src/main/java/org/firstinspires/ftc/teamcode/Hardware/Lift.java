@@ -48,8 +48,8 @@ private Motor lift2;
                     lift1.setRunMode(Motor.RunMode.PositionControl);
                     lift2.setTargetPosition(variables.liftUpPos);
                     lift2.setRunMode(Motor.RunMode.PositionControl);
-                    lift1.set(1);
-                    lift2.set(1);
+                    lift1.set(0.9);
+                    lift2.set(0.9);
                     initialized = true;
                 }
                 if (!lift1.atTargetPosition()) {
@@ -76,8 +76,8 @@ private Motor lift2;
                     lift1.setRunMode(Motor.RunMode.PositionControl);
                     lift2.setTargetPosition(variables.liftBasketPos);
                     lift2.setRunMode(Motor.RunMode.PositionControl);
-                    lift1.set(1);
-                    lift2.set(1);
+                    lift1.set(0.9);
+                    lift2.set(0.9);
                     initialized = true;
                 }
                 if (!lift1.atTargetPosition()) {
@@ -134,8 +134,8 @@ private Motor lift2;
                     lift1.setRunMode(Motor.RunMode.PositionControl);
                     lift2.setTargetPosition(0);
                     lift2.setRunMode(Motor.RunMode.PositionControl);
-                    lift1.set(1);
-                    lift2.set(1);
+                    lift1.set(0.9);
+                    lift2.set(0.9);
                     initialized = true;
                 }
                 if (!lift1.atTargetPosition()) {
@@ -164,8 +164,8 @@ private Motor lift2;
                     lift1.setRunMode(Motor.RunMode.PositionControl);
                     lift2.setTargetPosition(variables.liftSpecimenPos);
                     lift2.setRunMode(Motor.RunMode.PositionControl);
-                    lift1.set(1);
-                    lift2.set(1);
+                    lift1.set(0.9);
+                    lift2.set(0.9);
                     initialized = true;
                 }
                 if (!lift1.atTargetPosition()) {

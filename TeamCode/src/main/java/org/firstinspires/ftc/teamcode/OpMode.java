@@ -18,10 +18,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "OpMode")
 public class OpMode extends LinearOpMode {
 
+    int liftLastPosition;
     //Creating the variables for Motors
-    private DcMotor LMLeft;
-    private DcMotor LMRight;
-    private DcMotor IntakeMotor;
+    private Motor LMLeft;
+    private Motor LMRight;
+    private Motor IntakeMotor;
     private Motor fL, fR, bL, bR;
     //Creating drive speed variable
     public double drive_speed = 1;
@@ -43,19 +44,34 @@ public class OpMode extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(fL, fR, bL, bR);
 
         //Creating Lift/Slides and Intake Motors, Setting their behaviour to "brake"
-        LMLeft = hardwareMap.get(DcMotor.class, "LiftMotorLeft");
-        LMRight = hardwareMap.get(DcMotor.class, "LiftMotorRight");
-        IntakeMotor = hardwareMap.get(DcMotor.class, "IntakeMotor");
+        LMLeft = new Motor(hardwareMap, "LiftMotorLeft");
+        LMRight = new Motor(hardwareMap, "LiftMotorRight");
+        IntakeMotor = new Motor(hardwareMap, "IntakeMotor");
 
-        LMLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        LMLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        LMRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        IntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LMLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        LMLeft.setInverted(true);
+        LMRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        IntakeMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
+
+        LMLeft.setPositionCoefficient(0.05);
+        LMRight.setPositionCoefficient(0.05);
+        IntakeMotor.setPositionCoefficient(0.05);
+
+        LMLeft.setPositionTolerance(50);
+        LMRight.setPositionTolerance(50);
+        IntakeMotor.setPositionTolerance(50);
+
+        LMLeft.resetEncoder();
+        LMRight.resetEncoder();
+        IntakeMotor.resetEncoder();
         //Resetting the encoders of Lift and Intake Motors
-        LMLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LMRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        IntakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LMLeft.setTargetPosition(0);
+        LMRight.setTargetPosition(0);
+        IntakeMotor.setTargetPosition(0);
+        LMLeft.setRunMode(Motor.RunMode.PositionControl);
+        LMRight.setRunMode(Motor.RunMode.PositionControl);
+        IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
 
         //Creating Servos
 
@@ -95,13 +111,13 @@ public class OpMode extends LinearOpMode {
             {
                 LMLeft.setTargetPosition(200);
                 LMRight.setTargetPosition(200);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMLeft.setRunMode(Motor.RunMode.PositionControl);
+                LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<2)
                 {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
+                    LMLeft.set(0.9);
+                    LMRight.set(0.9);
                 }
                 clawServo.setPosition(variables.specimenClawAngleClosed/300);
                 wait.reset();
@@ -109,13 +125,13 @@ public class OpMode extends LinearOpMode {
                 timer.reset();
                 LMLeft.setTargetPosition(1550);
                 LMRight.setTargetPosition(1550);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMLeft.setRunMode(Motor.RunMode.PositionControl);
+                LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<2)
                 {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
+                    LMLeft.set(0.9);
+                    LMRight.set(0.9);
                 }
             }
             //Placing/Hanging the Specimens control
@@ -123,13 +139,13 @@ public class OpMode extends LinearOpMode {
             {
                 LMLeft.setTargetPosition(1050);
                 LMRight.setTargetPosition(1050);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMLeft.setRunMode(Motor.RunMode.PositionControl);
+                LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<2)
                 {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
+                    LMLeft.set(0.9);
+                    LMRight.set(0.9);
                 }
                 clawServo.setPosition(variables.specimenClawAngleOpened/300);;
                 wait.reset();
@@ -137,13 +153,13 @@ public class OpMode extends LinearOpMode {
                 timer.reset();
                 LMLeft.setTargetPosition(0);
                 LMRight.setTargetPosition(0);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMLeft.setRunMode(Motor.RunMode.PositionControl);
+                LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<2)
                 {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
+                    LMLeft.set(0.9);
+                    LMRight.set(0.9);
                 }
             }
 
@@ -165,26 +181,26 @@ public class OpMode extends LinearOpMode {
             {
                 LMLeft.setTargetPosition(1450);
                 LMRight.setTargetPosition(1450);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMLeft.setRunMode(Motor.RunMode.PositionControl);
+                LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<2)
                 {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
+                    LMLeft.set(0.9);
+                    LMRight.set(0.9);
                 }
             }
             if(gamepad1.options)
             {
                 LMLeft.setTargetPosition(0);
                 LMRight.setTargetPosition(0);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMLeft.setRunMode(Motor.RunMode.PositionControl);
+                LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2)
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<2)
                 {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
+                    LMLeft.set(0.9);
+                    LMRight.set(0.9);
                 }
             }
 
@@ -192,10 +208,10 @@ public class OpMode extends LinearOpMode {
             if(gamepad1.circle && gamepad1.left_trigger < 0.5)
             {
                 IntakeMotor.setTargetPosition(1350);
-                IntakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while (IntakeMotor.isBusy() && timer.seconds() < 2) {
-                    IntakeMotor.setPower(1);
+                while (!IntakeMotor.atTargetPosition() && timer.seconds() < 2) {
+                    IntakeMotor.set(0.9);
                 }
                 intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
                 intakeArmServo.setPosition(variables.armServoAngleDown/300);
@@ -214,10 +230,10 @@ public class OpMode extends LinearOpMode {
                 while (wait.seconds() < 0.5) {}
                 intakeArmServo.setPosition(variables.armServoAngleUp/300);
                 IntakeMotor.setTargetPosition(0);
-                IntakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while (IntakeMotor.isBusy() && timer.seconds() < 2) {
-                    IntakeMotor.setPower(1);
+                while (!IntakeMotor.atTargetPosition() && timer.seconds() < 2) {
+                    IntakeMotor.set(0.9);
                 }
             }
             if(gamepad1.dpad_left)
@@ -228,12 +244,12 @@ public class OpMode extends LinearOpMode {
                 flipServo.setPosition(variables.flipServoAngleDown/300);
                 LMLeft.setTargetPosition(0);
                 LMRight.setTargetPosition(0);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMLeft.setRunMode(Motor.RunMode.PositionControl);
+                LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2) {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<2) {
+                    LMLeft.set(0.9);
+                    LMRight.set(0.9);
                 }
 
             }
@@ -246,12 +262,12 @@ public class OpMode extends LinearOpMode {
                 flipServo.setPosition(variables.flipServoAngleUp/300);
                 LMLeft.setTargetPosition(1550);
                 LMRight.setTargetPosition(1550);
-                LMLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LMRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LMLeft.setRunMode(Motor.RunMode.PositionControl);
+                LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while((LMLeft.isBusy()||LMRight.isBusy()) && timer.seconds()<2) {
-                    LMLeft.setPower(1);
-                    LMRight.setPower(1);
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<2) {
+                    LMLeft.set(0.9);
+                    LMRight.set(0.9);
                 }
             }
             /*if(gamepad1.left_bumper)
@@ -268,12 +284,57 @@ public class OpMode extends LinearOpMode {
                 intakeArmServo.setPosition(variables.armServoAngleUp/300);
                 intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
                 intakePivotServo.setPosition(variables.pivotVerticalAngle/300);
-                clawServo.setPosition(variables.specimenClawAngleOpened/300);;
-            }
+                clawServo.setPosition(variables.specimenClawAngleOpened/300);
+                liftLastPosition = LMLeft.getCurrentPosition();
+
+                LMLeft.setRunMode(Motor.RunMode.RawPower);
+                LMRight.setRunMode(Motor.RunMode.RawPower);
+                LMLeft.set(-0.1);
+                LMRight.set(-0.1);
+
+                sleep(100);
+
+                while (!isStopRequested() && (LMLeft.getCurrentPosition() != liftLastPosition)) {
+                    liftLastPosition = LMLeft.getCurrentPosition();
+                    sleep(100);
+                }
+
+                LMLeft.set(0);
+                LMRight.set(0);
+                LMLeft.resetEncoder();
+                LMRight.resetEncoder();
+
+                sleep(50);
+
+                LMLeft.setTargetPosition(0);
+                LMRight.setTargetPosition(0);
+                LMLeft.setRunMode(Motor.RunMode.PositionControl);
+                LMRight.setRunMode(Motor.RunMode.PositionControl);
+
+                liftLastPosition = IntakeMotor.getCurrentPosition();
+
+                IntakeMotor.setRunMode(Motor.RunMode.RawPower);
+                IntakeMotor.set(-0.1);
+
+                sleep(100);
+
+                while (!isStopRequested() && (IntakeMotor.getCurrentPosition() != liftLastPosition)) {
+                    liftLastPosition = IntakeMotor.getCurrentPosition();
+                    sleep(100);
+                }
+
+                IntakeMotor.set(0);
+                IntakeMotor.resetEncoder();
+
+                sleep(50);
+
+                IntakeMotor.setTargetPosition(0);
+                IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
+             }
             //Telemetry and slides' powers
-            LMLeft.setPower(0.1);
-            LMRight.setPower(0.1);
-            IntakeMotor.setPower(0.1);
+            LMLeft.set(0.1);
+            LMRight.set(0.1);
+            IntakeMotor.set(0.1);
             telemetry.addData("Status: ", LMLeft.getCurrentPosition());
             telemetry.addData("Statusintake", IntakeMotor.getCurrentPosition());
             telemetry.update();
