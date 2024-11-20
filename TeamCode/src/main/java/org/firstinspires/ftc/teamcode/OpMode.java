@@ -109,8 +109,8 @@ public class OpMode extends LinearOpMode {
             //Picking up Specimens from the wall control
             if (gamepad1.dpad_up)
             {
-                LMLeft.setTargetPosition(200);
-                LMRight.setTargetPosition(200);
+                LMLeft.setTargetPosition(250);
+                LMRight.setTargetPosition(250);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
                 LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
@@ -119,9 +119,13 @@ public class OpMode extends LinearOpMode {
                     LMLeft.set(0.9);
                     LMRight.set(0.9);
                 }
+                LMLeft.set(0);
+                LMRight.set(0);
+
                 clawServo.setPosition(variables.specimenClawAngleClosed/300);
-                wait.reset();
-                while (wait.seconds() < 0.2) {}
+                //wait.reset();
+                //while (wait.seconds() < 0.6) {}
+                sleep(200);
                 timer.reset();
                 LMLeft.setTargetPosition(1550);
                 LMRight.setTargetPosition(1550);
@@ -137,8 +141,8 @@ public class OpMode extends LinearOpMode {
             //Placing/Hanging the Specimens control
             if (gamepad1.dpad_down)
             {
-                LMLeft.setTargetPosition(1050);
-                LMRight.setTargetPosition(1050);
+                LMLeft.setTargetPosition(variables.liftDownPos);
+                LMRight.setTargetPosition(variables.liftDownPos);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
                 LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
@@ -147,7 +151,9 @@ public class OpMode extends LinearOpMode {
                     LMLeft.set(0.9);
                     LMRight.set(0.9);
                 }
-                clawServo.setPosition(variables.specimenClawAngleOpened/300);;
+                clawServo.setPosition(variables.specimenClawAngleOpened/300);
+                LMLeft.set(0);
+                LMRight.set(0);
                 wait.reset();
                 while (wait.seconds() < 0.2) {}
                 timer.reset();
@@ -179,8 +185,8 @@ public class OpMode extends LinearOpMode {
             //Robot hanging controls
             if(gamepad1.share)
             {
-                LMLeft.setTargetPosition(1450);
-                LMRight.setTargetPosition(1450);
+                LMLeft.setTargetPosition(1500);
+                LMRight.setTargetPosition(1500);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
                 LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
@@ -192,15 +198,15 @@ public class OpMode extends LinearOpMode {
             }
             if(gamepad1.options)
             {
-                LMLeft.setTargetPosition(0);
-                LMRight.setTargetPosition(0);
+                LMLeft.setTargetPosition(1150);
+                LMRight.setTargetPosition(1150);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
                 LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
                 while((!LMLeft.atTargetPosition()) && timer.seconds()<2)
                 {
-                    LMLeft.set(0.9);
-                    LMRight.set(0.9);
+                    LMLeft.set(0.5);
+                    LMRight.set(0.5);
                 }
             }
 

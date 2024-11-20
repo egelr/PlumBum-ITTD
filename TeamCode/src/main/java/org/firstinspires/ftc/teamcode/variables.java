@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 public class variables {
 
-
     public static final double armServoAngleUp = 275;
     public static final double armServoAngleDown = armServoAngleUp - 149;
     public static final double armServoAngleGrab = armServoAngleUp - 166;
@@ -33,6 +32,7 @@ public class variables {
     //INTAKE SLIDES
     public static final int intakeSlideExtendPos = 1280;
     public static final int intakeSlideExtendPos2 = 1350;
+
 
     //LIFT
     public static final int liftUpPos = 1550;

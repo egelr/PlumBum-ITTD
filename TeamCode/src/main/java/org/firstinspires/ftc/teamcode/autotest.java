@@ -30,8 +30,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@Autonomous(name = "Auto", group = "Autonomous")
-public class auto extends LinearOpMode {
+@Autonomous(name = "Autotest", group = "Autonomous")
+public class autotest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -51,7 +51,7 @@ public class auto extends LinearOpMode {
 
         TrajectoryActionBuilder firstSpecimenHangTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(true)
-                .lineToX(-29.5);
+                .turn(Math.toRadians(90));
         TrajectoryActionBuilder firstSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-29.5,0,Math.toRadians(0)))
                 .setReversed(false)
                 .lineToX(-29);
@@ -132,47 +132,11 @@ public class auto extends LinearOpMode {
 
             Actions.runBlocking(
                     new SequentialAction(
-                            new ParallelAction(
-                                    lift.liftUp(),
+
+
                                     firstSpecimenHangTrajectoryAction
-                            ),
-                            lift.liftDown(),
-                            new ParallelAction(
-                                    claw.openClaw(),
-                                    firstSpecimenHangBackUpTrajectoryAction
-                            ),
-                            new SleepAction(0.1),
-                            new ParallelAction(
-                                    lift.liftSpeciment(),
-                                    sampleDeliveryTrajectoryAction
-                            ),
-                            secondSpecimenUploadTrajectoryAction,
-                            claw.closeClaw(),
-                            new SleepAction(0.1),
-                            lift.liftUp(),
-                            secondSpecimenStraightenTrajectoryAction,
-                            secondSpecimenHangTrajectoryAction,
-                            lift.liftDown(),
-                            new ParallelAction(
-                                    claw.openClaw(),
-                                    secondSpecimenHangBackUpTrajectoryAction
-                            ),
-                            new ParallelAction(
-                                    lift.liftSpeciment(),
-                                    thirdSpecimenUploadTrajectoryAction
-                            ),
-                            claw.closeClaw(),
-                            new SleepAction(0.1),
-                            lift.liftUp(),
-                            thirdSpecimenStraightenTrajectoryAction,
-                            thirdSpecimenHangTrajectoryAction,
-                            lift.liftDown(),
-                            new ParallelAction(
-                                    claw.openClaw(),
-                                    parkTrajectoryAction,
-                                    lift.liftPark()
-                            )
-                            ));
+
+                    ));
         }
     }
 }

@@ -57,24 +57,24 @@ public class autoyellow extends LinearOpMode {
                 .lineToX(-29);
         TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-10, -50.5, Math.toRadians(157)), Math.toRadians(0));
-        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(157)))
+                .splineToSplineHeading(new Pose2d(-10, -50.5, Math.toRadians(156)), Math.toRadians(0));
+        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(156)))
                 .setReversed(false)
-                .turn(Math.toRadians(-32)); //4
+                .turn(Math.toRadians(-31)); //4
         TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(125)))
                 .setReversed(false)
-                .turn(Math.toRadians(54));
-        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(179)))
+                .turn(Math.toRadians(53));
+        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(178)))
                 .setReversed(false)
-                .turn(Math.toRadians(-54));
+                .turn(Math.toRadians(-53));
         TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
                 .setReversed(false)
-                .turn(Math.toRadians(68.5))
+                .turn(Math.toRadians(68))
                 .lineToX(-12);
         TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(193.5)))
                 .setReversed(false)
                 .lineToX(-10)
-                .turn(Math.toRadians(-68.5));
+                .turn(Math.toRadians(-68));
 
 
         // actions that need to happen on init; for instance, a claw tightening.
