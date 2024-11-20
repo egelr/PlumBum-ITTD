@@ -49,41 +49,33 @@ public class autoyellow extends LinearOpMode {
         Pivot pivot = new Pivot(hardwareMap);
 
 
-        TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder specimenHangTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(true)
                 .lineToX(-29.5);
-        TrajectoryActionBuilder tab0 = drive.actionBuilder(new Pose2d(-29.5,0,Math.toRadians(0)))
+        TrajectoryActionBuilder specimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-29.5,0,Math.toRadians(0)))
                 .setReversed(false)
                 .lineToX(-29);
-        TrajectoryActionBuilder tab12 = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
+        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -50.5, Math.toRadians(157)), Math.toRadians(0));
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(157)))
+        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(157)))
                 .setReversed(false)
                 .turn(Math.toRadians(-32)); //4
-        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(125)))
+        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(125)))
                 .setReversed(false)
                 .turn(Math.toRadians(54));
-        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(179)))
+        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(179)))
                 .setReversed(false)
                 .turn(Math.toRadians(-54));
-        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
+        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
                 .setReversed(false)
                 .turn(Math.toRadians(68.5))
                 .lineToX(-12);
-        TrajectoryActionBuilder tab6 = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(193.5)))
+        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(193.5)))
                 .setReversed(false)
                 .lineToX(-10)
                 .turn(Math.toRadians(-68.5));
-        TrajectoryActionBuilder tab7 = drive.actionBuilder(new Pose2d(4, 30, Math.toRadians(180)))
-                .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-10, -2.5, Math.toRadians(0)),Math.toRadians(0));
-        TrajectoryActionBuilder tab8 = drive.actionBuilder(new Pose2d(-10, -2.5, Math.toRadians(0)))
-                .setReversed(true)
-                .lineToX(-28);
-        TrajectoryActionBuilder tab9 = drive.actionBuilder(new Pose2d(-38, -2.5, Math.toRadians(0)))
-                .setReversed(false)
-                .splineToSplineHeading(new Pose2d(0, 30, Math.toRadians(0)),Math.toRadians(0));
+
 
         // actions that need to happen on init; for instance, a claw tightening.
         Actions.runBlocking(claw.closeClaw());
@@ -95,30 +87,24 @@ public class autoyellow extends LinearOpMode {
         Actions.runBlocking(IntakeSlides.SlidePark());
         Actions.runBlocking(lift.liftPark());
 
-        Action trajectoryActionChosen;
-        Action trajectoryActionChosen0;
-        Action trajectoryActionChosen12;
-        Action trajectoryActionChosen1;
-        Action trajectoryActionChosen3;
-        Action trajectoryActionChosen4;
-        Action trajectoryActionChosen5;
-        Action trajectoryActionChosen6;
-        Action trajectoryActionChosen7;
-        Action trajectoryActionChosen8;
-        Action trajectoryActionChosen9;
+        Action specimenHangTrajectoryAction;
+        Action specimenHangBackUpTrajectoryAction;
+        Action firstSampleGrabTrajectoryAction;
+        Action firstSampleScoreTrajectoryAction;
+        Action secondSampleGrabTrajectoryAction;
+        Action secondSampleScoreTrajectoryAction;
+        Action thirdSampleGrabTrajectoryAction;
+        Action thirdSampleScoreTrajectoryAction;
 
 
-        trajectoryActionChosen = tab1.build();
-        trajectoryActionChosen0 = tab0.build();
-        trajectoryActionChosen12 = tab12.build();
-        trajectoryActionChosen1 = tab2.build();
-        trajectoryActionChosen3 = tab3.build();
-        trajectoryActionChosen4 = tab4.build();
-        trajectoryActionChosen5 = tab5.build();
-        trajectoryActionChosen6 = tab6.build();
-        trajectoryActionChosen7 = tab7.build();
-        trajectoryActionChosen8 = tab8.build();
-        trajectoryActionChosen9 = tab9.build();
+        specimenHangTrajectoryAction = specimenHangTrajectory.build();
+        specimenHangBackUpTrajectoryAction = specimenHangBackUpTrajectory.build();
+        firstSampleGrabTrajectoryAction = firstSampleGrabTrajectory.build();
+        firstSampleScoreTrajectoryAction = firstSampleScoreTrajectory.build();
+        secondSampleGrabTrajectoryAction = secondSampleGrabTrajectory.build();
+        secondSampleScoreTrajectoryAction = secondSampleScoreTrajectory.build();
+        thirdSampleGrabTrajectoryAction = thirdSampleGrabTrajectory.build();
+        thirdSampleScoreTrajectoryAction = thirdSampleScoreTrajectory.build();
 
         while (!isStopRequested() && !opModeIsActive()) {
 
@@ -131,16 +117,16 @@ public class autoyellow extends LinearOpMode {
                     new SequentialAction(
                             new ParallelAction(
                                     lift.liftUp(),
-                                    trajectoryActionChosen
+                                    specimenHangTrajectoryAction
                             ),
                             lift.liftDown(),
                             new ParallelAction(
                                     claw.openClaw(),
-                                    trajectoryActionChosen0
+                                    specimenHangBackUpTrajectoryAction
                             ),
                             new ParallelAction(
                                     lift.liftPark(),
-                                    trajectoryActionChosen12
+                                    firstSampleGrabTrajectoryAction
                             ),
                             new ParallelAction(
                                     IntakeSlides.SlideExtend(),
@@ -153,51 +139,18 @@ public class autoyellow extends LinearOpMode {
                             intakeArm.intakeArmSt(),
                             new SleepAction(0.4),
                             new ParallelAction(
-                            intakeArm.intakeArmUp(),
-                            IntakeSlides.SlidePark()
-                            ),
-                            new ParallelAction(
-                                    transferClaw.closeTransferClaw(),
-                            trajectoryActionChosen1,
-                            intakeClaw.openIntakeClaw()
-                            ),
-                            new ParallelAction(
-                            flipServo.upFlip(),
-                            lift.liftBasket()
-                            ),
-                            flipServo.basketFlip(),
-                            new SleepAction(0.2),
-                            transferClaw.openTransferClaw(),
-                            new SleepAction(0.1),
-                            new ParallelAction(
-                            flipServo.downFlip(),
-                            lift.liftPark(),
-                            trajectoryActionChosen3,
-                            IntakeSlides.SlideExtend2(),
-                            intakeArm.intakeArmDown()
-                            ),
-                            intakeArm.intakeArmGrab(),
-                            new SleepAction(0.25),
-                            intakeClaw.closeIntakeClaw(),
-                            new SleepAction(0.3),
-                            intakeArm.intakeArmSt(),
-                            new SleepAction(0.4),
-                            new ParallelAction(
                                     intakeArm.intakeArmUp(),
                                     IntakeSlides.SlidePark()
                             ),
                             new ParallelAction(
-                            transferClaw.closeTransferClaw(),
-                            trajectoryActionChosen4,
-                            intakeClaw.openIntakeClaw()),
+                                    transferClaw.closeTransferClaw(),
+                                    firstSampleScoreTrajectoryAction,
+                                    intakeClaw.openIntakeClaw()
+                            ),
                             new ParallelAction(
                                     flipServo.upFlip(),
                                     lift.liftBasket()
                             ),
-
-
-
-
                             flipServo.basketFlip(),
                             new SleepAction(0.2),
                             transferClaw.openTransferClaw(),
@@ -205,7 +158,7 @@ public class autoyellow extends LinearOpMode {
                             new ParallelAction(
                                     flipServo.downFlip(),
                                     lift.liftPark(),
-                                    trajectoryActionChosen5,
+                                    secondSampleGrabTrajectoryAction,
                                     IntakeSlides.SlideExtend2(),
                                     intakeArm.intakeArmDown()
                             ),
@@ -221,7 +174,36 @@ public class autoyellow extends LinearOpMode {
                             ),
                             new ParallelAction(
                                     transferClaw.closeTransferClaw(),
-                                    trajectoryActionChosen6,
+                                    secondSampleScoreTrajectoryAction,
+                            intakeClaw.openIntakeClaw()),
+                            new ParallelAction(
+                                    flipServo.upFlip(),
+                                    lift.liftBasket()
+                            ),
+                            flipServo.basketFlip(),
+                            new SleepAction(0.2),
+                            transferClaw.openTransferClaw(),
+                            new SleepAction(0.1),
+                            new ParallelAction(
+                                    flipServo.downFlip(),
+                                    lift.liftPark(),
+                                    thirdSampleGrabTrajectoryAction,
+                                    IntakeSlides.SlideExtend2(),
+                                    intakeArm.intakeArmDown()
+                            ),
+                            intakeArm.intakeArmGrab(),
+                            new SleepAction(0.25),
+                            intakeClaw.closeIntakeClaw(),
+                            new SleepAction(0.3),
+                            intakeArm.intakeArmSt(),
+                            new SleepAction(0.4),
+                            new ParallelAction(
+                                    intakeArm.intakeArmUp(),
+                                    IntakeSlides.SlidePark()
+                            ),
+                            new ParallelAction(
+                                    transferClaw.closeTransferClaw(),
+                                    thirdSampleScoreTrajectoryAction,
                                     intakeClaw.openIntakeClaw()),
                             new ParallelAction(
                                     flipServo.upFlip(),
@@ -235,34 +217,6 @@ public class autoyellow extends LinearOpMode {
                                     flipServo.downFlip(),
                                     lift.liftPark()
                             )
-                            /*
-                            transferClaw.openTransferClaw(),
-                            new SleepAction(0.2),
-                            flipServo.downFlip(),
-                            lift.liftPark(),
-                            trajectoryActionChosen5,
-                            IntakeSlides.SlideExtend2(),
-                            intakeArm.intakeArmGrab(),
-                            new SleepAction(0.8),
-                            intakeClaw.closeIntakeClaw(),
-                            new SleepAction(0.4),
-                            intakeArm.intakeArmSt(),
-                            new SleepAction(0.5),
-                            intakeArm.intakeArmUp(),
-                            IntakeSlides.SlidePark(),
-                            transferClaw.closeTransferClaw(),
-                            trajectoryActionChosen6,
-                            intakeClaw.openIntakeClaw(),
-                            new SleepAction(0.5),
-                            flipServo.upFlip(),
-                            new SleepAction(0.1),
-                            lift.liftBasket(),
-                            new SleepAction(1.5),
-                            transferClaw.openTransferClaw(),
-                            new SleepAction(0.2),
-                            flipServo.downFlip(),
-                            lift.liftPark()*/
-
                     ));
         }
     }

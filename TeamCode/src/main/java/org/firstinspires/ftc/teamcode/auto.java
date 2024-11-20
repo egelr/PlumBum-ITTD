@@ -49,41 +49,41 @@ public class auto extends LinearOpMode {
         Pivot pivot = new Pivot(hardwareMap);
 
 
-        TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder firstSpecimenHangTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(true)
                 .lineToX(-29.5);
-        TrajectoryActionBuilder tab0 = drive.actionBuilder(new Pose2d(-29.5,0,Math.toRadians(0)))
+        TrajectoryActionBuilder firstSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-29.5,0,Math.toRadians(0)))
                 .setReversed(false)
                 .lineToX(-29);
-        TrajectoryActionBuilder tab12 = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
+        TrajectoryActionBuilder sampleDeliveryTrajectory = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
                 .setReversed(false)
                 .lineToX(-23)
                 .splineToSplineHeading(new Pose2d(-23, 26, Math.toRadians(85)), Math.toRadians(0))
                 .strafeTo(new Vector2d(-46, 26))
                 .strafeTo(new Vector2d(-46, 42))
                 .strafeTo(new Vector2d(-5, 42));
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(new Pose2d(-5,42,Math.toRadians(85)))
+        TrajectoryActionBuilder secondSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-5,42,Math.toRadians(85)))
                 .setReversed(true)
                 .splineToSplineHeading(new Pose2d(4,30,Math.toRadians(180)),Math.toRadians(0));
-        TrajectoryActionBuilder tab3 = drive.actionBuilder(new Pose2d(4,30,Math.toRadians(180)))
+        TrajectoryActionBuilder secondSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(4,30,Math.toRadians(180)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -5, Math.toRadians(0)),Math.toRadians(0));
-        TrajectoryActionBuilder tab4 = drive.actionBuilder(new Pose2d(-10, -5, Math.toRadians(0)))
+        TrajectoryActionBuilder secondSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -5, Math.toRadians(0)))
                 .setReversed(true)
                 .lineToX(-28);
-        TrajectoryActionBuilder tab5 = drive.actionBuilder(new Pose2d(-28, -5, Math.toRadians(0)))
+        TrajectoryActionBuilder secondSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-28, -5, Math.toRadians(0)))
                 .setReversed(false)
                 .lineToX(-27);
-        TrajectoryActionBuilder tab6 = drive.actionBuilder(new Pose2d(-27, -5, Math.toRadians(0)))
+        TrajectoryActionBuilder thirdSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-27, -5, Math.toRadians(0)))
                 .setReversed(false)
-                        .splineToSplineHeading(new Pose2d(4, 30, Math.toRadians(180)),Math.toRadians(0));
-        TrajectoryActionBuilder tab7 = drive.actionBuilder(new Pose2d(4, 30, Math.toRadians(180)))
+                .splineToSplineHeading(new Pose2d(4, 30, Math.toRadians(180)),Math.toRadians(0));
+        TrajectoryActionBuilder thirdSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(4, 30, Math.toRadians(180)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -2.5, Math.toRadians(0)),Math.toRadians(0));
-        TrajectoryActionBuilder tab8 = drive.actionBuilder(new Pose2d(-10, -2.5, Math.toRadians(0)))
+        TrajectoryActionBuilder thirdSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -2.5, Math.toRadians(0)))
                 .setReversed(true)
                 .lineToX(-28);
-        TrajectoryActionBuilder tab9 = drive.actionBuilder(new Pose2d(-38, -2.5, Math.toRadians(0)))
+        TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(-38, -2.5, Math.toRadians(0)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(0, 30, Math.toRadians(0)),Math.toRadians(0));
 
@@ -97,30 +97,30 @@ public class auto extends LinearOpMode {
         Actions.runBlocking(IntakeSlides.SlidePark());
         Actions.runBlocking(lift.liftPark());
 
-        Action trajectoryActionChosen;
-        Action trajectoryActionChosen0;
-        Action trajectoryActionChosen12;
-        Action trajectoryActionChosen1;
-        Action trajectoryActionChosen3;
-        Action trajectoryActionChosen4;
-        Action trajectoryActionChosen5;
-        Action trajectoryActionChosen6;
-        Action trajectoryActionChosen7;
-        Action trajectoryActionChosen8;
-        Action trajectoryActionChosen9;
+        Action firstSpecimenHangTrajectoryAction;
+        Action firstSpecimenHangBackUpTrajectoryAction;
+        Action sampleDeliveryTrajectoryAction;
+        Action secondSpecimenUploadTrajectoryAction;
+        Action secondSpecimenStraightenTrajectoryAction;
+        Action secondSpecimenHangTrajectoryAction;
+        Action secondSpecimenHangBackUpTrajectoryAction;
+        Action thirdSpecimenUploadTrajectoryAction;
+        Action thirdSpecimenStraightenTrajectoryAction;
+        Action thirdSpecimenHangTrajectoryAction;
+        Action parkTrajectoryAction;
 
 
-        trajectoryActionChosen = tab1.build();
-        trajectoryActionChosen0 = tab0.build();
-        trajectoryActionChosen12 = tab12.build();
-        trajectoryActionChosen1 = tab2.build();
-        trajectoryActionChosen3 = tab3.build();
-        trajectoryActionChosen4 = tab4.build();
-        trajectoryActionChosen5 = tab5.build();
-        trajectoryActionChosen6 = tab6.build();
-        trajectoryActionChosen7 = tab7.build();
-        trajectoryActionChosen8 = tab8.build();
-        trajectoryActionChosen9 = tab9.build();
+        firstSpecimenHangTrajectoryAction = firstSpecimenHangTrajectory.build();
+        firstSpecimenHangBackUpTrajectoryAction = firstSpecimenHangBackUpTrajectory.build();
+        sampleDeliveryTrajectoryAction = sampleDeliveryTrajectory.build();
+        secondSpecimenUploadTrajectoryAction = secondSpecimenUploadTrajectory.build();
+        secondSpecimenStraightenTrajectoryAction = secondSpecimenStraightenTrajectory.build();
+        secondSpecimenHangTrajectoryAction = secondSpecimenHangTrajectory.build();
+        secondSpecimenHangBackUpTrajectoryAction = secondSpecimenHangBackUpTrajectory.build();
+        thirdSpecimenUploadTrajectoryAction = thirdSpecimenUploadTrajectory.build();
+        thirdSpecimenStraightenTrajectoryAction = thirdSpecimenStraightenTrajectory.build();
+        thirdSpecimenHangTrajectoryAction = thirdSpecimenHangTrajectory.build();
+        parkTrajectoryAction = parkTrajectory.build();
 
 
         while (!isStopRequested() && !opModeIsActive()) {
@@ -134,44 +134,44 @@ public class auto extends LinearOpMode {
                     new SequentialAction(
                             new ParallelAction(
                                     lift.liftUp(),
-                                    trajectoryActionChosen
+                                    firstSpecimenHangTrajectoryAction
                             ),
                             lift.liftDown(),
                             new ParallelAction(
                                     claw.openClaw(),
-                                    trajectoryActionChosen0
+                                    firstSpecimenHangBackUpTrajectoryAction
                                     ),
                             new SleepAction(0.1),
-                            trajectoryActionChosen12,
+                            sampleDeliveryTrajectoryAction,
                             new ParallelAction(
                                     lift.liftSpeciment(),
-                                    trajectoryActionChosen1
+                                    secondSpecimenUploadTrajectoryAction
                             ),
                             claw.closeClaw(),
                             new SleepAction(0.1),
                             lift.liftUp(),
-                            trajectoryActionChosen3,
+                            secondSpecimenStraightenTrajectoryAction,
                             lift.liftUp(),
-                            trajectoryActionChosen4,
+                            secondSpecimenHangTrajectoryAction,
                             lift.liftDown(),
                             new ParallelAction(
                                     claw.openClaw(),
-                                    trajectoryActionChosen5
+                                    secondSpecimenHangBackUpTrajectoryAction
                             ),
                             new ParallelAction(
                                     lift.liftSpeciment(),
-                                    trajectoryActionChosen6
-                           ),
+                                    thirdSpecimenUploadTrajectoryAction
+                            ),
                             claw.closeClaw(),
                             new SleepAction(0.1),
                             lift.liftUp(),
-                            trajectoryActionChosen7,
+                            thirdSpecimenStraightenTrajectoryAction,
                             lift.liftUp(),
-                            trajectoryActionChosen8,
+                            thirdSpecimenHangTrajectoryAction,
                             lift.liftDown(),
                             new ParallelAction(
-                            claw.openClaw(),
-                                    trajectoryActionChosen9,
+                                    claw.openClaw(),
+                                    parkTrajectoryAction,
                                     lift.liftPark()
                             )
                             ));
