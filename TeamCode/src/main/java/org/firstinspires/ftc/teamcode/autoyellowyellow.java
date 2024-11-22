@@ -30,8 +30,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@Autonomous(name = "AutoYellow", group = "Autonomous")
-public class autoyellow extends LinearOpMode {
+@Autonomous(name = "AutoYellowYellow", group = "Autonomous")
+public class autoyellowyellow extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -49,19 +49,16 @@ public class autoyellow extends LinearOpMode {
         Pivot pivot = new Pivot(hardwareMap);
 
 
-        TrajectoryActionBuilder specimenHangTrajectory = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder initialSampleScoreTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(true)
-                .lineToX(-29.5);
-        TrajectoryActionBuilder specimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-29.5,0,Math.toRadians(0)))
+                .splineToSplineHeading(new Pose2d(-10,-50.5, Math.toRadians(135)), Math.toRadians(0));
+        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(135)))
                 .setReversed(false)
-                .lineToX(-29);
-        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
+                .turn(Math.toRadians(28));
+        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(163)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-10, -50.5, Math.toRadians(156)), Math.toRadians(0));
-        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(156)))
-                .setReversed(false)
-                .turn(Math.toRadians(-31)); //4
-        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(125)))
+                .turn(Math.toRadians(-28)); //4
+        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(135)))
                 .setReversed(false)
                 .turn(Math.toRadians(53));
         TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(178)))
@@ -81,14 +78,13 @@ public class autoyellow extends LinearOpMode {
         Actions.runBlocking(claw.closeClaw());
         Actions.runBlocking(flipServo.downFlip());
         Actions.runBlocking(intakeClaw.openIntakeClaw());
-        Actions.runBlocking(transferClaw.openTransferClaw());
+        Actions.runBlocking(transferClaw.closeTransferClaw());
         Actions.runBlocking(intakeArm.intakeArmUp());
         Actions.runBlocking(pivot.PivotN());
         Actions.runBlocking(IntakeSlides.SlidePark());
         Actions.runBlocking(lift.liftPark());
 
-        Action specimenHangTrajectoryAction;
-        Action specimenHangBackUpTrajectoryAction;
+        Action initialSampleScoreTrajectoryAction;
         Action firstSampleGrabTrajectoryAction;
         Action firstSampleScoreTrajectoryAction;
         Action secondSampleGrabTrajectoryAction;
@@ -97,8 +93,7 @@ public class autoyellow extends LinearOpMode {
         Action thirdSampleScoreTrajectoryAction;
 
 
-        specimenHangTrajectoryAction = specimenHangTrajectory.build();
-        specimenHangBackUpTrajectoryAction = specimenHangBackUpTrajectory.build();
+        initialSampleScoreTrajectoryAction = initialSampleScoreTrajectory.build();
         firstSampleGrabTrajectoryAction = firstSampleGrabTrajectory.build();
         firstSampleScoreTrajectoryAction = firstSampleScoreTrajectory.build();
         secondSampleGrabTrajectoryAction = secondSampleGrabTrajectory.build();
@@ -115,19 +110,22 @@ public class autoyellow extends LinearOpMode {
 
             Actions.runBlocking(
                     new SequentialAction(
-                            new ParallelAction(
-                                    lift.liftUp(),
-                                    specimenHangTrajectoryAction
-                            ),
-                            lift.liftDown(),
-                            new ParallelAction(
-                                    claw.openClaw(),
-                                    specimenHangBackUpTrajectoryAction
-                            ),
-                            new ParallelAction(
-                                    lift.liftPark(),
-                                    firstSampleGrabTrajectoryAction
-                            ),
+                            initialSampleScoreTrajectoryAction,
+                    new ParallelAction(
+                            flipServo.upFlip(),
+                            lift.liftBasket()
+                    ),
+                    flipServo.basketFlip(),
+                    new SleepAction(0.2),
+                    transferClaw.openTransferClaw(),
+                    new SleepAction(0.1),
+                    new ParallelAction(
+                            flipServo.downFlip(),
+                            lift.liftPark(),
+                            firstSampleGrabTrajectoryAction,
+                            IntakeSlides.SlideExtend(),
+                            intakeArm.intakeArmDown()
+                    )/*,
                             new ParallelAction(
                                     IntakeSlides.SlideExtend2(),
                                     intakeArm.intakeArmDown()
@@ -175,7 +173,7 @@ public class autoyellow extends LinearOpMode {
                             new ParallelAction(
                                     transferClaw.closeTransferClaw(),
                                     secondSampleScoreTrajectoryAction,
-                            intakeClaw.openIntakeClaw()),
+                                    intakeClaw.openIntakeClaw()),
                             new ParallelAction(
                                     flipServo.upFlip(),
                                     lift.liftBasket()
@@ -216,7 +214,7 @@ public class autoyellow extends LinearOpMode {
                             new ParallelAction(
                                     flipServo.downFlip(),
                                     lift.liftPark()
-                            )
+                            )*/
                     ));
         }
     }

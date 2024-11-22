@@ -30,7 +30,7 @@ public class variables {
 
 
     //INTAKE SLIDES
-    public static final int intakeSlideExtendPos = 1280;
+    public static final int intakeSlideExtendPos = 1300;
     public static final int intakeSlideExtendPos2 = 1350;
 
 
