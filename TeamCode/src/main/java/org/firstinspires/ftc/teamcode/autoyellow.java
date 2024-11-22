@@ -29,6 +29,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+//Autonomous for hanging a specimen and delivering 3 samples (68 points)
+
 @Config
 @Autonomous(name = "AutoYellow", group = "Autonomous")
 public class autoyellow extends LinearOpMode {
@@ -77,7 +79,7 @@ public class autoyellow extends LinearOpMode {
                 .turn(Math.toRadians(-68));
 
 
-        // actions that need to happen on init; for instance, a claw tightening.
+        //Actions that need to happen on init
         Actions.runBlocking(claw.closeClaw());
         Actions.runBlocking(flipServo.downFlip());
         Actions.runBlocking(intakeClaw.openIntakeClaw());
@@ -115,6 +117,9 @@ public class autoyellow extends LinearOpMode {
 
             Actions.runBlocking(
                     new SequentialAction(
+
+                            //Actions for hanging specimen
+
                             new ParallelAction(
                                     lift.liftUp(),
                                     specimenHangTrajectoryAction
@@ -124,6 +129,9 @@ public class autoyellow extends LinearOpMode {
                                     claw.openClaw(),
                                     specimenHangBackUpTrajectoryAction
                             ),
+
+                            //Actions for delivering first sample
+
                             new ParallelAction(
                                     lift.liftPark(),
                                     firstSampleGrabTrajectoryAction
@@ -155,6 +163,9 @@ public class autoyellow extends LinearOpMode {
                             new SleepAction(0.2),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
+
+                            //Actions for delivering second sample
+
                             new ParallelAction(
                                     flipServo.downFlip(),
                                     lift.liftPark(),
@@ -184,6 +195,9 @@ public class autoyellow extends LinearOpMode {
                             new SleepAction(0.2),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
+
+                            //Actions for delivering third sample
+
                             new ParallelAction(
                                     flipServo.downFlip(),
                                     lift.liftPark(),

@@ -29,6 +29,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+//Autonomous for delivering 4 samples (64 points)
+
 @Config
 @Autonomous(name = "AutoYellowYellow", group = "Autonomous")
 public class autoyellowyellow extends LinearOpMode {
@@ -74,7 +76,7 @@ public class autoyellowyellow extends LinearOpMode {
                 .turn(Math.toRadians(-68));
 
 
-        // actions that need to happen on init; for instance, a claw tightening.
+        //Actions that need to happen on init
         Actions.runBlocking(claw.closeClaw());
         Actions.runBlocking(flipServo.downFlip());
         Actions.runBlocking(intakeClaw.openIntakeClaw());
@@ -110,26 +112,28 @@ public class autoyellowyellow extends LinearOpMode {
 
             Actions.runBlocking(
                     new SequentialAction(
+
+                            //Actions for delivering first sample
+
                             initialSampleScoreTrajectoryAction,
-                    new ParallelAction(
-                            flipServo.upFlip(),
-                            lift.liftBasket()
-                    ),
-                    flipServo.basketFlip(),
-                    new SleepAction(0.2),
-                    transferClaw.openTransferClaw(),
-                    new SleepAction(0.1),
-                    new ParallelAction(
-                            flipServo.downFlip(),
-                            lift.liftPark(),
-                            firstSampleGrabTrajectoryAction,
-                            IntakeSlides.SlideExtend(),
-                            intakeArm.intakeArmDown()
-                    )/*,
                             new ParallelAction(
-                                    IntakeSlides.SlideExtend2(),
-                                    intakeArm.intakeArmDown()
+                                    flipServo.upFlip(),
+                                    lift.liftBasket()
                             ),
+                            flipServo.basketFlip(),
+                            new SleepAction(0.2),
+                            transferClaw.openTransferClaw(),
+                            new SleepAction(0.1),
+
+                            //Actions for delivering second sample
+
+                            new ParallelAction(
+                                    flipServo.downFlip(),
+                                    lift.liftPark(),
+                                    firstSampleGrabTrajectoryAction,
+                                    IntakeSlides.SlideExtend(),
+                                    intakeArm.intakeArmDown()
+                            )/*,
                             intakeArm.intakeArmGrab(),
                             new SleepAction(0.25),
                             intakeClaw.closeIntakeClaw(),
@@ -153,6 +157,9 @@ public class autoyellowyellow extends LinearOpMode {
                             new SleepAction(0.2),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
+
+                            //Actions for delivering third sample
+
                             new ParallelAction(
                                     flipServo.downFlip(),
                                     lift.liftPark(),
@@ -182,6 +189,9 @@ public class autoyellowyellow extends LinearOpMode {
                             new SleepAction(0.2),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
+
+                            //Actions for delivering third sample
+
                             new ParallelAction(
                                     flipServo.downFlip(),
                                     lift.liftPark(),

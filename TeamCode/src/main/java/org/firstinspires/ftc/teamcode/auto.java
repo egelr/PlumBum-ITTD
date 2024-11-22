@@ -29,6 +29,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+//Autonomous for hanging 3 specimens and parking (63 points)
+
 @Config
 @Autonomous(name = "Auto", group = "Autonomous")
 public class auto extends LinearOpMode {
@@ -87,7 +89,7 @@ public class auto extends LinearOpMode {
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(0, 30, Math.toRadians(0)),Math.toRadians(0));
 
-        // actions that need to happen on init; for instance, a claw tightening.
+        //Actions that need to happen on init
         Actions.runBlocking(claw.closeClaw());
         Actions.runBlocking(flipServo.downFlip());
         Actions.runBlocking(intakeClaw.openIntakeClaw());
@@ -132,6 +134,9 @@ public class auto extends LinearOpMode {
 
             Actions.runBlocking(
                     new SequentialAction(
+
+                            //Actions for hanging first specimen
+
                             new ParallelAction(
                                     lift.liftUp(),
                                     firstSpecimenHangTrajectoryAction
@@ -141,11 +146,17 @@ public class auto extends LinearOpMode {
                                     claw.openClaw(),
                                     firstSpecimenHangBackUpTrajectoryAction
                             ),
+
+                            //Actions for delivering sample to human player
+
                             new SleepAction(0.1),
                             new ParallelAction(
                                     lift.liftSpeciment(),
                                     sampleDeliveryTrajectoryAction
                             ),
+
+                            //Actions for hanging second specimen
+
                             secondSpecimenUploadTrajectoryAction,
                             claw.closeClaw(),
                             new SleepAction(0.1),
@@ -157,6 +168,9 @@ public class auto extends LinearOpMode {
                                     claw.openClaw(),
                                     secondSpecimenHangBackUpTrajectoryAction
                             ),
+
+                            //Actions for hanging third specimen
+
                             new ParallelAction(
                                     lift.liftSpeciment(),
                                     thirdSpecimenUploadTrajectoryAction
@@ -167,6 +181,9 @@ public class auto extends LinearOpMode {
                             thirdSpecimenStraightenTrajectoryAction,
                             thirdSpecimenHangTrajectoryAction,
                             lift.liftDown(),
+
+                            //Actions for parking
+
                             new ParallelAction(
                                     claw.openClaw(),
                                     parkTrajectoryAction,
