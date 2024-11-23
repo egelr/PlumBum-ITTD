@@ -36,7 +36,7 @@ public class IntakeSlides {
             if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPos) {
                 return true;
             } else {
-                iSlide.setPower(0.1);
+                iSlide.setPower(0);
                 return false;
             }
         }
@@ -58,7 +58,7 @@ public class IntakeSlides {
             if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPos2) {
                 return true;
             } else {
-                iSlide.setPower(0.1);
+                iSlide.setPower(0);
                 return false;
             }
         }
@@ -81,7 +81,7 @@ public class IntakeSlides {
             if (iSlide.getCurrentPosition() > 0) {
                 return true;
             } else {
-                iSlide.setPower(0.1);
+                iSlide.setPower(0);
                 return false;
             }
 

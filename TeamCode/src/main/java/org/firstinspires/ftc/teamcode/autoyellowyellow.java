@@ -63,14 +63,14 @@ public class autoyellowyellow extends LinearOpMode {
         TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(135)))
                 .setReversed(false)
                 .turn(Math.toRadians(53));
-        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(178)))
+        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(188)))
                 .setReversed(false)
                 .turn(Math.toRadians(-53));
-        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
+        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(135)))
                 .setReversed(false)
                 .turn(Math.toRadians(68))
                 .lineToX(-12);
-        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(193.5)))
+        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(203)))
                 .setReversed(false)
                 .lineToX(-10)
                 .turn(Math.toRadians(-68));

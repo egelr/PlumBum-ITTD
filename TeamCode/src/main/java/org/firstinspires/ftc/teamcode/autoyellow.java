@@ -73,7 +73,7 @@ public class autoyellow extends LinearOpMode {
                 .setReversed(false)
                 .turn(Math.toRadians(68))
                 .lineToX(-12);
-        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(193.5)))
+        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(193)))
                 .setReversed(false)
                 .lineToX(-10)
                 .turn(Math.toRadians(-68));
