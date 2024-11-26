@@ -29,7 +29,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-//Autonomous for delivering 4 samples (64 points)
+//Autonomous for delivering 4 samples (67 points)
 
 @Config
 @Autonomous(name = "AutoYellowYellow", group = "Autonomous")
@@ -53,28 +53,31 @@ public class autoyellowyellow extends LinearOpMode {
 
         TrajectoryActionBuilder initialSampleScoreTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(-10,-50.5, Math.toRadians(135)), Math.toRadians(0));
-        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(135)))
+                .splineToSplineHeading(new Pose2d(-9,-50.5, Math.toRadians(135)), Math.toRadians(0));
+        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9,-50.5,Math.toRadians(135)))
                 .setReversed(false)
-                .turn(Math.toRadians(28));
-        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(163)))
+                .turn(Math.toRadians(29));
+        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(164)))
                 .setReversed(false)
-                .turn(Math.toRadians(-28)); //4
-        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(135)))
+                .turn(Math.toRadians(-29)); //4
+        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9,-50.5,Math.toRadians(135)))
                 .setReversed(false)
-                .turn(Math.toRadians(53));
-        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(188)))
+                .turn(Math.toRadians(46));
+        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(181)))
                 .setReversed(false)
-                .turn(Math.toRadians(-53));
-        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(135)))
+                .turn(Math.toRadians(-46));
+        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(135)))
                 .setReversed(false)
-                .turn(Math.toRadians(68))
-                .lineToX(-12);
-        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(203)))
+                .turn(Math.toRadians(63))
+                .lineToX(-10.5);
+        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10.5, -50.5, Math.toRadians(192)))
                 .setReversed(false)
-                .lineToX(-10)
-                .turn(Math.toRadians(-68));
-
+                .lineToX(-9)
+                .turn(Math.toRadians(-63));
+        TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(135)))
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(-48, -40, Math.toRadians(270)), Math.toRadians(0))
+                .strafeTo(new Vector2d(-48, -16.5));
 
         //Actions that need to happen on init
         Actions.runBlocking(claw.closeClaw());
@@ -93,6 +96,7 @@ public class autoyellowyellow extends LinearOpMode {
         Action secondSampleScoreTrajectoryAction;
         Action thirdSampleGrabTrajectoryAction;
         Action thirdSampleScoreTrajectoryAction;
+        Action firstParkingTrajectoryAction;
 
 
         initialSampleScoreTrajectoryAction = initialSampleScoreTrajectory.build();
@@ -102,6 +106,7 @@ public class autoyellowyellow extends LinearOpMode {
         secondSampleScoreTrajectoryAction = secondSampleScoreTrajectory.build();
         thirdSampleGrabTrajectoryAction = thirdSampleGrabTrajectory.build();
         thirdSampleScoreTrajectoryAction = thirdSampleScoreTrajectory.build();
+        firstParkingTrajectoryAction = firstParkingTrajectory.build();
 
         while (!isStopRequested() && !opModeIsActive()) {
 
@@ -133,7 +138,7 @@ public class autoyellowyellow extends LinearOpMode {
                                     firstSampleGrabTrajectoryAction,
                                     IntakeSlides.SlideExtend(),
                                     intakeArm.intakeArmDown()
-                            )/*,
+                            ),
                             intakeArm.intakeArmGrab(),
                             new SleepAction(0.25),
                             intakeClaw.closeIntakeClaw(),
@@ -164,7 +169,7 @@ public class autoyellowyellow extends LinearOpMode {
                                     flipServo.downFlip(),
                                     lift.liftPark(),
                                     secondSampleGrabTrajectoryAction,
-                                    IntakeSlides.SlideExtend2(),
+                                    IntakeSlides.SlideExtend(),
                                     intakeArm.intakeArmDown()
                             ),
                             intakeArm.intakeArmGrab(),
@@ -222,9 +227,12 @@ public class autoyellowyellow extends LinearOpMode {
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
                             new ParallelAction(
-                                    flipServo.downFlip(),
-                                    lift.liftPark()
-                            )*/
+                                    flipServo.upFlip(),
+                                    lift.liftPark(),
+                                    firstParkingTrajectoryAction
+                            ),
+                            flipServo.basketFlip(),
+                            new SleepAction(0.5)
                     ));
         }
     }

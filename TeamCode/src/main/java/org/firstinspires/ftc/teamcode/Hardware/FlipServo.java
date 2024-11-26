@@ -44,8 +44,5 @@ public class basketFlip implements Action {
         return false;
     }
 }
-    public Action basketFlip() {
-        return new FlipServo.basketFlip();
-    }
+    public Action basketFlip() {return new FlipServo.basketFlip();}
 }
-

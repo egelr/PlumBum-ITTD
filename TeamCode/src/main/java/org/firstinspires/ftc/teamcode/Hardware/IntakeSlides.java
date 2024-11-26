@@ -66,6 +66,28 @@ public class IntakeSlides {
     public  Action SlideExtend2() {
         return new IntakeSlides.SlideExtend2();
     }
+    public class SlideExtendSmall implements Action {
+        private boolean initialized = false;
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            if (!initialized) {
+                iSlide.setTargetPosition(variables.intakeSlideExtendPosSmall);
+                iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                iSlide.setPower(1);
+                initialized = true;
+            }
+            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPosSmall) {
+                return true;
+            } else {
+                iSlide.setPower(0);
+                return false;
+            }
+        }
+    }
+    public  Action SlideExtendSmall() {
+        return new IntakeSlides.SlideExtendSmall();
+    }
     public class SlidePark implements Action {
         private boolean initialized = false;
 

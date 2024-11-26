@@ -104,7 +104,7 @@ public class OpMode extends LinearOpMode {
             if (gamepad1.right_trigger > 0.5) {
                 drive_speed = 0.35;
             } else {
-                drive_speed = 0.85;
+                drive_speed = 1;
             }
             //Picking up Specimens from the wall control
             if (gamepad1.dpad_up)
@@ -161,6 +161,19 @@ public class OpMode extends LinearOpMode {
                 LMRight.setTargetPosition(0);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
                 LMRight.setRunMode(Motor.RunMode.PositionControl);
+                //Drive forward for 0.02sec
+                timer.reset();
+                while( timer.seconds()<0.04)
+                {
+
+                    drive.driveRobotCentric(
+                            0,
+                            -0.3,
+                            0,
+                            false
+
+                    );
+                }
                 timer.reset();
                 while((!LMLeft.atTargetPosition()) && timer.seconds()<2)
                 {
@@ -276,19 +289,20 @@ public class OpMode extends LinearOpMode {
                     LMRight.set(0.9);
                 }
             }
-            /*if(gamepad1.left_bumper)
+            if(gamepad1.left_bumper)
             {
-                transferClawServo.turnToAngle(90);
-                wait.reset();
-                while (wait.seconds() < 0.3) {}
-                intakeClawServo.turnToAngle(150);
-                flipServo.turnToAngle(100);
-            }*/
+                transferClawServo.setPosition(variables.transferClawServoAngleOpened/300);
+                intakeArmServo.setPosition(variables.armServoAngleDown/300);
+                sleep(100);
+                intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
+                sleep(100);
+                intakeArmServo.setPosition(variables.armServoAngleUp/300);
+            }
             if(gamepad1.guide){
                 transferClawServo.setPosition(variables.transferClawServoAngleOpened/300);
                 flipServo.setPosition(variables.flipServoAngleDown/300);
                 intakeArmServo.setPosition(variables.armServoAngleUp/300);
-                intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
+                intakeClawServo.setPosition(variables.intakeClawServoAngleClosed/300);
                 intakePivotServo.setPosition(variables.pivotVerticalAngle/300);
                 clawServo.setPosition(variables.specimenClawAngleOpened/300);
                 liftLastPosition = LMLeft.getCurrentPosition();

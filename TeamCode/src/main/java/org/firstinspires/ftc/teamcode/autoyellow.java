@@ -29,7 +29,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-//Autonomous for hanging a specimen and delivering 3 samples (68 points)
+//Autonomous for hanging a specimen and delivering 3 samples (71 points)
 
 @Config
 @Autonomous(name = "AutoYellow", group = "Autonomous")
@@ -77,6 +77,10 @@ public class autoyellow extends LinearOpMode {
                 .setReversed(false)
                 .lineToX(-10)
                 .turn(Math.toRadians(-68));
+        TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(-49, -40, Math.toRadians(270)), Math.toRadians(0))
+                .strafeTo(new Vector2d(-49, -14));
 
 
         //Actions that need to happen on init
@@ -97,6 +101,7 @@ public class autoyellow extends LinearOpMode {
         Action secondSampleScoreTrajectoryAction;
         Action thirdSampleGrabTrajectoryAction;
         Action thirdSampleScoreTrajectoryAction;
+        Action firstParkingTrajectoryAction;
 
 
         specimenHangTrajectoryAction = specimenHangTrajectory.build();
@@ -107,6 +112,7 @@ public class autoyellow extends LinearOpMode {
         secondSampleScoreTrajectoryAction = secondSampleScoreTrajectory.build();
         thirdSampleGrabTrajectoryAction = thirdSampleGrabTrajectory.build();
         thirdSampleScoreTrajectoryAction = thirdSampleScoreTrajectory.build();
+        firstParkingTrajectoryAction = firstParkingTrajectory.build();
 
         while (!isStopRequested() && !opModeIsActive()) {
 
@@ -228,9 +234,12 @@ public class autoyellow extends LinearOpMode {
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
                             new ParallelAction(
-                                    flipServo.downFlip(),
-                                    lift.liftPark()
-                            )
+                                    flipServo.upFlip(),
+                                    lift.liftPark(),
+                                    firstParkingTrajectoryAction
+                            ),
+                            flipServo.basketFlip(),
+                            new SleepAction(0.5)
                     ));
         }
     }
