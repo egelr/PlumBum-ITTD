@@ -59,10 +59,13 @@ public class autoIntake extends LinearOpMode {
                 .lineToX(-29);
         TrajectoryActionBuilder firstsampleDeliveryTrajectory = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-10, 40, Math.toRadians(175)), Math.toRadians(0));
-        TrajectoryActionBuilder secondsampleDeliveryTrajectory = drive.actionBuilder(new Pose2d(-10, 40, Math.toRadians(175)))
+                .splineToSplineHeading(new Pose2d(-11.5, 25, Math.toRadians(142)), Math.toRadians(0));
+        TrajectoryActionBuilder firstsample2DeliveryTrajectory = drive.actionBuilder(new Pose2d(-11.5, 25, Math.toRadians(142)))
                 .setReversed(false)
-                .strafeTo(new Vector2d(-10, 51));
+                .turn(Math.toRadians(-100));
+        TrajectoryActionBuilder secondsampleDeliveryTrajectory = drive.actionBuilder(new Pose2d(-11.5, 25, Math.toRadians(42)))
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(-15, 36, Math.toRadians(138)), Math.toRadians(0));
         TrajectoryActionBuilder secondSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-5,42,Math.toRadians(85)))
                 .setReversed(true)
                 .splineToSplineHeading(new Pose2d(4,30,Math.toRadians(180)),Math.toRadians(0));
@@ -101,6 +104,7 @@ public class autoIntake extends LinearOpMode {
         Action firstSpecimenHangTrajectoryAction;
         Action firstSpecimenHangBackUpTrajectoryAction;
         Action firstsampleDeliveryTrajectoryAction;
+        Action firstsample2DeliveryTrajectoryAction;
         Action secondsampleDeliveryTrajectoryAction;
         Action secondSpecimenUploadTrajectoryAction;
         Action secondSpecimenStraightenTrajectoryAction;
@@ -115,6 +119,7 @@ public class autoIntake extends LinearOpMode {
         firstSpecimenHangTrajectoryAction = firstSpecimenHangTrajectory.build();
         firstSpecimenHangBackUpTrajectoryAction = firstSpecimenHangBackUpTrajectory.build();
         firstsampleDeliveryTrajectoryAction = firstsampleDeliveryTrajectory.build();
+        firstsample2DeliveryTrajectoryAction = firstsample2DeliveryTrajectory.build();
         secondsampleDeliveryTrajectoryAction = secondsampleDeliveryTrajectory.build();
         secondSpecimenUploadTrajectoryAction = secondSpecimenUploadTrajectory.build();
         secondSpecimenStraightenTrajectoryAction = secondSpecimenStraightenTrajectory.build();
@@ -156,19 +161,23 @@ public class autoIntake extends LinearOpMode {
                                     firstsampleDeliveryTrajectoryAction
                             ),
                             new ParallelAction(
-                                    IntakeSlides.SlideExtendSmall(),
-                                    intakeArm.intakeArmDown()
+                                    IntakeSlides.SlideExtend(),
+                                    intakeArm.intakeArmDown(),
+                                    pivot.Pivot1Colour()
                             ),
                             intakeArm.intakeArmGrab(),
                             new SleepAction(0.25),
                             intakeClaw.closeIntakeClaw(),
                             new SleepAction(0.3),
-                            intakeArm.intakeArmSt(),
-                            new SleepAction(0.4),
                             new ParallelAction(
-                                    intakeArm.intakeArmUp(),
-                                    IntakeSlides.SlidePark()
-                            ),
+                                    IntakeSlides.SlidePark(),
+                                    pivot.PivotN(),
+                                    intakeArm.intakeArmDown(),
+                                    firstsample2DeliveryTrajectoryAction
+                                    ),
+                            intakeClaw.openIntakeClaw(),
+                            secondsampleDeliveryTrajectoryAction
+                            /*,
                             new ParallelAction(
                                     transferClaw.closeTransferClaw(),
                                     new SleepAction(0.3),

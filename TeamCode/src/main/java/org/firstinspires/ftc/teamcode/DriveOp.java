@@ -1,19 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.Hardware.FlipServo;
 
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "DriveOp")
 public class DriveOp extends LinearOpMode {
@@ -84,9 +75,7 @@ public class DriveOp extends LinearOpMode {
         Servo transferClawServo = hardwareMap.get(Servo.class, "transferClawServo");
 
         Servo flipServo = hardwareMap.get(Servo.class, "flipServo");*/
-        //Creating timer variables
-        ElapsedTime timer = new ElapsedTime();
-        ElapsedTime wait = new ElapsedTime();
+
 
         waitForStart();
 

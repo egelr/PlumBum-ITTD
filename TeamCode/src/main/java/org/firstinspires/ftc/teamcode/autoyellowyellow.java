@@ -62,10 +62,10 @@ public class autoyellowyellow extends LinearOpMode {
                 .turn(Math.toRadians(-29)); //4
         TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9,-50.5,Math.toRadians(135)))
                 .setReversed(false)
-                .turn(Math.toRadians(46));
-        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(181)))
+                .turn(Math.toRadians(47.5));
+        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(182.5)))
                 .setReversed(false)
-                .turn(Math.toRadians(-46));
+                .turn(Math.toRadians(-47.5));
         TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(135)))
                 .setReversed(false)
                 .turn(Math.toRadians(63))
@@ -137,7 +137,8 @@ public class autoyellowyellow extends LinearOpMode {
                                     lift.liftPark(),
                                     firstSampleGrabTrajectoryAction,
                                     IntakeSlides.SlideExtend(),
-                                    intakeArm.intakeArmDown()
+                                    intakeArm.intakeArmDown(),
+                                    pivot.Pivot1yellow()
                             ),
                             intakeArm.intakeArmGrab(),
                             new SleepAction(0.25),
@@ -146,6 +147,7 @@ public class autoyellowyellow extends LinearOpMode {
                             intakeArm.intakeArmSt(),
                             new SleepAction(0.4),
                             new ParallelAction(
+                                    pivot.PivotN(),
                                     intakeArm.intakeArmUp(),
                                     IntakeSlides.SlidePark()
                             ),
@@ -195,14 +197,15 @@ public class autoyellowyellow extends LinearOpMode {
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
 
-                            //Actions for delivering third sample
+                            //Actions for delivering fourth sample
 
                             new ParallelAction(
                                     flipServo.downFlip(),
                                     lift.liftPark(),
                                     thirdSampleGrabTrajectoryAction,
                                     IntakeSlides.SlideExtend2(),
-                                    intakeArm.intakeArmDown()
+                                    intakeArm.intakeArmDown(),
+                                    pivot.Pivot3yellow()
                             ),
                             intakeArm.intakeArmGrab(),
                             new SleepAction(0.25),
@@ -211,6 +214,7 @@ public class autoyellowyellow extends LinearOpMode {
                             intakeArm.intakeArmSt(),
                             new SleepAction(0.4),
                             new ParallelAction(
+                                    pivot.PivotN(),
                                     intakeArm.intakeArmUp(),
                                     IntakeSlides.SlidePark()
                             ),

@@ -65,21 +65,21 @@ public class autoyellow extends LinearOpMode {
                 .turn(Math.toRadians(-31)); //4
         TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(125)))
                 .setReversed(false)
-                .turn(Math.toRadians(53));
-        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(178)))
+                .turn(Math.toRadians(54));
+        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(179)))
                 .setReversed(false)
-                .turn(Math.toRadians(-53));
+                .turn(Math.toRadians(-54));
         TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
                 .setReversed(false)
-                .turn(Math.toRadians(68))
+                .turn(Math.toRadians(69))
                 .lineToX(-12);
-        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(193)))
+        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(194)))
                 .setReversed(false)
                 .lineToX(-10)
-                .turn(Math.toRadians(-68));
+                .turn(Math.toRadians(-69));
         TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-49, -40, Math.toRadians(270)), Math.toRadians(0))
+                .splineToSplineHeading(new Pose2d(-49, -37.5, Math.toRadians(270)), Math.toRadians(0))
                 .strafeTo(new Vector2d(-49, -14));
 
 
@@ -144,7 +144,8 @@ public class autoyellow extends LinearOpMode {
                             ),
                             new ParallelAction(
                                     IntakeSlides.SlideExtend2(),
-                                    intakeArm.intakeArmDown()
+                                    intakeArm.intakeArmDown(),
+                                    pivot.Pivot1yellow()
                             ),
                             intakeArm.intakeArmGrab(),
                             new SleepAction(0.25),
@@ -153,6 +154,7 @@ public class autoyellow extends LinearOpMode {
                             intakeArm.intakeArmSt(),
                             new SleepAction(0.4),
                             new ParallelAction(
+                                    pivot.PivotN(),
                                     intakeArm.intakeArmUp(),
                                     IntakeSlides.SlidePark()
                             ),
@@ -209,7 +211,8 @@ public class autoyellow extends LinearOpMode {
                                     lift.liftPark(),
                                     thirdSampleGrabTrajectoryAction,
                                     IntakeSlides.SlideExtend2(),
-                                    intakeArm.intakeArmDown()
+                                    intakeArm.intakeArmDown(),
+                                    pivot.Pivot3yellow()
                             ),
                             intakeArm.intakeArmGrab(),
                             new SleepAction(0.25),
@@ -218,6 +221,7 @@ public class autoyellow extends LinearOpMode {
                             intakeArm.intakeArmSt(),
                             new SleepAction(0.4),
                             new ParallelAction(
+                                    pivot.PivotN(),
                                     intakeArm.intakeArmUp(),
                                     IntakeSlides.SlidePark()
                             ),
