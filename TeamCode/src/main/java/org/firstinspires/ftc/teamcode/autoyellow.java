@@ -80,7 +80,7 @@ public class autoyellow extends LinearOpMode {
         TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-49, -37.5, Math.toRadians(270)), Math.toRadians(0))
-                .strafeTo(new Vector2d(-49, -14));
+                .strafeTo(new Vector2d(-49, -12));
 
 
         //Actions that need to happen on init

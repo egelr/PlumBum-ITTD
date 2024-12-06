@@ -22,6 +22,7 @@ public class variables {
     //Outtake (flip) servo angles for TeleOp and Autonomous
     public static final double flipServoAngleDown = 249;
     public static final double flipServoAngleUp = flipServoAngleDown - 144;
+    public static final double flipServoAngleUpTeleOp = flipServoAngleDown - 150;
     public static final double flipServoAngleBasket = flipServoAngleDown - 174;
 
 

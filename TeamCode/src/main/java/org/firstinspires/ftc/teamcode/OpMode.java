@@ -260,7 +260,7 @@ public class OpMode extends LinearOpMode {
                 transferClawServo.setPosition(variables.transferClawServoAngleClosed/300);
                 sleep(300);
                 intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
-                flipServo.setPosition(variables.flipServoAngleUp/300);
+                flipServo.setPosition(variables.flipServoAngleUpTeleOp/300);
                 LMLeft.setTargetPosition(1600);
                 LMRight.setTargetPosition(1600);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);

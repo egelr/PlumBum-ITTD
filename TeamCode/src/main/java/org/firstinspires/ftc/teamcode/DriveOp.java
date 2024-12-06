@@ -9,12 +9,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "DriveOp")
 public class DriveOp extends LinearOpMode {
 
-    //int liftLastPosition;
-    //Creating the variables for Motors
-    /*private Motor LMLeft;
-    private Motor LMRight;
-    private Motor IntakeMotor;*/
-
     private Motor fL, fR, bL, bR;
     //Creating drive speed variable
     public double drive_speed = 0.5;
@@ -34,48 +28,6 @@ public class DriveOp extends LinearOpMode {
         bR.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         //Creating the Mecanum Drivetrain
         MecanumDrive drive = new MecanumDrive(fL, fR, bL, bR);
-
-        //Creating Lift/Slides and Intake Motors, Setting their behaviour to "brake"
-        /*LMLeft = new Motor(hardwareMap, "LiftMotorLeft");
-        LMRight = new Motor(hardwareMap, "LiftMotorRight");
-        IntakeMotor = new Motor(hardwareMap, "IntakeMotor");
-
-        LMLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        LMLeft.setInverted(true);
-        LMRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        IntakeMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-
-
-        LMLeft.setPositionCoefficient(0.05);
-        LMRight.setPositionCoefficient(0.05);
-        IntakeMotor.setPositionCoefficient(0.05);
-
-        LMLeft.setPositionTolerance(50);
-        LMRight.setPositionTolerance(50);
-        IntakeMotor.setPositionTolerance(50);
-
-        LMLeft.resetEncoder();
-        LMRight.resetEncoder();
-        IntakeMotor.resetEncoder();
-        //Resetting the encoders of Lift and Intake Motors
-        LMLeft.setTargetPosition(0);
-        LMRight.setTargetPosition(0);
-        IntakeMotor.setTargetPosition(0);
-        LMLeft.setRunMode(Motor.RunMode.PositionControl);
-        LMRight.setRunMode(Motor.RunMode.PositionControl);
-        IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
-
-        //Creating Servos
-
-        Servo clawServo = hardwareMap.get(Servo.class, "clawServo");
-        Servo intakePivotServo = hardwareMap.get(Servo.class, "intakePivotServo");
-        Servo intakeArmServo = hardwareMap.get(Servo.class, "intakeArmServo");
-        Servo intakeClawServo = hardwareMap.get(Servo.class, "intakeClawServo");
-
-        Servo transferClawServo = hardwareMap.get(Servo.class, "transferClawServo");
-
-        Servo flipServo = hardwareMap.get(Servo.class, "flipServo");*/
-
 
         waitForStart();
 
