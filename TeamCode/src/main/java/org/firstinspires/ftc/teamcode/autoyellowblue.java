@@ -84,14 +84,7 @@ public class autoyellowblue extends LinearOpMode {
 
 
         //Actions that need to happen on init
-        Actions.runBlocking(claw.closeClaw());
-        Actions.runBlocking(flipServo.downFlip());
-        Actions.runBlocking(intakeClaw.openIntakeClaw());
-        Actions.runBlocking(transferClaw.openTransferClaw());
-        Actions.runBlocking(intakeArm.intakeArmUp());
-        Actions.runBlocking(pivot.PivotN());
-        Actions.runBlocking(IntakeSlides.SlidePark());
-        Actions.runBlocking(lift.liftPark());
+
 
         Action specimenHangTrajectoryAction;
         Action specimenHangBackUpTrajectoryAction;
@@ -103,6 +96,14 @@ public class autoyellowblue extends LinearOpMode {
         Action thirdSampleScoreTrajectoryAction;
         Action firstParkingTrajectoryAction;
 
+        Actions.runBlocking(claw.closeClaw());
+        Actions.runBlocking(flipServo.downFlip());
+        Actions.runBlocking(intakeClaw.openIntakeClaw());
+        Actions.runBlocking(transferClaw.openTransferClaw());
+        Actions.runBlocking(intakeArm.intakeArmUp());
+        Actions.runBlocking(pivot.PivotN());
+        Actions.runBlocking(IntakeSlides.SlidePark());
+        Actions.runBlocking(lift.liftPark());
 
         specimenHangTrajectoryAction = specimenHangTrajectory.build();
         specimenHangBackUpTrajectoryAction = specimenHangBackUpTrajectory.build();

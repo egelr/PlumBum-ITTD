@@ -6,6 +6,19 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import java.util.Locale;
 
 @TeleOp(name = "OpMode")
 public class OpMode extends LinearOpMode {
@@ -18,6 +31,8 @@ public class OpMode extends LinearOpMode {
     private Motor fL, fR, bL, bR;
     //Creating drive speed variable
     public double drive_speed = 1;
+    ColorSensor sensorColor;
+    DistanceSensor sensorDistance;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -76,12 +91,26 @@ public class OpMode extends LinearOpMode {
 
         Servo flipServo =  hardwareMap.get(Servo.class, "flipServo");
 
+
+        sensorColor = hardwareMap.get(ColorSensor.class, "colourSensor");
+        sensorDistance = hardwareMap.get(DistanceSensor.class, "colourSensor");
+        float hsvValues[] = {0F, 0F, 0F};
+        final float values[] = hsvValues;
+        final double SCALE_FACTOR = 255;
+        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
+
         //Creating timer variables
         ElapsedTime timer = new ElapsedTime();
 
         waitForStart();
 
         while (!isStopRequested()) {
+
+            Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                    (int) (sensorColor.green() * SCALE_FACTOR),
+                    (int) (sensorColor.blue() * SCALE_FACTOR),
+                    hsvValues);
 
             //Drivetrain controls
             drive.driveRobotCentric(
@@ -230,13 +259,19 @@ public class OpMode extends LinearOpMode {
                 sleep(400);
                 intakePivotServo.setPosition(variables.pivotVerticalAngle/300);
                 intakeArmServo.setPosition(variables.armServoAngleStraight/300);
-                sleep(500);
-                intakeArmServo.setPosition(variables.armServoAngleUp/300);
-                IntakeMotor.setTargetPosition(0);
-                IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
-                timer.reset();
-                while (!IntakeMotor.atTargetPosition() && timer.seconds() < 2) {
-                    IntakeMotor.set(0.9);
+                sleep(550);
+                if (sensorDistance.getDistance(DistanceUnit.CM) > 4.5) {
+                    intakeClawServo.setPosition(variables.intakeClawServoAngleOpened / 300);
+                    intakeArmServo.setPosition(variables.armServoAngleDown/300);
+                }
+                else  {
+                    intakeArmServo.setPosition(variables.armServoAngleUp / 300);
+                    IntakeMotor.setTargetPosition(0);
+                    IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
+                    timer.reset();
+                    while (!IntakeMotor.atTargetPosition() && timer.seconds() < 2) {
+                        IntakeMotor.set(0.9);
+                    }
                 }
             }
             if(gamepad1.dpad_left)
@@ -279,6 +314,16 @@ public class OpMode extends LinearOpMode {
                 intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
                 sleep(100);
                 intakeArmServo.setPosition(variables.armServoAngleUp/300);
+            }
+            if (gamepad1.right_bumper)
+            {
+                intakeArmServo.setPosition(variables.armServoAngleUp / 300);
+                IntakeMotor.setTargetPosition(0);
+                IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
+                timer.reset();
+                while (!IntakeMotor.atTargetPosition() && timer.seconds() < 2) {
+                    IntakeMotor.set(0.9);
+                }
             }
             if(gamepad1.guide){
                 transferClawServo.setPosition(variables.transferClawServoAngleOpened/300);
@@ -332,13 +377,17 @@ public class OpMode extends LinearOpMode {
 
                 IntakeMotor.setTargetPosition(0);
                 IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
-             }
+            }
             //Telemetry and slides' powers
             LMLeft.set(0.1);
             LMRight.set(0.1);
             IntakeMotor.set(0.1);
             telemetry.addData("Status: ", LMLeft.getCurrentPosition());
             telemetry.addData("StatusIntake", IntakeMotor.getCurrentPosition());
+            telemetry.addData("Distance (cm)", String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
+            telemetry.addData("Red  ", sensorColor.red());
+            telemetry.addData("Green", sensorColor.green());
+            telemetry.addData("Blue ", sensorColor.blue());
             telemetry.update();
 
         }

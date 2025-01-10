@@ -90,14 +90,7 @@ public class auto extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(0, 30, Math.toRadians(0)),Math.toRadians(0));
 
         //Actions that need to happen on init
-        Actions.runBlocking(claw.closeClaw());
-        Actions.runBlocking(flipServo.downFlip());
-        Actions.runBlocking(intakeClaw.openIntakeClaw());
-        Actions.runBlocking(transferClaw.openTransferClaw());
-        Actions.runBlocking(intakeArm.intakeArmUp());
-        Actions.runBlocking(pivot.PivotN());
-        Actions.runBlocking(IntakeSlides.SlidePark());
-        Actions.runBlocking(lift.liftPark());
+
 
         Action firstSpecimenHangTrajectoryAction;
         Action firstSpecimenHangBackUpTrajectoryAction;
@@ -111,6 +104,14 @@ public class auto extends LinearOpMode {
         Action thirdSpecimenHangTrajectoryAction;
         Action parkTrajectoryAction;
 
+        Actions.runBlocking(claw.closeClaw());
+        Actions.runBlocking(flipServo.downFlip());
+        Actions.runBlocking(intakeClaw.openIntakeClaw());
+        Actions.runBlocking(transferClaw.openTransferClaw());
+        Actions.runBlocking(intakeArm.intakeArmUp());
+        Actions.runBlocking(pivot.PivotN());
+        Actions.runBlocking(IntakeSlides.SlidePark());
+        Actions.runBlocking(lift.liftPark());
 
         firstSpecimenHangTrajectoryAction = firstSpecimenHangTrajectory.build();
         firstSpecimenHangBackUpTrajectoryAction = firstSpecimenHangBackUpTrajectory.build();

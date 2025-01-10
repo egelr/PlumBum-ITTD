@@ -3,14 +3,15 @@ package org.firstinspires.ftc.teamcode;
 public class variables {
 
     //Arm Servo angles for TeleOP and Autonomous
-    public static final double armServoAngleUp = 275;
-    public static final double armServoAngleDown = armServoAngleUp - 149;
-    public static final double armServoAngleGrab = armServoAngleUp - 166;
-    public static final double armServoAngleStraight = armServoAngleUp - 75;
+    public static final double armServoAngleUp = 289;
+    public static final double x = 275;
+    public static final double armServoAngleDown = x - 147;
+    public static final double armServoAngleGrab = x - 163;
+    public static final double armServoAngleStraight = x - 58;
 
 
     //Intake claw angles for TeleOP and Autonomous
-    public static final double intakeClawServoAngleClosed = 265;
+    public static final double intakeClawServoAngleClosed = 271;
     public static final double intakeClawServoAngleOpened = intakeClawServoAngleClosed - 85;
 
 
@@ -27,8 +28,8 @@ public class variables {
 
 
     //Pivot servo angles for TeleOP and Autonomous
-    public static final double pivotVerticalAngle = 140;
-    public static final double pivotHorizontalAngle = pivotVerticalAngle + 90;
+    public static final double pivotVerticalAngle = 67;
+    public static final double pivotHorizontalAngle = pivotVerticalAngle + 90; //3
     public static final double pivot1yellowAngle = pivotVerticalAngle + 15;
     public static final double pivot3yellowAngle = pivotVerticalAngle - 23;
     public static final double pivot1ColourAngle = pivotVerticalAngle + 26;

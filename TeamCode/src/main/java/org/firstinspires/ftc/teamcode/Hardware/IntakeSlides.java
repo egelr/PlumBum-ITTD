@@ -8,13 +8,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.autoyellow;
 import org.firstinspires.ftc.teamcode.variables;
 
 public class IntakeSlides {
     private DcMotor iSlide;
-
+    private ElapsedTime timer = new ElapsedTime();
     public IntakeSlides(HardwareMap hardwareMap) {
         iSlide = hardwareMap.get(DcMotor.class, "IntakeMotor");
         iSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -29,11 +30,12 @@ public class IntakeSlides {
             if (!initialized) {
                 iSlide.setTargetPosition(variables.intakeSlideExtendPos);
                 iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                iSlide.setPower(1);
+                iSlide.setPower(0.9);
+                timer.reset();
                 initialized = true;
             }
 
-            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPos) {
+            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPos && timer.seconds() < 1.5) {
                 return true;
             } else {
                 iSlide.setPower(0);
@@ -52,10 +54,11 @@ public class IntakeSlides {
             if (!initialized) {
                 iSlide.setTargetPosition(variables.intakeSlideExtendPos2);
                 iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                iSlide.setPower(1);
+                iSlide.setPower(0.9);
+                timer.reset();
                 initialized = true;
             }
-            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPos2) {
+            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPos2 && timer.seconds() < 1.5) {
                 return true;
             } else {
                 iSlide.setPower(0);
@@ -74,10 +77,11 @@ public class IntakeSlides {
             if (!initialized) {
                 iSlide.setTargetPosition(variables.intakeSlideExtendPosSmall);
                 iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                iSlide.setPower(1);
+                iSlide.setPower(0.9);
+                timer.reset();
                 initialized = true;
             }
-            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPosSmall) {
+            if (iSlide.getCurrentPosition()< variables.intakeSlideExtendPosSmall && timer.seconds() < 1.5) {
                 return true;
             } else {
                 iSlide.setPower(0);
@@ -96,11 +100,12 @@ public class IntakeSlides {
             if (!initialized) {
                 iSlide.setTargetPosition(0);
                 iSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                iSlide.setPower(1);
+                iSlide.setPower(0.9);
+                timer.reset();
                 initialized = true;
             }
 
-            if (iSlide.getCurrentPosition() > 0) {
+            if (iSlide.getCurrentPosition() > 0 && timer.seconds() < 1.5) {
                 return true;
             } else {
                 iSlide.setPower(0);

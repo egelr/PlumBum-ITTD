@@ -80,14 +80,7 @@ public class autoyellowyellow extends LinearOpMode {
                 .strafeTo(new Vector2d(-48, -15));
 
         //Actions that need to happen on init
-        Actions.runBlocking(claw.closeClaw());
-        Actions.runBlocking(flipServo.downFlip());
-        Actions.runBlocking(intakeClaw.openIntakeClaw());
-        Actions.runBlocking(transferClaw.closeTransferClaw());
-        Actions.runBlocking(intakeArm.intakeArmUp());
-        Actions.runBlocking(pivot.PivotN());
-        Actions.runBlocking(IntakeSlides.SlidePark());
-        Actions.runBlocking(lift.liftPark());
+
 
         Action initialSampleScoreTrajectoryAction;
         Action firstSampleGrabTrajectoryAction;
@@ -98,6 +91,14 @@ public class autoyellowyellow extends LinearOpMode {
         Action thirdSampleScoreTrajectoryAction;
         Action firstParkingTrajectoryAction;
 
+        Actions.runBlocking(claw.closeClaw());
+        Actions.runBlocking(flipServo.downFlip());
+        Actions.runBlocking(intakeClaw.openIntakeClaw());
+        Actions.runBlocking(transferClaw.closeTransferClaw());
+        Actions.runBlocking(intakeArm.intakeArmUp());
+        Actions.runBlocking(pivot.PivotN());
+        Actions.runBlocking(IntakeSlides.SlidePark());
+        Actions.runBlocking(lift.liftPark());
 
         initialSampleScoreTrajectoryAction = initialSampleScoreTrajectory.build();
         firstSampleGrabTrajectoryAction = firstSampleGrabTrajectory.build();
@@ -126,7 +127,7 @@ public class autoyellowyellow extends LinearOpMode {
                                     lift.liftBasket()
                             ),
                             flipServo.basketFlip(),
-                            new SleepAction(0.2),
+                            new SleepAction(0.4),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
 
@@ -161,7 +162,7 @@ public class autoyellowyellow extends LinearOpMode {
                                     lift.liftBasket()
                             ),
                             flipServo.basketFlip(),
-                            new SleepAction(0.2),
+                            new SleepAction(0.4),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
 
@@ -193,7 +194,7 @@ public class autoyellowyellow extends LinearOpMode {
                                     lift.liftBasket()
                             ),
                             flipServo.basketFlip(),
-                            new SleepAction(0.2),
+                            new SleepAction(0.4),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
 
@@ -227,7 +228,7 @@ public class autoyellowyellow extends LinearOpMode {
                                     lift.liftBasket()
                             ),
                             flipServo.basketFlip(),
-                            new SleepAction(0.2),
+                            new SleepAction(0.4),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
                             new ParallelAction(

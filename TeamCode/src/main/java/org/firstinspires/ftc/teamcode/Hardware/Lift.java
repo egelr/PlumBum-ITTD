@@ -9,12 +9,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.variables;
 
 public class Lift {
     private DcMotor lift1;
     private DcMotor lift2;
+    private ElapsedTime timer = new ElapsedTime();
 
     public Lift(HardwareMap hardwareMap) {
         lift1 = hardwareMap.get(DcMotor.class, "LiftMotorRight");
@@ -40,9 +42,10 @@ public class Lift {
                 lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift1.setPower(1);
                 lift2.setPower(1);
+                timer.reset();
                 initialized = true;
             }
-            if (lift1.getCurrentPosition()<variables.liftUpPos) {
+            if (lift1.getCurrentPosition()<variables.liftUpPos && timer.seconds() < 1.5) {
                 return true;
             } else {
                 lift1.setPower(0.1);
@@ -68,9 +71,10 @@ public class Lift {
                 lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift1.setPower(1);
                 lift2.setPower(1);
+                timer.reset();
                 initialized = true;
             }
-            if (lift1.getCurrentPosition()<variables.liftBasketPos) {
+            if (lift1.getCurrentPosition()<variables.liftBasketPos && timer.seconds() < 1.5) {
                 return true;
             } else {
                 lift1.setPower(0.1);
@@ -97,9 +101,10 @@ public class Lift {
                 lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift1.setPower(1);
                 lift2.setPower(1);
+                timer.reset();
                 initialized = true;
             }
-            if (lift1.getCurrentPosition()>variables.liftDownPos) {
+            if (lift1.getCurrentPosition()>variables.liftDownPos && timer.seconds() < 1.5) {
                 return true;
             } else {
                 lift1.setPower(0.1);
@@ -124,11 +129,12 @@ public class Lift {
                 lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift2.setTargetPosition(0);
                 lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lift1.setPower(0.8);
-                lift2.setPower(0.8);
+                lift1.setPower(1);
+                lift2.setPower(1);
+                timer.reset();
                 initialized = true;
             }
-            if (lift1.getCurrentPosition()>0) {
+            if (lift1.getCurrentPosition()>0 && timer.seconds() < 1.5) {
                 return true;
             } else {
                 lift1.setPower(0.1);
@@ -154,11 +160,12 @@ public class Lift {
                 lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift2.setTargetPosition(variables.liftSpecimenPos);
                 lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lift1.setPower(0.8);
-                lift2.setPower(0.8);
+                lift1.setPower(1);
+                lift2.setPower(1);
+                timer.reset();
                 initialized = true;
             }
-            if (lift1.getCurrentPosition()>variables.liftSpecimenPos) {
+            if (lift1.getCurrentPosition()>variables.liftSpecimenPos && timer.seconds() < 1.5) {
                 return true;
             } else {
                 lift1.setPower(0.1);
@@ -171,4 +178,5 @@ public class Lift {
     public Action liftSpeciment() {
         return new Lift.LiftSpeciment();
     }
+
 }
