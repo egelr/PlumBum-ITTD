@@ -11,7 +11,7 @@ public class variables {
 
 
     //Intake claw angles for TeleOP and Autonomous
-    public static final double intakeClawServoAngleClosed = 271;
+    public static final double intakeClawServoAngleClosed = 270;
     public static final double intakeClawServoAngleOpened = intakeClawServoAngleClosed - 85;
 
 

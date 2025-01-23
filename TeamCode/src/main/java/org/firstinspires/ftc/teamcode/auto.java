@@ -72,10 +72,10 @@ public class auto extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(-10, -5, Math.toRadians(0)),Math.toRadians(0));
         TrajectoryActionBuilder secondSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -5, Math.toRadians(0)))
                 .setReversed(true)
-                .lineToX(-28);
+                .lineToX(-28.5);
         TrajectoryActionBuilder secondSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-28, -5, Math.toRadians(0)))
                 .setReversed(false)
-                .lineToX(-27);
+                .lineToX(-27.5);
         TrajectoryActionBuilder thirdSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-27, -5, Math.toRadians(0)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(4, 30, Math.toRadians(180)),Math.toRadians(0));
@@ -84,7 +84,7 @@ public class auto extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(-10, -2.5, Math.toRadians(0)),Math.toRadians(0));
         TrajectoryActionBuilder thirdSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -2.5, Math.toRadians(0)))
                 .setReversed(true)
-                .lineToX(-28);
+                .lineToX(-28.8);
         TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(-38, -2.5, Math.toRadians(0)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(0, 30, Math.toRadians(0)),Math.toRadians(0));

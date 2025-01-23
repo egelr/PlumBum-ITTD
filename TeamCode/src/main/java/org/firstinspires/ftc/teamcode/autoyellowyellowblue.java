@@ -32,8 +32,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 //Autonomous for delivering 4 samples (67 points)
 
 @Config
-@Autonomous(name = "AutoYellowYellow", group = "Autonomous")
-public class autoyellowyellow extends LinearOpMode {
+@Autonomous(name = "AutoYellowYellowBlue", group = "Autonomous")
+public class autoyellowyellowblue extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -62,10 +62,10 @@ public class autoyellowyellow extends LinearOpMode {
                 .turn(Math.toRadians(-29)); //4
         TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9,-50.5,Math.toRadians(135)))
                 .setReversed(false)
-                .turn(Math.toRadians(48));
+                .turn(Math.toRadians(47.5));
         TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(182.5)))
                 .setReversed(false)
-                .turn(Math.toRadians(-48));
+                .turn(Math.toRadians(-47.5));
         TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(135)))
                 .setReversed(false)
                 .turn(Math.toRadians(63))
@@ -242,3 +242,4 @@ public class autoyellowyellow extends LinearOpMode {
         }
     }
 }
+
