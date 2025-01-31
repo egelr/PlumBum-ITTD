@@ -84,8 +84,11 @@ public class auto extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(-10, -2.5, Math.toRadians(0)),Math.toRadians(0));
         TrajectoryActionBuilder thirdSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -2.5, Math.toRadians(0)))
                 .setReversed(true)
-                .lineToX(-28.8);
-        TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(-38, -2.5, Math.toRadians(0)))
+                .lineToX(-28.5);
+        TrajectoryActionBuilder thirdSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-28.5, -2.5, Math.toRadians(0)))
+                .setReversed(false)
+                .lineToX(-27.5);
+        TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(-27.5, -2.5, Math.toRadians(0)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(0, 30, Math.toRadians(0)),Math.toRadians(0));
 
@@ -103,6 +106,7 @@ public class auto extends LinearOpMode {
         Action thirdSpecimenStraightenTrajectoryAction;
         Action thirdSpecimenHangTrajectoryAction;
         Action parkTrajectoryAction;
+        Action thirdSpecimenHangBackUpTrajectoryAction;
 
         Actions.runBlocking(claw.closeClaw());
         Actions.runBlocking(flipServo.downFlip());
@@ -123,6 +127,7 @@ public class auto extends LinearOpMode {
         thirdSpecimenUploadTrajectoryAction = thirdSpecimenUploadTrajectory.build();
         thirdSpecimenStraightenTrajectoryAction = thirdSpecimenStraightenTrajectory.build();
         thirdSpecimenHangTrajectoryAction = thirdSpecimenHangTrajectory.build();
+        thirdSpecimenHangBackUpTrajectoryAction =thirdSpecimenHangBackUpTrajectory.build();
         parkTrajectoryAction = parkTrajectory.build();
 
 
@@ -187,6 +192,9 @@ public class auto extends LinearOpMode {
 
                             new ParallelAction(
                                     claw.openClaw(),
+                                    thirdSpecimenHangBackUpTrajectoryAction
+                            ),
+                            new ParallelAction(
                                     parkTrajectoryAction,
                                     lift.liftPark()
                             )
