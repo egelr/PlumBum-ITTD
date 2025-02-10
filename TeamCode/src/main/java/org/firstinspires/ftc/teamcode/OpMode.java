@@ -129,8 +129,8 @@ public class OpMode extends LinearOpMode {
             //Picking up Specimens from the wall control
             if (gamepad1.dpad_up)
             {
-                LMLeft.setTargetPosition(250);
-                LMRight.setTargetPosition(250);
+                LMLeft.setTargetPosition(200);
+                LMRight.setTargetPosition(200);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
                 LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
@@ -143,7 +143,7 @@ public class OpMode extends LinearOpMode {
                 LMRight.set(0);
 
                 clawServo.setPosition(variables.specimenClawAngleClosed/300);
-                sleep(200);
+                sleep(250);
                 timer.reset();
                 LMLeft.setTargetPosition(1550);
                 LMRight.setTargetPosition(1550);
@@ -232,10 +232,10 @@ public class OpMode extends LinearOpMode {
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
                 LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while((!LMLeft.atTargetPosition()) && timer.seconds()<2)
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<5)
                 {
-                    LMLeft.set(0.5);
-                    LMRight.set(0.5);
+                    LMLeft.set(0.8);
+                    LMRight.set(0.8);
                 }
             }
 
@@ -274,7 +274,7 @@ public class OpMode extends LinearOpMode {
                     }
                 }
             }
-            if(gamepad1.dpad_left)
+            if(gamepad1.dpad_left )
             {
                 transferClawServo.setPosition(variables.transferClawServoAngleOpened/300);
                 sleep(200);
@@ -288,9 +288,8 @@ public class OpMode extends LinearOpMode {
                     LMLeft.set(0.9);
                     LMRight.set(0.9);
                 }
-
             }
-            if(gamepad1.dpad_right)
+            if(gamepad1.dpad_right && gamepad1.left_trigger < 0.5)
             {
                 transferClawServo.setPosition(variables.transferClawServoAngleClosed/300);
                 sleep(300);
@@ -298,6 +297,22 @@ public class OpMode extends LinearOpMode {
                 flipServo.setPosition(variables.flipServoAngleUpTeleOp/300);
                 LMLeft.setTargetPosition(1600);
                 LMRight.setTargetPosition(1600);
+                LMLeft.setRunMode(Motor.RunMode.PositionControl);
+                LMRight.setRunMode(Motor.RunMode.PositionControl);
+                timer.reset();
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<2) {
+                    LMLeft.set(0.9);
+                    LMRight.set(0.9);
+                }
+            }
+            if(gamepad1.dpad_right && gamepad1.left_trigger > 0.5)
+            {
+                transferClawServo.setPosition(variables.transferClawServoAngleClosed/300);
+                sleep(300);
+                intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
+                flipServo.setPosition(variables.flipServoAngleUpTeleOp/300);
+                LMLeft.setTargetPosition(300);
+                LMRight.setTargetPosition(300);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
                 LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();

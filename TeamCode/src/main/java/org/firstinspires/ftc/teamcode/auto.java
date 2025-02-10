@@ -66,31 +66,31 @@ public class auto extends LinearOpMode {
                 .strafeTo(new Vector2d(-5, 42));
         TrajectoryActionBuilder secondSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-5,42,Math.toRadians(85)))
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(4,30,Math.toRadians(180)),Math.toRadians(0));
-        TrajectoryActionBuilder secondSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(4,30,Math.toRadians(180)))
+                .splineToSplineHeading(new Pose2d(5,30,Math.toRadians(180)),Math.toRadians(0));
+        TrajectoryActionBuilder secondSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(5,30,Math.toRadians(180)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -5, Math.toRadians(0)),Math.toRadians(0));
         TrajectoryActionBuilder secondSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -5, Math.toRadians(0)))
                 .setReversed(true)
-                .lineToX(-28.5);
+                .lineToX(-28);
         TrajectoryActionBuilder secondSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-28, -5, Math.toRadians(0)))
                 .setReversed(false)
-                .lineToX(-27.5);
+                .lineToX(-27);
         TrajectoryActionBuilder thirdSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-27, -5, Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(4, 30, Math.toRadians(180)),Math.toRadians(0));
-        TrajectoryActionBuilder thirdSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(4, 30, Math.toRadians(180)))
+                .splineToSplineHeading(new Pose2d(5, 30, Math.toRadians(180)),Math.toRadians(0));
+        TrajectoryActionBuilder thirdSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(5, 30, Math.toRadians(180)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -2.5, Math.toRadians(0)),Math.toRadians(0));
         TrajectoryActionBuilder thirdSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -2.5, Math.toRadians(0)))
                 .setReversed(true)
-                .lineToX(-28.5);
-        TrajectoryActionBuilder thirdSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-28.5, -2.5, Math.toRadians(0)))
+                .lineToX(-28);
+        TrajectoryActionBuilder thirdSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-28, -2.5, Math.toRadians(0)))
                 .setReversed(false)
-                .lineToX(-27.5);
+                .lineToX(-27);
         TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(-27.5, -2.5, Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(0, 30, Math.toRadians(0)),Math.toRadians(0));
+                .splineToSplineHeading(new Pose2d(5, 35, Math.toRadians(0)),Math.toRadians(0));
 
         //Actions that need to happen on init
 
@@ -198,7 +198,7 @@ public class auto extends LinearOpMode {
                                     parkTrajectoryAction,
                                     lift.liftPark()
                             )
-                            ));
+                    ));
         }
     }
 }

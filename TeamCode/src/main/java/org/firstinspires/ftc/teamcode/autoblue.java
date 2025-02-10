@@ -66,8 +66,8 @@ public class autoblue extends LinearOpMode {
                 .strafeTo(new Vector2d(-5, 42));
         TrajectoryActionBuilder secondSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-5,42,Math.toRadians(85)))
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(4,30,Math.toRadians(180)),Math.toRadians(0));
-        TrajectoryActionBuilder secondSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(4,30,Math.toRadians(180)))
+                .splineToSplineHeading(new Pose2d(5,30,Math.toRadians(180)),Math.toRadians(0));
+        TrajectoryActionBuilder secondSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(5,30,Math.toRadians(180)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -5, Math.toRadians(0)),Math.toRadians(0));
         TrajectoryActionBuilder secondSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -5, Math.toRadians(0)))
@@ -78,26 +78,22 @@ public class autoblue extends LinearOpMode {
                 .lineToX(-27);
         TrajectoryActionBuilder thirdSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-27, -5, Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(5, 30, Math.toRadians(180)),Math.toRadians(0));
-        TrajectoryActionBuilder thirdSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(5, 30, Math.toRadians(180)))
+                .splineToSplineHeading(new Pose2d(4, 30, Math.toRadians(180)),Math.toRadians(0));
+        TrajectoryActionBuilder thirdSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(4, 30, Math.toRadians(180)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -2.5, Math.toRadians(0)),Math.toRadians(0));
         TrajectoryActionBuilder thirdSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -2.5, Math.toRadians(0)))
                 .setReversed(true)
-                .lineToX(-28);
-        TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(-38, -2.5, Math.toRadians(0)))
+                .lineToX(-28.5);
+        TrajectoryActionBuilder thirdSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-28.5, -2.5, Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(0, 30, Math.toRadians(0)),Math.toRadians(0));
+                .lineToX(-27.5);
+        TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(-27.5, -2.5, Math.toRadians(0)))
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(2, 30, Math.toRadians(0)),Math.toRadians(0));
 
         //Actions that need to happen on init
-        Actions.runBlocking(claw.closeClaw());
-        Actions.runBlocking(flipServo.downFlip());
-        Actions.runBlocking(intakeClaw.openIntakeClaw());
-        Actions.runBlocking(transferClaw.openTransferClaw());
-        Actions.runBlocking(intakeArm.intakeArmUp());
-        Actions.runBlocking(pivot.PivotN());
-        Actions.runBlocking(IntakeSlides.SlidePark());
-        Actions.runBlocking(lift.liftPark());
+
 
         Action firstSpecimenHangTrajectoryAction;
         Action firstSpecimenHangBackUpTrajectoryAction;
@@ -110,7 +106,16 @@ public class autoblue extends LinearOpMode {
         Action thirdSpecimenStraightenTrajectoryAction;
         Action thirdSpecimenHangTrajectoryAction;
         Action parkTrajectoryAction;
+        Action thirdSpecimenHangBackUpTrajectoryAction;
 
+        Actions.runBlocking(claw.closeClaw());
+        Actions.runBlocking(flipServo.downFlip());
+        Actions.runBlocking(intakeClaw.openIntakeClaw());
+        Actions.runBlocking(transferClaw.openTransferClaw());
+        Actions.runBlocking(intakeArm.intakeArmUp());
+        Actions.runBlocking(pivot.PivotN());
+        Actions.runBlocking(IntakeSlides.SlidePark());
+        Actions.runBlocking(lift.liftPark());
 
         firstSpecimenHangTrajectoryAction = firstSpecimenHangTrajectory.build();
         firstSpecimenHangBackUpTrajectoryAction = firstSpecimenHangBackUpTrajectory.build();
@@ -122,6 +127,7 @@ public class autoblue extends LinearOpMode {
         thirdSpecimenUploadTrajectoryAction = thirdSpecimenUploadTrajectory.build();
         thirdSpecimenStraightenTrajectoryAction = thirdSpecimenStraightenTrajectory.build();
         thirdSpecimenHangTrajectoryAction = thirdSpecimenHangTrajectory.build();
+        thirdSpecimenHangBackUpTrajectoryAction =thirdSpecimenHangBackUpTrajectory.build();
         parkTrajectoryAction = parkTrajectory.build();
 
 
@@ -186,6 +192,9 @@ public class autoblue extends LinearOpMode {
 
                             new ParallelAction(
                                     claw.openClaw(),
+                                    thirdSpecimenHangBackUpTrajectoryAction
+                            ),
+                            new ParallelAction(
                                     parkTrajectoryAction,
                                     lift.liftPark()
                             )

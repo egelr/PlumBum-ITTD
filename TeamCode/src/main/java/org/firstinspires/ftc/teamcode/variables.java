@@ -30,7 +30,7 @@ public class variables {
     //Pivot servo angles for TeleOP and Autonomous
     public static final double pivotVerticalAngle = 67;
     public static final double pivotHorizontalAngle = pivotVerticalAngle + 90; //3
-    public static final double pivot1yellowAngle = pivotVerticalAngle + 15;
+    public static final double pivot1yellowAngle = pivotVerticalAngle + 14;
     public static final double pivot3yellowAngle = pivotVerticalAngle - 23;
     public static final double pivot1ColourAngle = pivotVerticalAngle + 26;
 
@@ -52,7 +52,7 @@ public class variables {
     public static final int liftUpPos = 1550;
     public static final int liftBasketPos = 1650;
     public static final int liftDownPos = 1050;
-    public static final int liftSpecimenPos = 200;
+    public static final int liftSpecimenPos = 175;
 
 
 }

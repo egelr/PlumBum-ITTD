@@ -59,16 +59,16 @@ public class autoyellow extends LinearOpMode {
                 .lineToX(-29);
         TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-10, -50.5, Math.toRadians(156)), Math.toRadians(0));
-        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(156)))
+                .splineToSplineHeading(new Pose2d(-10, -50.5, Math.toRadians(156.5)), Math.toRadians(0));
+        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(156.5)))
                 .setReversed(false)
-                .turn(Math.toRadians(-31)); //4
+                .turn(Math.toRadians(-31.5)); //4
         TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(125)))
                 .setReversed(false)
-                .turn(Math.toRadians(54));
+                .turn(Math.toRadians(54.5));
         TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(179)))
                 .setReversed(false)
-                .turn(Math.toRadians(-54));
+                .turn(Math.toRadians(-54.5));
         TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
                 .setReversed(false)
                 .turn(Math.toRadians(69))

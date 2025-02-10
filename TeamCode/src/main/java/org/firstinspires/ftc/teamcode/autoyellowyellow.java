@@ -56,10 +56,10 @@ public class autoyellowyellow extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(-9,-50.5, Math.toRadians(135)), Math.toRadians(0));
         TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9,-50.5,Math.toRadians(135)))
                 .setReversed(false)
-                .turn(Math.toRadians(29));
-        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(164)))
+                .turn(Math.toRadians(28));
+        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(163)))
                 .setReversed(false)
-                .turn(Math.toRadians(-29)); //4
+                .turn(Math.toRadians(-28)); //4
         TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9,-50.5,Math.toRadians(135)))
                 .setReversed(false)
                 .turn(Math.toRadians(48));
@@ -137,7 +137,7 @@ public class autoyellowyellow extends LinearOpMode {
                                     flipServo.downFlip(),
                                     lift.liftPark(),
                                     firstSampleGrabTrajectoryAction,
-                                    IntakeSlides.SlideExtend2(),
+                                    IntakeSlides.SlideExtend(),
                                     intakeArm.intakeArmDown(),
                                     pivot.Pivot1yellow()
                             ),
@@ -204,7 +204,7 @@ public class autoyellowyellow extends LinearOpMode {
                                     flipServo.downFlip(),
                                     lift.liftPark(),
                                     thirdSampleGrabTrajectoryAction,
-                                    IntakeSlides.SlideExtend2(),
+                                    IntakeSlides.SlideExtend(),
                                     intakeArm.intakeArmDown(),
                                     pivot.Pivot3yellow()
                             ),
