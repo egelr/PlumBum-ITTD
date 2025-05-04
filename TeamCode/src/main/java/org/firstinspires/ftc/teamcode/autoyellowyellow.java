@@ -54,30 +54,30 @@ public class autoyellowyellow extends LinearOpMode {
         TrajectoryActionBuilder initialSampleScoreTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(true)
                 .splineToSplineHeading(new Pose2d(-9,-50.5, Math.toRadians(135)), Math.toRadians(0));
-        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9,-50.5,Math.toRadians(135)))
+        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9.5,-50.5,Math.toRadians(135)))
                 .setReversed(false)
                 .turn(Math.toRadians(28));
-        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(163)))
+        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9.5, -50.5, Math.toRadians(163)))
                 .setReversed(false)
                 .turn(Math.toRadians(-28)); //4
-        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9,-50.5,Math.toRadians(135)))
+        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9.5,-50.5,Math.toRadians(135)))
                 .setReversed(false)
                 .turn(Math.toRadians(48));
-        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(182.5)))
+        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9.5, -50.5, Math.toRadians(182.5)))
                 .setReversed(false)
                 .turn(Math.toRadians(-48));
-        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(135)))
+        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9.5, -50.5, Math.toRadians(135)))
                 .setReversed(false)
-                .turn(Math.toRadians(63))
-                .lineToX(-10.5);
-        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10.5, -50.5, Math.toRadians(192)))
+                .turn(Math.toRadians(64))
+                .lineToX(-11);
+        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-11, -50.5, Math.toRadians(199)))
                 .setReversed(false)
-                .lineToX(-9)
-                .turn(Math.toRadians(-63));
-        TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(135)))
+                .lineToX(-9.5)
+                .turn(Math.toRadians(-64));
+        TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-9.5, -50.5, Math.toRadians(135)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-48, -40, Math.toRadians(270)), Math.toRadians(0))
-                .strafeTo(new Vector2d(-48, -15));
+                .strafeTo(new Vector2d(-48, -16));
 
         //Actions that need to happen on init
 

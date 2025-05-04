@@ -232,10 +232,10 @@ public class OpMode extends LinearOpMode {
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
                 LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
-                while((!LMLeft.atTargetPosition()) && timer.seconds()<5)
+                while((!LMLeft.atTargetPosition()) && timer.seconds()<7)
                 {
-                    LMLeft.set(0.8);
-                    LMRight.set(0.8);
+                    LMLeft.set(1);
+                    LMRight.set(1);
                 }
             }
 

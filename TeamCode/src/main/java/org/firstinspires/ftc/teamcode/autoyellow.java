@@ -53,34 +53,34 @@ public class autoyellow extends LinearOpMode {
 
         TrajectoryActionBuilder specimenHangTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(true)
+                .lineToX(-30);
+        TrajectoryActionBuilder specimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-30,0,Math.toRadians(0)))
+                .setReversed(false)
                 .lineToX(-29.5);
-        TrajectoryActionBuilder specimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-29.5,0,Math.toRadians(0)))
+        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-29.5,0,Math.toRadians(0)))
                 .setReversed(false)
-                .lineToX(-29);
-        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
-                .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-10, -50.5, Math.toRadians(156.5)), Math.toRadians(0));
-        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(156.5)))
+                .splineToSplineHeading(new Pose2d(-11, -50.5, Math.toRadians(156.5)), Math.toRadians(0));
+        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-11, -50.5, Math.toRadians(156.5)))
                 .setReversed(false)
                 .turn(Math.toRadians(-31.5)); //4
-        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10,-50.5,Math.toRadians(125)))
+        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-11,-50.5,Math.toRadians(125)))
                 .setReversed(false)
-                .turn(Math.toRadians(54.5));
-        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(179)))
+                .turn(Math.toRadians(55));
+        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-11, -50.5, Math.toRadians(180)))
                 .setReversed(false)
-                .turn(Math.toRadians(-54.5));
-        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
+                .turn(Math.toRadians(-55));
+        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-11, -50.5, Math.toRadians(125)))
                 .setReversed(false)
-                .turn(Math.toRadians(69))
-                .lineToX(-12);
-        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -50.5, Math.toRadians(194)))
+                .turn(Math.toRadians(69.5))
+                .lineToX(-13);
+        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-13, -50.5, Math.toRadians(194.5)))
                 .setReversed(false)
-                .lineToX(-10)
-                .turn(Math.toRadians(-69));
-        TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-10, -50.5, Math.toRadians(125)))
+                .lineToX(-11)
+                .turn(Math.toRadians(-69.5));
+        TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-11, -50.5, Math.toRadians(125)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-49, -37.5, Math.toRadians(270)), Math.toRadians(0))
-                .strafeTo(new Vector2d(-49, -12));
+                .strafeTo(new Vector2d(-49, -13));
 
 
         //Actions that need to happen on init
@@ -194,7 +194,7 @@ public class autoyellow extends LinearOpMode {
                             new ParallelAction(
                                     transferClaw.closeTransferClaw(),
                                     secondSampleScoreTrajectoryAction,
-                            intakeClaw.openIntakeClaw()),
+                                    intakeClaw.openIntakeClaw()),
                             new ParallelAction(
                                     flipServo.upFlip(),
                                     lift.liftBasket()
