@@ -9,34 +9,32 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Variables;
 
-public class Claw {
-    private Servo claw;
+public class SpecimenPivot{
+    private Servo specimenPivotServo;
 
-    public Claw(HardwareMap hardwareMap) {
-        claw = hardwareMap.get(Servo.class, "clawServo");
+    public SpecimenPivot(HardwareMap hardwareMap) {
+        specimenPivotServo = hardwareMap.get(Servo.class, "specimenPivotServo");
     }
 
-    public class CloseClaw implements Action {
+    public class normal implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            claw.setPosition(Variables.specimenClawAngleClosed/300);
+            specimenPivotServo.setPosition(Variables.pivotNormalPos);
             return false;
         }
     }
-
-    public Action closeClaw() {
-        return new Claw.CloseClaw();
+    public Action normal() {
+        return new SpecimenPivot.normal();
     }
-
-    public class OpenClaw implements Action {
+    public class inverted implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            claw.setPosition(Variables.specimenClawAngleOpened/300);
+            specimenPivotServo.setPosition(Variables.pivotInvertedPos);
             return false;
         }
     }
-
-    public Action openClaw() {
-        return new Claw.OpenClaw();
+    public Action inverted() {
+        return new SpecimenPivot.inverted();
     }
+
 }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Hardware;
+package org.firstinspires.ftc.teamcode.hardware;
 
 import androidx.annotation.NonNull;
 
@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.variables;
+import org.firstinspires.ftc.teamcode.Variables;
 
 public class Lift {
     private DcMotor lift1;
@@ -36,16 +36,16 @@ public class Lift {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                lift1.setTargetPosition(variables.liftUpPos);
+                lift1.setTargetPosition(Variables.liftUpPos);
                 lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lift2.setTargetPosition(variables.liftUpPos);
+                lift2.setTargetPosition(Variables.liftUpPos);
                 lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift1.setPower(1);
                 lift2.setPower(1);
                 timer.reset();
                 initialized = true;
             }
-            if (lift1.getCurrentPosition()<variables.liftUpPos && timer.seconds() < 1.5) {
+            if (lift1.getCurrentPosition()<Variables.liftUpPos && timer.seconds() < 1.5) {
                 return true;
             } else {
                 lift1.setPower(0.1);
@@ -65,16 +65,16 @@ public class Lift {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                lift1.setTargetPosition(variables.liftBasketPos);
+                lift1.setTargetPosition(Variables.liftBasketPos);
                 lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lift2.setTargetPosition(variables.liftBasketPos);
+                lift2.setTargetPosition(Variables.liftBasketPos);
                 lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift1.setPower(1);
                 lift2.setPower(1);
                 timer.reset();
                 initialized = true;
             }
-            if (lift1.getCurrentPosition()<variables.liftBasketPos && timer.seconds() < 1.5) {
+            if (lift1.getCurrentPosition()<Variables.liftBasketPos && timer.seconds() < 1.5) {
                 return true;
             } else {
                 lift1.setPower(0.1);
@@ -95,16 +95,16 @@ public class Lift {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                lift1.setTargetPosition(variables.liftDownPos);
+                lift1.setTargetPosition(Variables.liftDownPos);
                 lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lift2.setTargetPosition(variables.liftDownPos);
+                lift2.setTargetPosition(Variables.liftDownPos);
                 lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift1.setPower(1);
                 lift2.setPower(1);
                 timer.reset();
                 initialized = true;
             }
-            if (lift1.getCurrentPosition()>variables.liftDownPos && timer.seconds() < 1.5) {
+            if (lift1.getCurrentPosition()>Variables.liftDownPos && timer.seconds() < 1.5) {
                 return true;
             } else {
                 lift1.setPower(0.1);
@@ -156,16 +156,16 @@ public class Lift {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                lift1.setTargetPosition(variables.liftSpecimenPos);
+                lift1.setTargetPosition(Variables.liftSpecimenPos);
                 lift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lift2.setTargetPosition(variables.liftSpecimenPos);
+                lift2.setTargetPosition(Variables.liftSpecimenPos);
                 lift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 lift1.setPower(1);
                 lift2.setPower(1);
                 timer.reset();
                 initialized = true;
             }
-            if (lift1.getCurrentPosition()>variables.liftSpecimenPos && timer.seconds() < 1.5) {
+            if (lift1.getCurrentPosition()>Variables.liftSpecimenPos && timer.seconds() < 1.5) {
                 return true;
             } else {
                 lift1.setPower(0.1);

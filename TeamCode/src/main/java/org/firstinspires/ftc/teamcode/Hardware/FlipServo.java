@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Hardware;
+package org.firstinspires.ftc.teamcode.hardware;
 
 import androidx.annotation.NonNull;
 
@@ -7,7 +7,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.variables;
+import org.firstinspires.ftc.teamcode.Variables;
 
 public class FlipServo {
     private Servo flipServo;
@@ -19,7 +19,7 @@ public class FlipServo {
     public class downFlip implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            flipServo.setPosition(variables.flipServoAngleDown/300);
+            flipServo.setPosition(Variables.flipServoAngleDown/300);
             return false;
         }
     }
@@ -29,7 +29,7 @@ public class FlipServo {
     public class upFlip implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            flipServo.setPosition(variables.flipServoAngleUp/300);
+            flipServo.setPosition(Variables.flipServoAngleUp/300);
             return false;
         }
     }
@@ -37,12 +37,12 @@ public class FlipServo {
         return new FlipServo.upFlip();
     }
 
-public class basketFlip implements Action {
-    @Override
-    public boolean run(@NonNull TelemetryPacket packet) {
-        flipServo.setPosition(variables.flipServoAngleBasket/300);
-        return false;
+    public class basketFlip implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            flipServo.setPosition(Variables.flipServoAngleBasket/300);
+            return false;
+        }
     }
-}
     public Action basketFlip() {return new FlipServo.basketFlip();}
 }

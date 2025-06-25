@@ -10,9 +10,6 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -20,7 +17,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import java.util.Locale;
 
-@TeleOp(name = "OpMode")
+import org.firstinspires.ftc.teamcode.Variables;
+
+@TeleOp(name = "TeleOpMode")
 public class OpMode extends LinearOpMode {
 
     int liftLastPosition;
@@ -86,10 +85,11 @@ public class OpMode extends LinearOpMode {
         Servo intakePivotServo = hardwareMap.get(Servo.class, "intakePivotServo");
         Servo intakeArmServo = hardwareMap.get(Servo.class, "intakeArmServo");
         Servo intakeClawServo = hardwareMap.get(Servo.class, "intakeClawServo");
-
         Servo transferClawServo = hardwareMap.get(Servo.class, "transferClawServo");
-
         Servo flipServo =  hardwareMap.get(Servo.class, "flipServo");
+        Servo specimenArmAngleServo = hardwareMap.get(Servo.class, "specimenArmAngleServo");
+        Servo specimenPivotServo = hardwareMap.get(Servo.class, "specimenPivotServo");
+        Servo specimenGrabServo = hardwareMap.get(Servo.class, "specimenGrabServo");
 
 
         sensorColor = hardwareMap.get(ColorSensor.class, "colourSensor");
@@ -127,7 +127,7 @@ public class OpMode extends LinearOpMode {
                 drive_speed = 1;
             }
             //Picking up Specimens from the wall control
-            if (gamepad1.dpad_up)
+            if (gamepad1.dpad_up && gamepad1.left_trigger > 0.5)
             {
                 LMLeft.setTargetPosition(200);
                 LMRight.setTargetPosition(200);
@@ -142,7 +142,7 @@ public class OpMode extends LinearOpMode {
                 LMLeft.set(0);
                 LMRight.set(0);
 
-                clawServo.setPosition(variables.specimenClawAngleClosed/300);
+                clawServo.setPosition(Variables.specimenClawAngleClosed/300);
                 sleep(250);
                 timer.reset();
                 LMLeft.setTargetPosition(1550);
@@ -157,10 +157,10 @@ public class OpMode extends LinearOpMode {
                 }
             }
             //Placing/Hanging the Specimens control
-            if (gamepad1.dpad_down)
+            if (gamepad1.dpad_down && gamepad1.left_trigger > 0.5)
             {
-                LMLeft.setTargetPosition(variables.liftDownPos);
-                LMRight.setTargetPosition(variables.liftDownPos);
+                LMLeft.setTargetPosition(Variables.liftDownPos);
+                LMRight.setTargetPosition(Variables.liftDownPos);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
                 LMRight.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
@@ -169,7 +169,7 @@ public class OpMode extends LinearOpMode {
                     LMLeft.set(0.9);
                     LMRight.set(0.9);
                 }
-                clawServo.setPosition(variables.specimenClawAngleOpened/300);
+                clawServo.setPosition(Variables.specimenClawAngleOpened/300);
                 LMLeft.set(0);
                 LMRight.set(0);
                 sleep(200);
@@ -197,19 +197,32 @@ public class OpMode extends LinearOpMode {
                     LMRight.set(0.9);
                 }
             }
-
-
+            if(gamepad1.dpad_up && gamepad1.left_trigger < 0.5){
+                specimenGrabServo.setPosition(0.15); //close
+                sleep(100);
+                specimenArmAngleServo.setPosition(Variables.specimenArmAngleHangPos); //hang
+                sleep(300);
+                specimenPivotServo.setPosition(Variables.pivotInvertedPos); //inverted
+                sleep(200);
+                specimenGrabServo.setPosition(Variables.specimenArmClawClosed); //close close
+            }
+            if(gamepad1.dpad_down && gamepad1.left_trigger < 0.5){
+                specimenGrabServo.setPosition(Variables.specimenArmClawOpened); //open
+                sleep(200);
+                specimenPivotServo.setPosition(Variables.pivotNormalPos); //normal
+                specimenArmAngleServo.setPosition(Variables.specimenArmAngleGrabPos); //grab from human player
+            }
             if (gamepad1.right_trigger > 0.5 && gamepad1.triangle) {
-                intakePivotServo.setPosition(variables.pivotVerticalAngle/300);
+                intakePivotServo.setPosition(Variables.pivotVerticalAngle/300);
             }
             if (gamepad1.right_trigger > 0.5 && gamepad1.cross) {
-                intakePivotServo.setPosition(variables.pivotHorizontalAngle/300);
+                intakePivotServo.setPosition(Variables.pivotHorizontalAngle/300);
             }
             if (gamepad1.left_trigger > 0.5 && gamepad1.cross) {
-                transferClawServo.setPosition(variables.transferClawServoAngleOpened/300);
+                transferClawServo.setPosition(Variables.transferClawServoAngleOpened/300);
             }
             if (gamepad1.left_trigger > 0.5 && gamepad1.triangle) {
-                transferClawServo.setPosition(variables.transferClawServoAngleClosed/300);
+                transferClawServo.setPosition(Variables.transferClawServoAngleClosed/300);
             }
             //Robot hanging controls
             if(gamepad1.share)
@@ -248,24 +261,24 @@ public class OpMode extends LinearOpMode {
                 while (!IntakeMotor.atTargetPosition() && timer.seconds() < 2) {
                     IntakeMotor.set(0.9);
                 }
-                intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
-                intakeArmServo.setPosition(variables.armServoAngleDown/300);
+                intakeClawServo.setPosition(Variables.intakeClawServoAngleOpened/300);
+                intakeArmServo.setPosition(Variables.armServoAngleDown/300);
             }
             if(gamepad1.square && gamepad1.left_trigger < 0.5)
             {
-                intakeArmServo.setPosition(variables.armServoAngleGrab/300);
+                intakeArmServo.setPosition(Variables.armServoAngleGrab/300);
                 sleep(400);
-                intakeClawServo.setPosition(variables.intakeClawServoAngleClosed/300);
+                intakeClawServo.setPosition(Variables.intakeClawServoAngleClosed/300);
                 sleep(400);
-                intakePivotServo.setPosition(variables.pivotVerticalAngle/300);
-                intakeArmServo.setPosition(variables.armServoAngleStraight/300);
+                intakePivotServo.setPosition(Variables.pivotVerticalAngle/300);
+                intakeArmServo.setPosition(Variables.armServoAngleStraight/300);
                 sleep(550);
                 if (sensorDistance.getDistance(DistanceUnit.CM) > 4.5) {
-                    intakeClawServo.setPosition(variables.intakeClawServoAngleOpened / 300);
-                    intakeArmServo.setPosition(variables.armServoAngleDown/300);
+                    intakeClawServo.setPosition(Variables.intakeClawServoAngleOpened / 300);
+                    intakeArmServo.setPosition(Variables.armServoAngleDown/300);
                 }
                 else  {
-                    intakeArmServo.setPosition(variables.armServoAngleUp / 300);
+                    intakeArmServo.setPosition(Variables.armServoAngleUp / 300);
                     IntakeMotor.setTargetPosition(0);
                     IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
                     timer.reset();
@@ -276,9 +289,9 @@ public class OpMode extends LinearOpMode {
             }
             if(gamepad1.dpad_left )
             {
-                transferClawServo.setPosition(variables.transferClawServoAngleOpened/300);
+                transferClawServo.setPosition(Variables.transferClawServoAngleOpened/300);
                 sleep(200);
-                flipServo.setPosition(variables.flipServoAngleDown/300);
+                flipServo.setPosition(Variables.flipServoAngleDown/300);
                 LMLeft.setTargetPosition(0);
                 LMRight.setTargetPosition(0);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
@@ -291,10 +304,10 @@ public class OpMode extends LinearOpMode {
             }
             if(gamepad1.dpad_right && gamepad1.left_trigger < 0.5)
             {
-                transferClawServo.setPosition(variables.transferClawServoAngleClosed/300);
+                transferClawServo.setPosition(Variables.transferClawServoAngleClosed/300);
                 sleep(300);
-                intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
-                flipServo.setPosition(variables.flipServoAngleUpTeleOp/300);
+                intakeClawServo.setPosition(Variables.intakeClawServoAngleOpened/300);
+                flipServo.setPosition(Variables.flipServoAngleUpTeleOp/300);
                 LMLeft.setTargetPosition(1600);
                 LMRight.setTargetPosition(1600);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
@@ -307,32 +320,24 @@ public class OpMode extends LinearOpMode {
             }
             if(gamepad1.dpad_right && gamepad1.left_trigger > 0.5)
             {
-                transferClawServo.setPosition(variables.transferClawServoAngleClosed/300);
+                transferClawServo.setPosition(Variables.transferClawServoAngleClosed/300);
                 sleep(300);
-                intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
-                flipServo.setPosition(variables.flipServoAngleUpTeleOp/300);
-                LMLeft.setTargetPosition(300);
-                LMRight.setTargetPosition(300);
+                intakeClawServo.setPosition(Variables.intakeClawServoAngleOpened/300);
+                flipServo.setPosition(Variables.flipServoAngleUpTeleOp/300);
                 LMLeft.setRunMode(Motor.RunMode.PositionControl);
-                LMRight.setRunMode(Motor.RunMode.PositionControl);
-                timer.reset();
-                while((!LMLeft.atTargetPosition()) && timer.seconds()<2) {
-                    LMLeft.set(0.9);
-                    LMRight.set(0.9);
-                }
             }
             if(gamepad1.left_bumper)
             {
-                transferClawServo.setPosition(variables.transferClawServoAngleOpened/300);
-                intakeArmServo.setPosition(variables.armServoAngleDown/300);
+                transferClawServo.setPosition(Variables.transferClawServoAngleOpened/300);
+                intakeArmServo.setPosition(Variables.armServoAngleDown/300);
                 sleep(100);
-                intakeClawServo.setPosition(variables.intakeClawServoAngleOpened/300);
+                intakeClawServo.setPosition(Variables.intakeClawServoAngleOpened/300);
                 sleep(100);
-                intakeArmServo.setPosition(variables.armServoAngleUp/300);
+                intakeArmServo.setPosition(Variables.armServoAngleUp/300);
             }
             if (gamepad1.right_bumper)
             {
-                intakeArmServo.setPosition(variables.armServoAngleUp / 300);
+                intakeArmServo.setPosition(Variables.armServoAngleUp / 300);
                 IntakeMotor.setTargetPosition(0);
                 IntakeMotor.setRunMode(Motor.RunMode.PositionControl);
                 timer.reset();
@@ -341,12 +346,16 @@ public class OpMode extends LinearOpMode {
                 }
             }
             if(gamepad1.guide){
-                transferClawServo.setPosition(variables.transferClawServoAngleOpened/300);
-                flipServo.setPosition(variables.flipServoAngleDown/300);
-                intakeArmServo.setPosition(variables.armServoAngleUp/300);
-                intakeClawServo.setPosition(variables.intakeClawServoAngleClosed/300);
-                intakePivotServo.setPosition(variables.pivotVerticalAngle/300);
-                clawServo.setPosition(variables.specimenClawAngleOpened/300);
+                transferClawServo.setPosition(Variables.transferClawServoAngleOpened/300);
+                flipServo.setPosition(Variables.flipServoAngleDown/300);
+                intakeArmServo.setPosition(Variables.armServoAngleUp/300);
+                intakeClawServo.setPosition(Variables.intakeClawServoAngleClosed/300);
+                intakePivotServo.setPosition(Variables.pivotVerticalAngle/300);
+                clawServo.setPosition(Variables.specimenClawAngleOpened/300);
+                specimenGrabServo.setPosition(Variables.specimenArmClawOpened); //open
+                specimenPivotServo.setPosition(Variables.pivotNormalPos); //normal
+                specimenArmAngleServo.setPosition(Variables.specimenArmAngleGrabPos); //grab from human player
+
                 liftLastPosition = LMLeft.getCurrentPosition();
 
                 LMLeft.setRunMode(Motor.RunMode.RawPower);

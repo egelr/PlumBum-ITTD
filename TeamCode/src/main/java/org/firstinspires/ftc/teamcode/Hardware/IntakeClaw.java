@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Hardware;
+package org.firstinspires.ftc.teamcode.hardware;
 
 import androidx.annotation.NonNull;
 
@@ -7,7 +7,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.variables;
+import org.firstinspires.ftc.teamcode.Variables;
 
 public class IntakeClaw {
     private Servo intakeClaw;
@@ -19,7 +19,7 @@ public class IntakeClaw {
     public class CloseIntakeClaw implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeClaw.setPosition(variables.intakeClawServoAngleClosed/300);
+            intakeClaw.setPosition(Variables.intakeClawServoAngleClosed/300);
             return false;
         }
     }
@@ -29,7 +29,7 @@ public class IntakeClaw {
     public class OpenIntakeClaw implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeClaw.setPosition(variables.intakeClawServoAngleOpened/300);
+            intakeClaw.setPosition(Variables.intakeClawServoAngleOpened/300);
             return false;
         }
     }
@@ -37,4 +37,3 @@ public class IntakeClaw {
         return new IntakeClaw.OpenIntakeClaw();
     }
 }
-

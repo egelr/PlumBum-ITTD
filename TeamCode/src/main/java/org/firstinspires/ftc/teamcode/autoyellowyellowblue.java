@@ -15,14 +15,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.Hardware.Claw;
-import org.firstinspires.ftc.teamcode.Hardware.FlipServo;
-import org.firstinspires.ftc.teamcode.Hardware.IntakeArm;
-import org.firstinspires.ftc.teamcode.Hardware.IntakeClaw;
-import org.firstinspires.ftc.teamcode.Hardware.IntakeSlides;
-import org.firstinspires.ftc.teamcode.Hardware.Lift;
-import org.firstinspires.ftc.teamcode.Hardware.Pivot;
-import org.firstinspires.ftc.teamcode.Hardware.TransferClaw;
+import org.firstinspires.ftc.teamcode.hardware.Claw;
+import org.firstinspires.ftc.teamcode.hardware.FlipServo;
+import org.firstinspires.ftc.teamcode.hardware.IntakeArm;
+import org.firstinspires.ftc.teamcode.hardware.IntakeClaw;
+import org.firstinspires.ftc.teamcode.hardware.IntakeSlides;
+import org.firstinspires.ftc.teamcode.hardware.Lift;
+import org.firstinspires.ftc.teamcode.hardware.Pivot;
+import org.firstinspires.ftc.teamcode.hardware.TransferClaw;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -33,7 +33,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 @Autonomous(name = "AutoYellowYellowBlue", group = "Autonomous")
-public class autoyellowyellowblue extends LinearOpMode {
+public class AutoYellowYellowBlue extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -53,31 +53,31 @@ public class autoyellowyellowblue extends LinearOpMode {
 
         TrajectoryActionBuilder initialSampleScoreTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(-9,-50.5, Math.toRadians(135)), Math.toRadians(0));
-        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9,-50.5,Math.toRadians(135)))
+                .splineToSplineHeading(new Pose2d(-11,-48,Math.toRadians(140)), Math.toRadians(0));
+        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-11,-48,Math.toRadians(140)))
                 .setReversed(false)
-                .turn(Math.toRadians(29));
-        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(164)))
+                .turn(Math.toRadians(30));
+        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-11, -48, Math.toRadians(170)))
                 .setReversed(false)
-                .turn(Math.toRadians(-29)); //4
-        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9,-50.5,Math.toRadians(135)))
+                .turn(Math.toRadians(-30)); //4
+        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-11,-48,Math.toRadians(140)))
                 .setReversed(false)
-                .turn(Math.toRadians(47.5));
-        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(182.5)))
+                .turn(Math.toRadians(60));
+        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-11, -48, Math.toRadians(200)))
                 .setReversed(false)
-                .turn(Math.toRadians(-47.5));
-        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(135)))
+                .turn(Math.toRadians(-60));
+        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-11, -48, Math.toRadians(140)))
                 .setReversed(false)
-                .turn(Math.toRadians(63))
-                .lineToX(-10.5);
-        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-10.5, -50.5, Math.toRadians(192)))
+                .turn(Math.toRadians(74))
+                .lineToX(-12.5);
+        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12.5, -48, Math.toRadians(214)))
                 .setReversed(false)
-                .lineToX(-9)
-                .turn(Math.toRadians(-63));
-        TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-9, -50.5, Math.toRadians(135)))
+                .lineToX(-11)
+                .turn(Math.toRadians(-80));
+        TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-11, -48, Math.toRadians(134)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-48, -40, Math.toRadians(270)), Math.toRadians(0))
-                .strafeTo(new Vector2d(-48, -15));
+                .strafeTo(new Vector2d(-48, -20));
 
         //Actions that need to happen on init
 
@@ -242,4 +242,3 @@ public class autoyellowyellowblue extends LinearOpMode {
         }
     }
 }
-

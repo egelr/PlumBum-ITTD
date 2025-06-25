@@ -15,14 +15,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.Hardware.Claw;
-import org.firstinspires.ftc.teamcode.Hardware.FlipServo;
-import org.firstinspires.ftc.teamcode.Hardware.IntakeArm;
-import org.firstinspires.ftc.teamcode.Hardware.IntakeClaw;
-import org.firstinspires.ftc.teamcode.Hardware.IntakeSlides;
-import org.firstinspires.ftc.teamcode.Hardware.Lift;
-import org.firstinspires.ftc.teamcode.Hardware.Pivot;
-import org.firstinspires.ftc.teamcode.Hardware.TransferClaw;
+import org.firstinspires.ftc.teamcode.hardware.Claw;
+import org.firstinspires.ftc.teamcode.hardware.FlipServo;
+import org.firstinspires.ftc.teamcode.hardware.IntakeArm;
+import org.firstinspires.ftc.teamcode.hardware.IntakeClaw;
+import org.firstinspires.ftc.teamcode.hardware.IntakeSlides;
+import org.firstinspires.ftc.teamcode.hardware.Lift;
+import org.firstinspires.ftc.teamcode.hardware.Pivot;
+import org.firstinspires.ftc.teamcode.hardware.TransferClaw;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -32,8 +32,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 //Autonomous for hanging 3 specimens and parking (63 points)
 
 @Config
-@Autonomous(name = "Autoblue", group = "Autonomous")
-public class autoblue extends LinearOpMode {
+@Autonomous(name = "AutoBlue", group = "Autonomous")
+public class AutoBlue extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -53,42 +53,44 @@ public class autoblue extends LinearOpMode {
 
         TrajectoryActionBuilder firstSpecimenHangTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(true)
-                .lineToX(-29.75);
-        TrajectoryActionBuilder firstSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-29.75,0,Math.toRadians(0)))
+                .lineToX(-29.5);
+        TrajectoryActionBuilder firstSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-29.5,0,Math.toRadians(0)))
                 .setReversed(false)
-                .lineToX(-29.25);
-        TrajectoryActionBuilder sampleDeliveryTrajectory = drive.actionBuilder(new Pose2d(-29.25,0,Math.toRadians(0)))
+                .lineToX(-29);
+        TrajectoryActionBuilder sampleDeliveryTrajectory = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
                 .setReversed(false)
                 .lineToX(-23)
-                .splineToSplineHeading(new Pose2d(-23, 26, Math.toRadians(85)), Math.toRadians(0))
-                .strafeTo(new Vector2d(-46, 26))
-                .strafeTo(new Vector2d(-46, 42))
-                .strafeTo(new Vector2d(-5, 42));
-        TrajectoryActionBuilder secondSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-5,42,Math.toRadians(85)))
+                .splineToSplineHeading(new Pose2d(-23, 26, Math.toRadians(90)), Math.toRadians(0))
+                .strafeTo(new Vector2d(-50, 26))
+                .strafeTo(new Vector2d(-50, 35))
+                .strafeTo(new Vector2d(-13, 35));
+        TrajectoryActionBuilder secondSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-13,35,Math.toRadians(90)))
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(5,30,Math.toRadians(180)),Math.toRadians(0));
-        TrajectoryActionBuilder secondSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(5,30,Math.toRadians(180)))
+                .turn(Math.toRadians(90))
+                .lineToX(0);
+                //.splineToSplineHeading(new Pose2d(0,32,Math.toRadians(180)),Math.toRadians(0));
+        TrajectoryActionBuilder secondSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(0,35,Math.toRadians(180)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(-10, -5, Math.toRadians(0)),Math.toRadians(0));
         TrajectoryActionBuilder secondSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -5, Math.toRadians(0)))
                 .setReversed(true)
-                .lineToX(-28.75);
-        TrajectoryActionBuilder secondSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-28.75, -5, Math.toRadians(0)))
+                .lineToX(-29.5);
+        TrajectoryActionBuilder secondSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-29.5, -5, Math.toRadians(0)))
                 .setReversed(false)
-                .lineToX(-28);
-        TrajectoryActionBuilder thirdSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-28, -5, Math.toRadians(0)))
+                .lineToX(-29);
+        TrajectoryActionBuilder thirdSpecimenUploadTrajectory = drive.actionBuilder(new Pose2d(-29, -5, Math.toRadians(0)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(5, 30, Math.toRadians(180)),Math.toRadians(0));
-        TrajectoryActionBuilder thirdSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(5, 30, Math.toRadians(180)))
+                .splineToSplineHeading(new Pose2d(0, 35, Math.toRadians(180)),Math.toRadians(0));
+        TrajectoryActionBuilder thirdSpecimenStraightenTrajectory = drive.actionBuilder(new Pose2d(0, 35, Math.toRadians(180)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-10, -2.5, Math.toRadians(0)),Math.toRadians(0));
-        TrajectoryActionBuilder thirdSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -2.5, Math.toRadians(0)))
+                .splineToSplineHeading(new Pose2d(-10, -3, Math.toRadians(0)),Math.toRadians(0));
+        TrajectoryActionBuilder thirdSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-10, -3, Math.toRadians(0)))
                 .setReversed(true)
-                .lineToX(-28.75);
-        TrajectoryActionBuilder thirdSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-28.75, -2.5, Math.toRadians(0)))
+                .lineToX(-30);
+        TrajectoryActionBuilder thirdSpecimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-30, -3, Math.toRadians(0)))
                 .setReversed(false)
-                .lineToX(-28.25);
-        TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(-28.25, -2.5, Math.toRadians(0)))
+                .lineToX(-29.5);
+        TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(-29.5, -3, Math.toRadians(0)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(5, 35, Math.toRadians(0)),Math.toRadians(0));
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Hardware;
+package org.firstinspires.ftc.teamcode.hardware;
 
 import androidx.annotation.NonNull;
 
@@ -7,8 +7,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.autoyellow;
-import org.firstinspires.ftc.teamcode.variables;
+import org.firstinspires.ftc.teamcode.Variables;
 
 public class IntakeArm {
     private Servo intakeArm;
@@ -20,7 +19,7 @@ public class IntakeArm {
     public class intakeArmDown implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeArm.setPosition(variables.armServoAngleDown/300);
+            intakeArm.setPosition(Variables.armServoAngleDown/300);
             return false;
         }
     }
@@ -30,7 +29,7 @@ public class IntakeArm {
     public class intakeArmSt implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeArm.setPosition(variables.armServoAngleStraight/300);
+            intakeArm.setPosition(Variables.armServoAngleStraight/300);
             return false;
         }
     }
@@ -38,7 +37,7 @@ public class IntakeArm {
     public class intakeArmUp implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeArm.setPosition(variables.armServoAngleUp/300);
+            intakeArm.setPosition(Variables.armServoAngleUp/300);
             return false;
         }
     }
@@ -46,7 +45,7 @@ public class IntakeArm {
     public class intakeArmGrab implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intakeArm.setPosition(variables.armServoAngleGrab/300);
+            intakeArm.setPosition(Variables.armServoAngleGrab/300);
             return false;
         }
     }

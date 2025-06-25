@@ -15,25 +15,25 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.Hardware.Claw;
-import org.firstinspires.ftc.teamcode.Hardware.FlipServo;
-import org.firstinspires.ftc.teamcode.Hardware.IntakeArm;
-import org.firstinspires.ftc.teamcode.Hardware.IntakeClaw;
-import org.firstinspires.ftc.teamcode.Hardware.IntakeSlides;
-import org.firstinspires.ftc.teamcode.Hardware.Lift;
-import org.firstinspires.ftc.teamcode.Hardware.Pivot;
-import org.firstinspires.ftc.teamcode.Hardware.TransferClaw;
+import org.firstinspires.ftc.teamcode.hardware.Claw;
+import org.firstinspires.ftc.teamcode.hardware.FlipServo;
+import org.firstinspires.ftc.teamcode.hardware.IntakeArm;
+import org.firstinspires.ftc.teamcode.hardware.IntakeClaw;
+import org.firstinspires.ftc.teamcode.hardware.IntakeSlides;
+import org.firstinspires.ftc.teamcode.hardware.Lift;
+import org.firstinspires.ftc.teamcode.hardware.Pivot;
+import org.firstinspires.ftc.teamcode.hardware.TransferClaw;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-//Autonomous for delivering 4 samples (67 points)
+//Autonomous for hanging a specimen and delivering 3 samples (71 points)
 
 @Config
-@Autonomous(name = "AutoYellowYellow", group = "Autonomous")
-public class autoyellowyellow extends LinearOpMode {
+@Autonomous(name = "AutoYellowRed", group = "Autonomous")
+public class AutoYellowRed extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -51,38 +51,43 @@ public class autoyellowyellow extends LinearOpMode {
         Pivot pivot = new Pivot(hardwareMap);
 
 
-        TrajectoryActionBuilder initialSampleScoreTrajectory = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder specimenHangTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(-9,-50.5, Math.toRadians(135)), Math.toRadians(0));
-        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9.5,-50.5,Math.toRadians(135)))
+                .lineToX(-29);
+        TrajectoryActionBuilder specimenHangBackUpTrajectory = drive.actionBuilder(new Pose2d(-29,0,Math.toRadians(0)))
                 .setReversed(false)
-                .turn(Math.toRadians(28));
-        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9.5, -50.5, Math.toRadians(163)))
+                .lineToX(-28.5);
+        TrajectoryActionBuilder firstSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-28.5,0,Math.toRadians(0)))
                 .setReversed(false)
-                .turn(Math.toRadians(-28)); //4
-        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9.5,-50.5,Math.toRadians(135)))
+                .splineToSplineHeading(new Pose2d(-11, -48, Math.toRadians(166)), Math.toRadians(0));
+        TrajectoryActionBuilder firstSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-11, -48, Math.toRadians(166)))
                 .setReversed(false)
-                .turn(Math.toRadians(48));
-        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-9.5, -50.5, Math.toRadians(182.5)))
+                .turn(Math.toRadians(-26)); //4
+        TrajectoryActionBuilder secondSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-11,-48,Math.toRadians(140)))
                 .setReversed(false)
-                .turn(Math.toRadians(-48));
-        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-9.5, -50.5, Math.toRadians(135)))
+                .turn(Math.toRadians(57));
+        TrajectoryActionBuilder secondSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-11, -48, Math.toRadians(197)))
                 .setReversed(false)
-                .turn(Math.toRadians(64))
-                .lineToX(-11);
-        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-11, -50.5, Math.toRadians(199)))
+                .turn(Math.toRadians(-57));
+        TrajectoryActionBuilder thirdSampleGrabTrajectory = drive.actionBuilder(new Pose2d(-11, -48, Math.toRadians(140)))
                 .setReversed(false)
-                .lineToX(-9.5)
-                .turn(Math.toRadians(-64));
-        TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-9.5, -50.5, Math.toRadians(135)))
+                .turn(Math.toRadians(73))
+                .lineToX(-12);
+        TrajectoryActionBuilder thirdSampleScoreTrajectory = drive.actionBuilder(new Pose2d(-12, -48, Math.toRadians(213)))
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-48, -40, Math.toRadians(270)), Math.toRadians(0))
-                .strafeTo(new Vector2d(-48, -16));
+                .lineToX(-11)
+                .turn(Math.toRadians(-73));
+        TrajectoryActionBuilder firstParkingTrajectory = drive.actionBuilder(new Pose2d(-11, -48, Math.toRadians(140)))
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(-49, -36.5, Math.toRadians(270)), Math.toRadians(0))
+                .strafeTo(new Vector2d(-49, -20));
+
 
         //Actions that need to happen on init
 
 
-        Action initialSampleScoreTrajectoryAction;
+        Action specimenHangTrajectoryAction;
+        Action specimenHangBackUpTrajectoryAction;
         Action firstSampleGrabTrajectoryAction;
         Action firstSampleScoreTrajectoryAction;
         Action secondSampleGrabTrajectoryAction;
@@ -94,13 +99,14 @@ public class autoyellowyellow extends LinearOpMode {
         Actions.runBlocking(claw.closeClaw());
         Actions.runBlocking(flipServo.downFlip());
         Actions.runBlocking(intakeClaw.openIntakeClaw());
-        Actions.runBlocking(transferClaw.closeTransferClaw());
+        Actions.runBlocking(transferClaw.openTransferClaw());
         Actions.runBlocking(intakeArm.intakeArmUp());
         Actions.runBlocking(pivot.PivotN());
         Actions.runBlocking(IntakeSlides.SlidePark());
         Actions.runBlocking(lift.liftPark());
 
-        initialSampleScoreTrajectoryAction = initialSampleScoreTrajectory.build();
+        specimenHangTrajectoryAction = specimenHangTrajectory.build();
+        specimenHangBackUpTrajectoryAction = specimenHangBackUpTrajectory.build();
         firstSampleGrabTrajectoryAction = firstSampleGrabTrajectory.build();
         firstSampleScoreTrajectoryAction = firstSampleScoreTrajectory.build();
         secondSampleGrabTrajectoryAction = secondSampleGrabTrajectory.build();
@@ -119,25 +125,26 @@ public class autoyellowyellow extends LinearOpMode {
             Actions.runBlocking(
                     new SequentialAction(
 
+                            //Actions for hanging specimen
+
+                            new ParallelAction(
+                                    lift.liftUp(),
+                                    specimenHangTrajectoryAction
+                            ),
+                            lift.liftDown(),
+                            new ParallelAction(
+                                    claw.openClaw(),
+                                    specimenHangBackUpTrajectoryAction
+                            ),
+
                             //Actions for delivering first sample
 
-                            initialSampleScoreTrajectoryAction,
                             new ParallelAction(
-                                    flipServo.upFlip(),
-                                    lift.liftBasket()
-                            ),
-                            flipServo.basketFlip(),
-                            new SleepAction(0.4),
-                            transferClaw.openTransferClaw(),
-                            new SleepAction(0.1),
-
-                            //Actions for delivering second sample
-
-                            new ParallelAction(
-                                    flipServo.downFlip(),
                                     lift.liftPark(),
-                                    firstSampleGrabTrajectoryAction,
-                                    IntakeSlides.SlideExtend(),
+                                    firstSampleGrabTrajectoryAction
+                            ),
+                            new ParallelAction(
+                                    IntakeSlides.SlideExtend2(),
                                     intakeArm.intakeArmDown(),
                                     pivot.Pivot1yellow()
                             ),
@@ -162,17 +169,17 @@ public class autoyellowyellow extends LinearOpMode {
                                     lift.liftBasket()
                             ),
                             flipServo.basketFlip(),
-                            new SleepAction(0.4),
+                            new SleepAction(0.2),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
 
-                            //Actions for delivering third sample
+                            //Actions for delivering second sample
 
                             new ParallelAction(
                                     flipServo.downFlip(),
                                     lift.liftPark(),
                                     secondSampleGrabTrajectoryAction,
-                                    IntakeSlides.SlideExtend(),
+                                    IntakeSlides.SlideExtend2(),
                                     intakeArm.intakeArmDown()
                             ),
                             intakeArm.intakeArmGrab(),
@@ -194,17 +201,17 @@ public class autoyellowyellow extends LinearOpMode {
                                     lift.liftBasket()
                             ),
                             flipServo.basketFlip(),
-                            new SleepAction(0.4),
+                            new SleepAction(0.2),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
 
-                            //Actions for delivering fourth sample
+                            //Actions for delivering third sample
 
                             new ParallelAction(
                                     flipServo.downFlip(),
                                     lift.liftPark(),
                                     thirdSampleGrabTrajectoryAction,
-                                    IntakeSlides.SlideExtend(),
+                                    IntakeSlides.SlideExtend2(),
                                     intakeArm.intakeArmDown(),
                                     pivot.Pivot3yellow()
                             ),
@@ -228,7 +235,7 @@ public class autoyellowyellow extends LinearOpMode {
                                     lift.liftBasket()
                             ),
                             flipServo.basketFlip(),
-                            new SleepAction(0.4),
+                            new SleepAction(0.2),
                             transferClaw.openTransferClaw(),
                             new SleepAction(0.1),
                             new ParallelAction(

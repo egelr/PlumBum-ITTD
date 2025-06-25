@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Hardware;
+package org.firstinspires.ftc.teamcode.hardware;
 
 import androidx.annotation.NonNull;
 
@@ -7,8 +7,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.autoyellow;
-import org.firstinspires.ftc.teamcode.variables;
+import org.firstinspires.ftc.teamcode.Variables;
 
 public class Pivot {
     private Servo pivot;
@@ -20,7 +19,7 @@ public class Pivot {
     public class PivotN implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            pivot.setPosition(variables.pivotVerticalAngle/300);
+            pivot.setPosition(Variables.pivotVerticalAngle/300);
             return false;
         }
     }
@@ -31,7 +30,7 @@ public class Pivot {
     public class Pivot1yellow implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            pivot.setPosition(variables.pivot1yellowAngle/300);
+            pivot.setPosition(Variables.pivot1yellowAngle/300);
             return false;
         }
     }
@@ -42,7 +41,7 @@ public class Pivot {
     public class Pivot3yellow implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            pivot.setPosition(variables.pivot3yellowAngle/300);
+            pivot.setPosition(Variables.pivot3yellowAngle/300);
             return false;
         }
     }
@@ -51,13 +50,13 @@ public class Pivot {
         return new Pivot.Pivot3yellow();
     }
 
-public class Pivot1Colour implements Action {
-    @Override
-    public boolean run(@NonNull TelemetryPacket packet) {
-        pivot.setPosition(variables.pivot1ColourAngle/300);
-        return false;
+    public class Pivot1Colour implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            pivot.setPosition(Variables.pivot1ColourAngle/300);
+            return false;
+        }
     }
-}
 
     public Action Pivot1Colour(){return new Pivot.Pivot1Colour();}
 }
