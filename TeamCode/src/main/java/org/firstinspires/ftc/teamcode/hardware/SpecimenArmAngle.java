@@ -36,5 +36,15 @@ public class SpecimenArmAngle{
     public Action hangSpecimen() {
         return new SpecimenArmAngle.hangSpecimen();
     }
+    public class parkSpecimen implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            specimenArmAngleServo.setPosition(0.15);
+            return false;
+        }
+    }
+    public Action parkSpecimen() {
+        return new SpecimenArmAngle.parkSpecimen();
+    }
 
 }

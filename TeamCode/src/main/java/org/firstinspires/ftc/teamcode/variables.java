@@ -16,7 +16,7 @@ public class Variables {
 
 
     //Transfer claw angles for TeleOP and Autonomous
-    public static final double transferClawServoAngleClosed = 90;
+    public static final double transferClawServoAngleClosed = 95;
     public static final double transferClawServoAngleOpened = transferClawServoAngleClosed - 60;
 
 
@@ -58,15 +58,19 @@ public class Variables {
     //Specimen arm angle positions for TeleOP and Autonomous
 
     public static final double specimenArmAngleGrabPos = 0.85;
-    public static final double specimenArmAngleHangPos = 0.32;
+    public static final double specimenArmAngleHangPos = 0.29;
 
     //Specimen pivot  positions for TeleOP and Autonomous
     public static final double pivotNormalPos = 0.77;
     public static final double pivotInvertedPos = 0.08;
 
     //Specimen claw  positions for TeleOP and Autonomous
-    public static final double specimenArmClawOpened = 0.3;
-    public static final double specimenArmClawClosed = 0.08;
+    public static final double specimenArmClawOpened = 0.35;
+    public static final double specimenArmClawClosed = 0.16;
+
+    //Auto positions
+
+    public static final double specimenAdjustable = 0;
 
 
 

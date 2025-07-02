@@ -60,8 +60,8 @@ public class AutoSpecimen extends LinearOpMode {
         TrajectoryActionBuilder firstSpecimenHangTrajectory = drive.actionBuilder(initialPose)
                 .setReversed(false)
                 .strafeTo(new Vector2d(29, 13))
-                .lineToX(32);
-        TrajectoryActionBuilder secondSpecimenIntakeTrajectory = drive.actionBuilder(new Pose2d(32,13,Math.toRadians(0)))
+                .lineToX(32 + Variables.specimenAdjustable);
+        TrajectoryActionBuilder secondSpecimenIntakeTrajectory = drive.actionBuilder(new Pose2d(32 + Variables.specimenAdjustable,13,Math.toRadians(0)))
                 .setReversed(true)
                 .lineToX(29)
                 .strafeTo(new Vector2d(16, -32));
@@ -78,8 +78,8 @@ public class AutoSpecimen extends LinearOpMode {
                 .setReversed(false)
                 .strafeTo(new Vector2d(31, 12.5))
                 .turn(Math.toRadians(-4))
-                .lineToX(33);
-        TrajectoryActionBuilder secondSpecimenBackupTrajectory = drive.actionBuilder(new Pose2d(33, 12.5,Math.toRadians(-4)))
+                .lineToX(33 + Variables.specimenAdjustable);
+        TrajectoryActionBuilder secondSpecimenBackupTrajectory = drive.actionBuilder(new Pose2d(33 + Variables.specimenAdjustable, 12.5,Math.toRadians(-4)))
                 .setReversed(true)
                 .lineToX(31);
         TrajectoryActionBuilder thirdSpecimenPickupTrajectory = drive.actionBuilder(new Pose2d(31, 12.5,Math.toRadians(0)))
@@ -89,21 +89,21 @@ public class AutoSpecimen extends LinearOpMode {
                 .setReversed(false)
                 .strafeTo(new Vector2d(31, 11))
                 .turn(Math.toRadians(-5))
-                .lineToX(34);
-        TrajectoryActionBuilder thirdSpecimenBackupTrajectory = drive.actionBuilder(new Pose2d(34, 11,Math.toRadians(-5)))
+                .lineToX(34 + Variables.specimenAdjustable);
+        TrajectoryActionBuilder thirdSpecimenBackupTrajectory = drive.actionBuilder(new Pose2d(34 + Variables.specimenAdjustable, 11,Math.toRadians(-5)))
                 .setReversed(true)
                 .lineToX(31);
         TrajectoryActionBuilder fourthSpecimenPickupTrajectory = drive.actionBuilder(new Pose2d(31, 11,Math.toRadians(-3)))
                 .setReversed(true)
-                .strafeTo(new Vector2d(-2, -27));
+                .strafeTo(new Vector2d(-2.5, -27));
         TrajectoryActionBuilder fourthSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-3, -27,Math.toRadians(-3)))
                 .setReversed(false)
                 .strafeTo(new Vector2d(31, 11))
                 .turn(Math.toRadians(-5))
-                .lineToX(35);
-        TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(35, 11,Math.toRadians(-5)))
+                .lineToX(35 + Variables.specimenAdjustable);
+        TrajectoryActionBuilder parkTrajectory = drive.actionBuilder(new Pose2d(35 + Variables.specimenAdjustable, 11,Math.toRadians(-5)))
                 .setReversed(true)
-                .strafeTo(new Vector2d(0, -40));
+                .lineToX(20);
 
 
         //Actions that need to happen on init
@@ -282,10 +282,14 @@ public class AutoSpecimen extends LinearOpMode {
                                     specimenPivot.inverted(),
                                     fourthSpecimenHangTrajectoryAction
                             ),
-                            specimenClaw.openSpecimenClaw(),
 
-                            parkTrajectoryAction
-                            
+                            new ParallelAction(
+                                    specimenClaw.openSpecimenClaw(),
+                                    parkTrajectoryAction,
+                                    specimenArmAngle.parkSpecimen()
+                            )
+
+
                     ));
 
         }
