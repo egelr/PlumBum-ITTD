@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
-import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -12,8 +10,6 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.hardware.Claw;
 import org.firstinspires.ftc.teamcode.hardware.FlipServo;
@@ -26,17 +22,12 @@ import org.firstinspires.ftc.teamcode.hardware.TransferClaw;
 import org.firstinspires.ftc.teamcode.hardware.SpecimenArmAngle;
 import org.firstinspires.ftc.teamcode.hardware.SpecimenClaw;
 import org.firstinspires.ftc.teamcode.hardware.SpecimenPivot;
-import org.firstinspires.ftc.teamcode.MecanumDrive;
-
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 //Autonomous for delivering 4 samples (67 points)
 
 @Config
-@Autonomous(name = "AutoYellowYellowRed", group = "Autonomous")
-public class AutoYellowYellowRed extends LinearOpMode {
+@Autonomous(name = "AutoYellowYellow", group = "Autonomous")
+public class AutoYellowYellow extends LinearOpMode {
 
     @Override
     public void runOpMode() {

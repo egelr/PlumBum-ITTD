@@ -34,8 +34,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "AutoSpecimen", group = "Autonomous")
-public class AutoSpecimen extends LinearOpMode {
+@Autonomous(name = "AutoSpecimenChangedMoreBackUp", group = "Autonomous")
+public class AutoSpecimenChanged extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -63,7 +63,7 @@ public class AutoSpecimen extends LinearOpMode {
                 .lineToX(32 + Variables.specimenAdjustable);
         TrajectoryActionBuilder secondSpecimenIntakeTrajectory = drive.actionBuilder(new Pose2d(32 + Variables.specimenAdjustable,13,Math.toRadians(0)))
                 .setReversed(true)
-                .lineToX(29)
+                .lineToX(28)
                 .strafeTo(new Vector2d(16, -32));
         TrajectoryActionBuilder thirdSpecimenIntakeTrajectory = drive.actionBuilder(new Pose2d(16, -32,Math.toRadians(0)))
                 .setReversed(false)
@@ -81,8 +81,8 @@ public class AutoSpecimen extends LinearOpMode {
                 .lineToX(33 + Variables.specimenAdjustable);
         TrajectoryActionBuilder secondSpecimenBackupTrajectory = drive.actionBuilder(new Pose2d(33 + Variables.specimenAdjustable, 12.5,Math.toRadians(-4)))
                 .setReversed(true)
-                .lineToX(31);
-        TrajectoryActionBuilder thirdSpecimenPickupTrajectory = drive.actionBuilder(new Pose2d(31, 12.5,Math.toRadians(0)))
+                .lineToX(30);
+        TrajectoryActionBuilder thirdSpecimenPickupTrajectory = drive.actionBuilder(new Pose2d(30, 12.5,Math.toRadians(0)))
                 .setReversed(true)
                 .strafeTo(new Vector2d(-3, -27));
         TrajectoryActionBuilder thirdSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-3, -27,Math.toRadians(0)))
@@ -92,10 +92,10 @@ public class AutoSpecimen extends LinearOpMode {
                 .lineToX(34 + Variables.specimenAdjustable);
         TrajectoryActionBuilder thirdSpecimenBackupTrajectory = drive.actionBuilder(new Pose2d(34 + Variables.specimenAdjustable, 11,Math.toRadians(-5)))
                 .setReversed(true)
-                .lineToX(31);
-        TrajectoryActionBuilder fourthSpecimenPickupTrajectory = drive.actionBuilder(new Pose2d(31, 11,Math.toRadians(-3)))
+                .lineToX(30);
+        TrajectoryActionBuilder fourthSpecimenPickupTrajectory = drive.actionBuilder(new Pose2d(30, 11,Math.toRadians(-3)))
                 .setReversed(true)
-                .strafeTo(new Vector2d(-3, -27)); //TODO pakeistas kad arciau privaziuotu i 3 is 2.5 (del field one red ir del siaip)
+                .strafeTo(new Vector2d(-3, -27)); //TODO pakeistas kad arciau privaziuotu i 3 is 2.5
         TrajectoryActionBuilder fourthSpecimenHangTrajectory = drive.actionBuilder(new Pose2d(-3, -27,Math.toRadians(-3)))
                 .setReversed(false)
                 .strafeTo(new Vector2d(31, 11))

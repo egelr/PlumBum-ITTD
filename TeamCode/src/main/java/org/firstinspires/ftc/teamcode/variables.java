@@ -46,7 +46,7 @@ public class Variables {
     public static final int intakeSlideExtendPos = 1300;
     public static final int intakeSlideExtendPos2 = 1350;
     public static final int intakeSlideExtendPosSmall = 750;
-    public static final int intakeSlideExtendPosMedium = 850;
+    public static final int intakeSlideExtendPosMedium = 950;
 
 
     //Lift Slides positions for TeleOP and Autonomous
